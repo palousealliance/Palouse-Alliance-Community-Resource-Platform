@@ -11,7 +11,7 @@ import "../styles/Organizations.css";
 
 const SUPPORT_EMAIL = "palousealliance@gmail.com";
 
-const Organizations = () => {
+const Organizations = ({ session }) => {
   const navigate = useNavigate();
   const cachedOrganizationsEntry = readSessionCache(ORGANIZATIONS_PAGE_CACHE_KEY);
   const cachedOrganizations = getSessionCacheValue(cachedOrganizationsEntry);
@@ -22,6 +22,7 @@ const Organizations = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(!Array.isArray(cachedOrganizations));
   const [revalidationKey, setRevalidationKey] = useState(0);
+  const [currentUserOrgId, setCurrentUserOrgId] = useState(null);
 
   const isVisibleOrg = (org) => {
     const name = org.name?.trim()?.toLowerCase();
@@ -92,6 +93,42 @@ const Organizations = () => {
   }, [revalidationKey]);
 
   useEffect(() => {
+    let isMounted = true;
+
+    const loadCurrentUserOrg = async () => {
+      if (!session?.user?.id) {
+        if (isMounted) {
+          setCurrentUserOrgId(null);
+        }
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("users")
+        .select("organization_id")
+        .eq("id", session.user.id)
+        .maybeSingle();
+
+      if (!isMounted) {
+        return;
+      }
+
+      if (error) {
+        setCurrentUserOrgId(null);
+        return;
+      }
+
+      setCurrentUserOrgId(data?.organization_id || null);
+    };
+
+    loadCurrentUserOrg();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [session?.user?.id]);
+
+  useEffect(() => {
     const results = orgs.filter(
       (org) =>
         org.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -149,6 +186,7 @@ const Organizations = () => {
                 org.eventCount > 0 ||
                 isValid(org.phone_number) ||
                 isValid(org.email);
+              const showSupportLink = Boolean(session?.user?.id && currentUserOrgId && currentUserOrgId !== "unaffiliated" && org.id === currentUserOrgId);
 
               return (
                 <div key={org.id} className="masonry-item">
@@ -207,9 +245,11 @@ const Organizations = () => {
                       </div>
                     )}
 
-                    <p className="org-support-link">
-                      Contact the <a className="email-link" href={`mailto:${SUPPORT_EMAIL}`}>Palouse Alliance</a> to edit your organization's details.
-                    </p>
+                    {showSupportLink ? (
+                      <p className="org-support-link">
+                        Contact the <a className="email-link" href={`mailto:${SUPPORT_EMAIL}`}>Palouse Alliance</a> to edit your organization's details.
+                      </p>
+                    ) : null}
                   </div>
                 </div>
               );

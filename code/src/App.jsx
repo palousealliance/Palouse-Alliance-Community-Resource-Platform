@@ -162,7 +162,7 @@ function App() {
               path="/events"
               element={<Events key={session?.user?.id || "public"} session={session} />}
             />
-            <Route path="/organizations" element={<Organizations />} />
+            <Route path="/organizations" element={<Organizations session={session} />} />
             <Route
               path="/admin"
               element={
