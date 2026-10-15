@@ -7,6 +7,7 @@ import loginLogo from "../assets/PalouseSquareLogo.png";
 import "../styles/Login.css";
 
 const API_BASE = import.meta.env.VITE_API_BASE || "";
+const SUPPORT_EMAIL = "palousealliance@gmail.com";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -213,7 +214,11 @@ const Login = () => {
           {isForgotPasswordOpen ? (
             <Popup
               title="Password reset help"
-              description="Contact Palouse Alliance to reset your password and regain access to your account."
+              description={
+                <>
+                  Contact <a href={`mailto:${SUPPORT_EMAIL}`}>Palouse Alliance</a> to reset your password and regain access to your account.
+                </>
+              }
               onClose={() => setIsForgotPasswordOpen(false)}
               className="dialog-popup"
               actions={
@@ -228,7 +233,7 @@ const Login = () => {
               ariaLabel="Forgot password help"
             >
               <p className="login-forgot-body">
-                Please reach out to Palouse Alliance to reset your password. They will be able to verify
+                Please reach out to <a href={`mailto:${SUPPORT_EMAIL}`}>Palouse Alliance</a> to reset your password. They will be able to verify
                 your account and walk you through the next steps.
               </p>
             </Popup>

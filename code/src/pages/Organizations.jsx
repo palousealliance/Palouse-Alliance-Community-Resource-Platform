@@ -9,6 +9,8 @@ import {
 } from "../lib/sessionCache";
 import "../styles/Organizations.css";
 
+const SUPPORT_EMAIL = "palousealliance@gmail.com";
+
 const Organizations = () => {
   const navigate = useNavigate();
   const cachedOrganizationsEntry = readSessionCache(ORGANIZATIONS_PAGE_CACHE_KEY);
@@ -204,6 +206,10 @@ const Organizations = () => {
                         </button>
                       </div>
                     )}
+
+                    <span className="org-support-link">
+                      Contact the <a href={`mailto:${SUPPORT_EMAIL}`}>Palouse Alliance</a> to edit your organization's details.
+                    </span>
                   </div>
                 </div>
               );
