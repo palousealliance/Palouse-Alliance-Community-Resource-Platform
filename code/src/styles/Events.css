@@ -135,9 +135,11 @@
 }
 
 .home-filter-controls {
-  display: inline-grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
-  justify-items: stretch;
+  align-items: center;
+  justify-content: flex-end;
   position: relative;
 }
 
@@ -349,6 +351,10 @@
   .home-filter-controls,
   .home-actions {
     justify-content: flex-start;
+  }
+
+  .home-filter-controls {
+    flex-basis: 100%;
   }
 
   .home-actions {
@@ -729,11 +735,11 @@
 }
 
 .event-grid-public {
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 
 .event-grid-authenticated {
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 
 .empty-state {
