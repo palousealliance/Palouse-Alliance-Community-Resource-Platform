@@ -86,23 +86,10 @@
 }
 
 .org-support-link {
-  display: inline-flex;
-  width: fit-content;
   margin-top: 0.9rem;
-  color: var(--color-primary-700);
+  color: var(--color-text-subtle);
   font-size: 0.95rem;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.org-support-link:hover {
-  text-decoration: underline;
-}
-
-.org-support-link a {
-  color: inherit;
-  font: inherit;
-  text-decoration: inherit;
+  line-height: 1.6;
 }
 
 .org-cta-btn {

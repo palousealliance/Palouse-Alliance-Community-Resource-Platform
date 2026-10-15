@@ -207,9 +207,9 @@ const Organizations = () => {
                       </div>
                     )}
 
-                    <span className="org-support-link">
-                      Contact the <a href={`mailto:${SUPPORT_EMAIL}`}>Palouse Alliance</a> to edit your organization's details.
-                    </span>
+                    <p className="org-support-link">
+                      Contact the <a className="email-link" href={`mailto:${SUPPORT_EMAIL}`}>Palouse Alliance</a> to edit your organization's details.
+                    </p>
                   </div>
                 </div>
               );
