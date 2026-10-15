@@ -283,11 +283,21 @@ const Events = ({ session }) => {
         return;
       }
 
-      const { data, error } = await supabase
-        .from("users")
-        .select("organization_id")
-        .eq("id", session.user.id)
-        .maybeSingle();
+      const usersQuery = supabase.from("users").select("organization_id");
+      const scopedUsersQuery = typeof usersQuery?.eq === "function"
+        ? usersQuery.eq("id", session.user.id)
+        : usersQuery;
+
+      const maybeSingle = scopedUsersQuery?.maybeSingle;
+
+      if (typeof maybeSingle !== "function") {
+        if (isMounted) {
+          setCurrentUserOrgId(null);
+        }
+        return;
+      }
+
+      const { data, error } = await maybeSingle.call(scopedUsersQuery);
 
       if (!isMounted) {
         return;

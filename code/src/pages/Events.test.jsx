@@ -13,6 +13,9 @@ const { mockEventsOrder, mockCategoriesOrder, mockTagsOrder, mockFrom } = vi.hoi
     const tagsOrder = vi.fn();
     const tagsSelect = vi.fn(() => ({ order: tagsOrder, in: vi.fn(() => ({ order: tagsOrder })) }));
 
+    const usersMaybeSingle = vi.fn(async () => ({ data: { organization_id: 'org-1' }, error: null }));
+    const usersSelect = vi.fn(() => ({ maybeSingle: usersMaybeSingle }));
+
     const select = vi.fn(() => ({ eq: eventsEq, order: eventsOrder, in: vi.fn(() => ({ order: eventsOrder })) }));
 
     const from = vi.fn((table) => {
@@ -26,6 +29,10 @@ const { mockEventsOrder, mockCategoriesOrder, mockTagsOrder, mockFrom } = vi.hoi
 
       if (table === 'tags') {
         return { select: tagsSelect };
+      }
+
+      if (table === 'users') {
+        return { select: usersSelect };
       }
 
       if (table === 'event_tags') {
