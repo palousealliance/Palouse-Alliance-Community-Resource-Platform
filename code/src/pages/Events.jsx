@@ -246,6 +246,7 @@ const Events = ({ session }) => {
   const [isSubscribeOpen, setIsSubscribeOpen] = useState(false);
   const [postEventSuccessOpen, setPostEventSuccessOpen] = useState(false);
   const [revalidationKey, setRevalidationKey] = useState(0);
+  const [currentUserOrgId, setCurrentUserOrgId] = useState(null);
   const previousSessionUserIdRef = useRef(session?.user?.id || null);
 
   useEffect(() => {
@@ -270,6 +271,43 @@ const Events = ({ session }) => {
   useEffect(() => {
     setSearchQuery(searchParams.get("q")?.trim() || "");
   }, [searchParams]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadCurrentUserOrg = async () => {
+      if (!session?.user?.id) {
+        if (isMounted) {
+          setCurrentUserOrgId(null);
+        }
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("users")
+        .select("organization_id")
+        .eq("id", session.user.id)
+        .maybeSingle();
+
+      if (!isMounted) {
+        return;
+      }
+
+      if (error) {
+        setCurrentUserOrgId(null);
+        return;
+      }
+
+      setCurrentUserOrgId(data?.organization_id || null);
+    };
+
+    loadCurrentUserOrg();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [session?.user?.id]);
+
   const [visibleMonth, setVisibleMonth] = useState(() => {
     const today = new Date();
     return new Date(today.getFullYear(), today.getMonth(), 1);
@@ -282,6 +320,7 @@ const Events = ({ session }) => {
 
   const minVisibleMonth = useMemo(() => addMonths(currentMonth, -1), [currentMonth]);
   const maxVisibleMonth = useMemo(() => addMonths(currentMonth, 3), [currentMonth]);
+  const canPostEvent = Boolean(session?.user?.id && currentUserOrgId && currentUserOrgId !== "unaffiliated");
 
   useEffect(() => {
     if (!location.state?.flashMessage) {
@@ -754,7 +793,7 @@ const Events = ({ session }) => {
               </Popup>
             ) : null}
 
-            {session ? (
+            {canPostEvent ? (
               <div className="home-actions">
                 <button
                   type="button"
@@ -862,16 +901,17 @@ const Events = ({ session }) => {
                 formatCompactDate={formatCompactDate}
                 formatTimeRange={formatTimeRange}
                 onClose={() => setIsMyEventsOpen(false)}
-                onPostEvent={() => {
+                canPostEvent={canPostEvent}
+                onPostEvent={canPostEvent ? () => {
                   setIsPostEventOpen(true);
                   setIsMyEventsOpen(false);
-                }}
+                } : null}
               />
             </div>
           </div>
         ) : null}
 
-        {session && isPostEventOpen ? (
+        {canPostEvent && isPostEventOpen ? (
           <Popup
             title="Post a Community Event"
             description="Share your community event with the Palouse area."

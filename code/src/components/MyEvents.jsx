@@ -48,7 +48,7 @@ function normalizeSupabaseEvent(event, tagLookup = {}, eventTagIds = []) {
   };
 }
 
-const MyEvents = ({ session, formatTimeRange, onClose, onPostEvent }) => {
+const MyEvents = ({ session, formatTimeRange, onClose, onPostEvent, canPostEvent = true }) => {
   const [myEvents, setMyEvents] = useState([]);
   const [myEventsLoading, setMyEventsLoading] = useState(false);
   const [myEventsError, setMyEventsError] = useState("");
@@ -258,13 +258,19 @@ const MyEvents = ({ session, formatTimeRange, onClose, onPostEvent }) => {
               When you submit an event for review, it will appear here with its
               approval status.
             </p>
-            <button
-              type="button"
-              className="my-events-cta"
-              onClick={onPostEvent || (() => {})}
-            >
-              Post an Event
-            </button>
+            {canPostEvent ? (
+              <button
+                type="button"
+                className="my-events-cta"
+                onClick={onPostEvent || (() => {})}
+              >
+                Post an Event
+              </button>
+            ) : (
+              <p className="my-events-group-empty">
+                Your account must be linked to an organization before you can post an event.
+              </p>
+            )}
           </div>
         ) : (
           <div className="my-events-list">

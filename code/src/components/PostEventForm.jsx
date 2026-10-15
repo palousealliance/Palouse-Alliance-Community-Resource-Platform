@@ -384,7 +384,7 @@ const PostEventForm = ({ onClose, onSuccess }) => {
         return;
       }
 
-      if (!userData?.organization_id) {
+      if (!userData?.organization_id || userData.organization_id === "unaffiliated") {
         setErrorMessage("Your account must be linked to an organization before posting events.");
         return;
       }
