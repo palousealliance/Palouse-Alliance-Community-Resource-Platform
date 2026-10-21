@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Events from "./pages/Events";
 import Organizations from "./pages/Organizations";
 import Admin from "./pages/Admin";
+import History from "./pages/History";
 import { ADMIN_UI_STATE_KEY, removeSessionCache } from "./lib/sessionCache";
 
 function ProtectedRoute({ children, session, loading }) {
@@ -163,6 +164,7 @@ function App() {
               element={<Events key={session?.user?.id || "public"} session={session} />}
             />
             <Route path="/organizations" element={<Organizations session={session} />} />
+            <Route path="/history" element={<History />} />
             <Route
               path="/admin"
               element={
