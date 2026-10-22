@@ -110,7 +110,9 @@ function EventCard({ event, footerActions = null, formatFullDate, formatTimeRang
 
   return (
     <>
-      <article className="event-card">
+      <article className={`event-card${flyerUrl ? " event-card--with-flyer" : ""}`}>
+        <div className={`event-card-layout${flyerUrl ? " has-flyer" : ""}`}>
+          <div className="event-card-copy">
         <h3>{event.title}</h3>
         {(organizationName || categoryName) ? (
           <p className="event-org">
@@ -160,6 +162,33 @@ function EventCard({ event, footerActions = null, formatFullDate, formatTimeRang
         </div>
 
         {footerActions ? <div className="event-footer-actions">{footerActions}</div> : null}
+          </div>
+
+          {flyerUrl ? (
+            <button
+              className="event-flyer-thumbnail"
+              type="button"
+              onClick={() => setFlyerModalOpen(true)}
+              aria-label={`Preview flyer for ${event.title}`}
+              title="Preview event flyer"
+            >
+              {isPdfFlyer ? (
+                <iframe
+                  src={`${flyerUrl}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
+                  title={`${event.title} flyer preview`}
+                  tabIndex={-1}
+                  aria-hidden="true"
+                />
+              ) : (
+                <img src={flyerUrl} alt="" loading="lazy" />
+              )}
+              <span className="event-flyer-thumbnail-label">
+                <span className="material-symbols-outlined" aria-hidden="true">zoom_in</span>
+                Flyer
+              </span>
+            </button>
+          ) : null}
+        </div>
       </article>
 
       {/* Volunteer redirect popup */}
