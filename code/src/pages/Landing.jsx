@@ -37,6 +37,21 @@ const Landing = () => {
           </div>
         </section>
 
+        <section className="history-feature" aria-labelledby="history-title">
+          <div className="history-feature-icon" aria-hidden="true">
+            <span className="material-symbols-outlined">history_edu</span>
+          </div>
+          <div className="history-feature-copy">
+            <p className="history-eyebrow">A legacy of collaboration</p>
+            <h2 id="history-title">Our story on the Palouse</h2>
+            <p>Learn how the Palouse Alliance began and how decades of partnership have shaped our work today.</p>
+          </div>
+          <button className="btn-primary history-feature-button" onClick={() => navigate('/history')}>
+            Explore our history
+            <span className="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+          </button>
+        </section>
+
         <div className="masonry-container landing-pillars">
           <div className="masonry-item">
             <div className="org-card static-pillar-card">

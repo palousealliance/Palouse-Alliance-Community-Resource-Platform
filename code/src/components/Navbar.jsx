@@ -89,6 +89,7 @@ const Navbar = ({ session, isAdmin }) => {
 
                         <Link to="/events" className="navbar-link navbar-link-text">Member Events</Link>
                         <Link to="/organizations" className="navbar-link navbar-link-text">Organizations</Link>
+                        <Link to="/history" className="navbar-link navbar-link-text">Our History</Link>
                     </div>
 
                     <div className="navbar-action-group">
@@ -179,6 +180,7 @@ const Navbar = ({ session, isAdmin }) => {
                     </a>
                     <Link to="/events" className="navbar-mobile-link">Member Events</Link>
                     <Link to="/organizations" className="navbar-mobile-link">Organizations</Link>
+                    <Link to="/history" className="navbar-mobile-link">Our History</Link>
                     {isAdmin ? (
                         <Link to="/admin" className="navbar-mobile-link navbar-link-primary btn-primary">Admin Dashboard</Link>
                     ) : null}
