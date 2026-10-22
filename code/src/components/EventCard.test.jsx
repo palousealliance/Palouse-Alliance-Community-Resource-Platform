@@ -3,6 +3,8 @@ import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import EventCard from './EventCard';
 
+vi.mock('./PdfFlyerBackground', () => ({ default: () => <canvas /> }));
+
 vi.mock('../lib/supabase', () => ({
   getEventFlyerUrl: (flyerPath) => (flyerPath ? `https://example.com/${flyerPath}` : null),
   supabase: {

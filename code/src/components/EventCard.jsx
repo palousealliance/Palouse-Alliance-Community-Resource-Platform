@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Popup from "./Popup";
+import PdfFlyerBackground from "./PdfFlyerBackground";
 import {
   formatEventTimeRange,
   isSameCalendarDay,
@@ -111,83 +112,66 @@ function EventCard({ event, footerActions = null, formatFullDate, formatTimeRang
   return (
     <>
       <article className={`event-card${flyerUrl ? " event-card--with-flyer" : ""}`}>
-        <div className={`event-card-layout${flyerUrl ? " has-flyer" : ""}`}>
-          <div className="event-card-copy">
-        <h3>{event.title}</h3>
-        {(organizationName || categoryName) ? (
-          <p className="event-org">
-            {organizationName ? <span>{organizationName}</span> : null}
-            {organizationName && categoryName ? <span> · </span> : null}
-            {categoryName ? <span>{categoryName}</span> : null}
-          </p>
+        {flyerUrl ? (
+          <div className="event-flyer-backdrop" aria-hidden="true">
+            {isPdfFlyer ? (
+              <PdfFlyerBackground key={flyerUrl} src={flyerUrl} />
+            ) : (
+              <img src={flyerUrl} alt="" loading="lazy" />
+            )}
+          </div>
         ) : null}
 
-        <p className="event-description">{event.description}</p>
-
-        <div className="event-meta">
-          {renderDateMeta()}
-          {hasLocation ? (
-            <p>
-              <strong>Location:</strong> {event.location.trim()}
+        <div className="event-card-copy">
+          <h3>{event.title}</h3>
+          {(organizationName || categoryName) ? (
+            <p className="event-org">
+              {organizationName ? <span>{organizationName}</span> : null}
+              {organizationName && categoryName ? <span> · </span> : null}
+              {categoryName ? <span>{categoryName}</span> : null}
             </p>
           ) : null}
-        </div>
 
-        {tags.length > 0 ? (
-          <div className="event-tag-list" aria-label="Event tags">
-            {tags.map((tag) => (
-              <span key={tag} className="event-tag">
-                {tag}
-              </span>
-            ))}
-          </div>
-        ) : null}
+          <p className="event-description">{event.description}</p>
 
-        <div className="event-actions">
-          {flyerUrl ? (
-            <button
-              className="secondary-btn"
-              type="button"
-              onClick={() => setFlyerModalOpen(true)}
-            >
-              View Flyer
-            </button>
-          ) : null}
-
-          {volunteerUrl ? (
-            <button className="primary-btn" type="button" onClick={handleViewDetails}>
-              {volunteerActionLabel}
-            </button>
-          ) : null}
-        </div>
-
-        {footerActions ? <div className="event-footer-actions">{footerActions}</div> : null}
+          <div className="event-meta">
+            {renderDateMeta()}
+            {hasLocation ? (
+              <p>
+                <strong>Location:</strong> {event.location.trim()}
+              </p>
+            ) : null}
           </div>
 
-          {flyerUrl ? (
-            <button
-              className="event-flyer-thumbnail"
-              type="button"
-              onClick={() => setFlyerModalOpen(true)}
-              aria-label={`Preview flyer for ${event.title}`}
-              title="Preview event flyer"
-            >
-              {isPdfFlyer ? (
-                <iframe
-                  src={`${flyerUrl}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
-                  title={`${event.title} flyer preview`}
-                  tabIndex={-1}
-                  aria-hidden="true"
-                />
-              ) : (
-                <img src={flyerUrl} alt="" loading="lazy" />
-              )}
-              <span className="event-flyer-thumbnail-label">
-                <span className="material-symbols-outlined" aria-hidden="true">zoom_in</span>
-                Flyer
-              </span>
-            </button>
+          {tags.length > 0 ? (
+            <div className="event-tag-list" aria-label="Event tags">
+              {tags.map((tag) => (
+                <span key={tag} className="event-tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
           ) : null}
+
+          <div className="event-actions">
+            {flyerUrl ? (
+              <button
+                className="secondary-btn"
+                type="button"
+                onClick={() => setFlyerModalOpen(true)}
+              >
+                View Flyer
+              </button>
+            ) : null}
+
+            {volunteerUrl ? (
+              <button className="primary-btn" type="button" onClick={handleViewDetails}>
+                {volunteerActionLabel}
+              </button>
+            ) : null}
+          </div>
+
+          {footerActions ? <div className="event-footer-actions">{footerActions}</div> : null}
         </div>
       </article>
 
