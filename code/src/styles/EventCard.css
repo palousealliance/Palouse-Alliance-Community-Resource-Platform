@@ -1,4 +1,8 @@
 .event-card {
+  --event-card-surface: var(--color-surface);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   background-color: var(--color-surface) !important;
   color: var(--color-text) !important;
   border: 1px solid var(--color-border) !important;
@@ -13,7 +17,79 @@
     box-shadow var(--default-transition-duration) var(--default-transition-timing-function);
 }
 
+.event-card-copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.event-card--with-flyer .event-card-copy {
+  padding-top: 250px;
+}
+
+.event-flyer-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.event-flyer-backdrop img {
+  display: block;
+  width: 100%;
+  height: 440px;
+  border: 0;
+  object-fit: cover;
+  object-position: top center;
+  background: white;
+}
+
+.event-pdf-background {
+  min-height: 270px;
+  background: var(--color-primary-50);
+}
+
+.event-pdf-background canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+}
+
+.event-pdf-background--ready canvas { opacity: 1; }
+
+.event-pdf-background-fallback {
+  position: absolute;
+  inset: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 70px 20px;
+  color: var(--color-primary-700);
+}
+
+.event-pdf-background-fallback .material-symbols-outlined { font-size: 36px; }
+
+.event-flyer-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 70px,
+    color-mix(in srgb, var(--event-card-surface) 35%, transparent) 150px,
+    color-mix(in srgb, var(--event-card-surface) 92%, transparent) 230px,
+    var(--event-card-surface) 270px
+  );
+}
+
 .event-card:hover {
+  --event-card-surface: var(--color-surface-2);
   background-color: var(--color-surface-2) !important;
   border-color: var(--color-border-2) !important;
   box-shadow: var(--shadow-md);
@@ -205,4 +281,5 @@
   .flyer-pdf-iframe {
     height: 55vh;
   }
+
 }

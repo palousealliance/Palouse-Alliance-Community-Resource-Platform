@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Popup from "./Popup";
+import PdfFlyerBackground from "./PdfFlyerBackground";
 import {
   formatEventTimeRange,
   isSameCalendarDay,
@@ -110,56 +111,68 @@ function EventCard({ event, footerActions = null, formatFullDate, formatTimeRang
 
   return (
     <>
-      <article className="event-card">
-        <h3>{event.title}</h3>
-        {(organizationName || categoryName) ? (
-          <p className="event-org">
-            {organizationName ? <span>{organizationName}</span> : null}
-            {organizationName && categoryName ? <span> · </span> : null}
-            {categoryName ? <span>{categoryName}</span> : null}
-          </p>
-        ) : null}
-
-        <p className="event-description">{event.description}</p>
-
-        <div className="event-meta">
-          {renderDateMeta()}
-          {hasLocation ? (
-            <p>
-              <strong>Location:</strong> {event.location.trim()}
-            </p>
-          ) : null}
-        </div>
-
-        {tags.length > 0 ? (
-          <div className="event-tag-list" aria-label="Event tags">
-            {tags.map((tag) => (
-              <span key={tag} className="event-tag">
-                {tag}
-              </span>
-            ))}
+      <article className={`event-card${flyerUrl ? " event-card--with-flyer" : ""}`}>
+        {flyerUrl ? (
+          <div className="event-flyer-backdrop" aria-hidden="true">
+            {isPdfFlyer ? (
+              <PdfFlyerBackground key={flyerUrl} src={flyerUrl} />
+            ) : (
+              <img src={flyerUrl} alt="" loading="lazy" />
+            )}
           </div>
         ) : null}
 
-        <div className="event-actions">
-          {flyerUrl ? (
-            <button
-              className="secondary-btn"
-              type="button"
-              onClick={() => setFlyerModalOpen(true)}
-            >
-              View Flyer
-            </button>
+        <div className="event-card-copy">
+          <h3>{event.title}</h3>
+          {(organizationName || categoryName) ? (
+            <p className="event-org">
+              {organizationName ? <span>{organizationName}</span> : null}
+              {organizationName && categoryName ? <span> · </span> : null}
+              {categoryName ? <span>{categoryName}</span> : null}
+            </p>
           ) : null}
 
-          {volunteerUrl ? (
-            <button className="primary-btn" type="button" onClick={handleViewDetails}>
-              {volunteerActionLabel}
-            </button>
+          <p className="event-description">{event.description}</p>
+
+          <div className="event-meta">
+            {renderDateMeta()}
+            {hasLocation ? (
+              <p>
+                <strong>Location:</strong> {event.location.trim()}
+              </p>
+            ) : null}
+          </div>
+
+          {tags.length > 0 ? (
+            <div className="event-tag-list" aria-label="Event tags">
+              {tags.map((tag) => (
+                <span key={tag} className="event-tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
           ) : null}
+
+          <div className="event-actions">
+            {flyerUrl ? (
+              <button
+                className="secondary-btn"
+                type="button"
+                onClick={() => setFlyerModalOpen(true)}
+              >
+                View Flyer
+              </button>
+            ) : null}
+
+            {volunteerUrl ? (
+              <button className="primary-btn" type="button" onClick={handleViewDetails}>
+                {volunteerActionLabel}
+              </button>
+            ) : null}
+          </div>
+
+          {footerActions ? <div className="event-footer-actions">{footerActions}</div> : null}
         </div>
-
-        {footerActions ? <div className="event-footer-actions">{footerActions}</div> : null}
       </article>
 
       {/* Volunteer redirect popup */}
