@@ -2,9 +2,10 @@ import React from "react";
 import { getHistoryPdfUrl } from "../lib/supabase";
 import "../styles/History.css";
 
-const HISTORY_PDF_URL = getHistoryPdfUrl();
-
 export default function History() {
+  // Resolve the document only when this page is opened, not during app imports.
+  const historyPdfUrl = getHistoryPdfUrl();
+
   return (
     <div className="history-page page-root">
       <div className="page-shell history-shell">
@@ -23,11 +24,11 @@ export default function History() {
               <h2 id="history-document-title">Palouse Alliance: A History</h2>
             </div>
             <div className="history-document-actions">
-              <a className="btn-outline history-open-link" href={HISTORY_PDF_URL} target="_blank" rel="noopener noreferrer">
+              <a className="btn-outline history-open-link" href={historyPdfUrl} target="_blank" rel="noopener noreferrer">
                 <span className="material-symbols-outlined" aria-hidden="true">open_in_new</span>
                 Open in new tab
               </a>
-              <a className="btn-primary history-download-link" href={HISTORY_PDF_URL} download="Palouse-Alliance-History.pdf">
+              <a className="btn-primary history-download-link" href={historyPdfUrl} download="Palouse-Alliance-History.pdf">
                 <span className="material-symbols-outlined" aria-hidden="true">download</span>
                 Download PDF
               </a>
@@ -35,11 +36,11 @@ export default function History() {
           </div>
           <iframe
             className="history-pdf-viewer"
-            src={`${HISTORY_PDF_URL}#view=FitH`}
+            src={`${historyPdfUrl}#view=FitH`}
             title="Palouse Alliance history PDF"
           />
           <p className="history-pdf-fallback">
-            If the document does not display in your browser, <a href={HISTORY_PDF_URL} target="_blank" rel="noopener noreferrer">open the history PDF directly</a>.
+            If the document does not display in your browser, <a href={historyPdfUrl} target="_blank" rel="noopener noreferrer">open the history PDF directly</a>.
           </p>
         </section>
       </div>
