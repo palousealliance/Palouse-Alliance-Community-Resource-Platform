@@ -283,7 +283,7 @@ const Events = ({ session }) => {
         return;
       }
 
-      const usersQuery = supabase.from("users").select("organization_id");
+      const usersQuery = supabase.from("users").select("organization_id, organizations(name)");
       const scopedUsersQuery = typeof usersQuery?.eq === "function"
         ? usersQuery.eq("id", session.user.id)
         : usersQuery;
@@ -308,7 +308,11 @@ const Events = ({ session }) => {
         return;
       }
 
-      setCurrentUserOrgId(data?.organization_id || null);
+      const isUnaffiliated = !data?.organization_id ||
+        data.organization_id === "unaffiliated" ||
+        data?.organizations?.name?.trim()?.toLowerCase() === "unaffiliated";
+
+      setCurrentUserOrgId(isUnaffiliated ? "unaffiliated" : data?.organization_id || null);
     };
 
     loadCurrentUserOrg();

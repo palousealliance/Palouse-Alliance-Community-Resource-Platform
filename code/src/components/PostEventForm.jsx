@@ -371,7 +371,7 @@ const PostEventForm = ({ onClose, onSuccess }) => {
       try {
         ({ data: userData, error: userError } = await supabase
           .from("users")
-          .select("organization_id")
+          .select("organization_id, organizations(name)")
           .eq("id", userId)
           .maybeSingle());
       } catch (error) {
@@ -384,7 +384,11 @@ const PostEventForm = ({ onClose, onSuccess }) => {
         return;
       }
 
-      if (!userData?.organization_id || userData.organization_id === "unaffiliated") {
+      const isUnaffiliated = !userData?.organization_id ||
+        userData.organization_id === "unaffiliated" ||
+        userData?.organizations?.name?.trim()?.toLowerCase() === "unaffiliated";
+
+      if (isUnaffiliated) {
         setErrorMessage("Your account must be linked to an organization before posting events.");
         return;
       }

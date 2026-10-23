@@ -105,7 +105,7 @@ const Organizations = ({ session }) => {
 
       const { data, error } = await supabase
         .from("users")
-        .select("organization_id")
+        .select("organization_id, organizations(name)")
         .eq("id", session.user.id)
         .maybeSingle();
 
@@ -118,7 +118,11 @@ const Organizations = ({ session }) => {
         return;
       }
 
-      setCurrentUserOrgId(data?.organization_id || null);
+      const isUnaffiliated = !data?.organization_id ||
+        data.organization_id === "unaffiliated" ||
+        data?.organizations?.name?.trim()?.toLowerCase() === "unaffiliated";
+
+      setCurrentUserOrgId(isUnaffiliated ? "unaffiliated" : data?.organization_id || null);
     };
 
     loadCurrentUserOrg();

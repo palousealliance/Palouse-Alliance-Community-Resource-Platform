@@ -243,6 +243,31 @@ function isValidRole(role) {
   return role === 'admin' || role === 'member';
 }
 
+let cachedUnaffiliatedOrgId = null;
+
+async function getUnaffiliatedOrganizationId() {
+  if (cachedUnaffiliatedOrgId) {
+    return cachedUnaffiliatedOrgId;
+  }
+  try {
+    const { data, error } = await supabaseAdmin
+      .from('organizations')
+      .select('id')
+      .ilike('name', 'unaffiliated')
+      .maybeSingle();
+
+    if (error || !data) {
+      console.error('Error fetching unaffiliated organization:', error);
+      return null;
+    }
+    cachedUnaffiliatedOrgId = data.id;
+    return data.id;
+  } catch (err) {
+    console.error('Unexpected error fetching unaffiliated organization:', err);
+    return null;
+  }
+}
+
 app.post('/api/register', requireAdmin, adminRateLimiter, async (req, res) => {
   const { email, password, role, organization_id } = req.body || {};
 
@@ -255,10 +280,11 @@ app.post('/api/register', requireAdmin, adminRateLimiter, async (req, res) => {
   if (role != null && role !== '' && !isValidRole(role)) {
     return res.status(400).json({ error: 'invalid_role', message: 'role must be "admin" or "member".' });
   }
-  if (organization_id != null && organization_id !== '') {
-    if (typeof organization_id !== 'string' || !validateUuid(organization_id)) {
-      return res.status(400).json({ error: 'invalid_organization_id', message: 'organization_id must be a UUID.' });
-    }
+  let effectiveOrgId = organization_id;
+  if (!effectiveOrgId || effectiveOrgId === 'unaffiliated') {
+    effectiveOrgId = await getUnaffiliatedOrganizationId();
+  } else if (!validateUuid(effectiveOrgId)) {
+    return res.status(400).json({ error: 'invalid_organization_id', message: 'organization_id must be a UUID.' });
   }
 
   let createdUserId = null;
@@ -281,7 +307,7 @@ app.post('/api/register', requireAdmin, adminRateLimiter, async (req, res) => {
 
     const updatePayload = {};
     if (role) updatePayload.role = role;
-    if (organization_id) updatePayload.organization_id = organization_id;
+    if (effectiveOrgId) updatePayload.organization_id = effectiveOrgId;
 
     if (Object.keys(updatePayload).length > 0) {
       const { data: updateData, error: updateError } = await supabaseAdmin
@@ -369,7 +395,6 @@ app.get('/api/organizations', publicRateLimiter, async (_req, res) => {
     const { data, error } = await supabaseAdmin
       .from('organizations')
       .select('id, name, description, phone_number, email, location')
-      .neq('name', 'Unaffiliated')
       .order('name', { ascending: true });
 
     if (error) {
@@ -443,6 +468,16 @@ app.patch('/api/organizations/:id', requireAdmin, adminRateLimiter, async (req, 
     return res.status(400).json({ error: 'invalid_email', message: 'Please provide a valid email address.' });
   }
 
+  const { data: existingOrgToPatch } = await supabaseAdmin
+    .from('organizations')
+    .select('name')
+    .eq('id', id)
+    .maybeSingle();
+
+  if (existingOrgToPatch?.name?.toLowerCase() === 'unaffiliated') {
+    return res.status(403).json({ error: 'forbidden', message: 'The Unaffiliated organization cannot be modified.' });
+  }
+
   try {
     const { data, error } = await supabaseAdmin
       .from('organizations')
@@ -479,7 +514,17 @@ app.delete('/api/organizations/:id', requireAdmin, adminRateLimiter, async (req,
   const { id } = req.params;
 
   if (!validateUuid(id)) {
-    return res.status(400).json({ error: 'invalid_id', message: 'Organization id must be a valid UUID.' });
+    return res.status(400).json({ error: 'invalid_id', message: 'Organization id must be a UUID.' });
+  }
+
+  const { data: existingOrgToDelete } = await supabaseAdmin
+    .from('organizations')
+    .select('name')
+    .eq('id', id)
+    .maybeSingle();
+
+  if (existingOrgToDelete?.name?.toLowerCase() === 'unaffiliated') {
+    return res.status(403).json({ error: 'forbidden', message: 'The Unaffiliated organization cannot be deleted.' });
   }
 
   try {
@@ -517,13 +562,18 @@ app.patch('/api/users/:id', requireAdmin, adminRateLimiter, async (req, res) => 
     return res.status(400).json({ error: 'invalid_role', message: 'role must be "admin" or "member".' });
   }
 
-  if (organization_id != null && organization_id !== '' && !validateUuid(organization_id)) {
+  let effectiveOrgId = organization_id;
+  if (effectiveOrgId === 'unaffiliated' || effectiveOrgId === '' || effectiveOrgId === null) {
+    effectiveOrgId = await getUnaffiliatedOrganizationId();
+  } else if (effectiveOrgId != null && !validateUuid(effectiveOrgId)) {
     return res.status(400).json({ error: 'invalid_organization_id', message: 'organization_id must be a UUID.' });
   }
 
   const updatePayload = {};
   if (role != null) updatePayload.role = role;
-  updatePayload.organization_id = organization_id === '' ? null : organization_id || null;
+  if (effectiveOrgId !== undefined) {
+    updatePayload.organization_id = effectiveOrgId;
+  }
 
   try {
     const { data, error } = await supabaseAdmin

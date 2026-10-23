@@ -59,6 +59,7 @@ const Admin = ({ session }) => {
   const [usersError, setUsersError] = useState("");
   const [editingUser, setEditingUser] = useState(() => persistedAdminState?.editingUser ?? null);
   const [userEditForm, setUserEditForm] = useState(() => persistedAdminState?.userEditForm ?? { role: "member", organization_id: "unaffiliated" });
+  const [userEditFieldErrors, setUserEditFieldErrors] = useState(() => persistedAdminState?.userEditFieldErrors ?? {});
   const [userEditLoading, setUserEditLoading] = useState(false);
   const [userEditError, setUserEditError] = useState(() => persistedAdminState?.userEditError ?? "");
   const [isRegisterPasswordVisible, setIsRegisterPasswordVisible] = useState(false);
@@ -112,6 +113,19 @@ const Admin = ({ session }) => {
   const [adminAlertPopupDescription, setAdminAlertPopupDescription] = useState(() => persistedAdminState?.adminAlertPopupDescription ?? "");
   const [adminAlertPopupMessage, setAdminAlertPopupMessage] = useState(() => persistedAdminState?.adminAlertPopupMessage ?? "");
 
+  const unaffiliatedOrg = orgs.find((org) => org.name?.trim()?.toLowerCase() === "unaffiliated");
+  const unaffiliatedOrgId = unaffiliatedOrg?.id || "unaffiliated";
+  const selectableOrgs = orgs.filter((org) => org.name?.trim()?.toLowerCase() !== "unaffiliated");
+  const manageableOrgs = orgs.filter((org) => org.name?.trim()?.toLowerCase() !== "unaffiliated");
+
+  const selectedRegisterOrgId = (!userForm.organization_id || userForm.organization_id === "unaffiliated")
+    ? unaffiliatedOrgId
+    : userForm.organization_id;
+
+  const selectedEditOrgId = (!userEditForm.organization_id || userEditForm.organization_id === "unaffiliated")
+    ? unaffiliatedOrgId
+    : userEditForm.organization_id;
+
   useEffect(() => {
     if (!sessionUserId) {
       removeSessionCache(ADMIN_UI_STATE_KEY);
@@ -121,6 +135,13 @@ const Admin = ({ session }) => {
   useEffect(() => {
     setCurrentUserId(sessionUserId || null);
   }, [sessionUserId]);
+
+  useEffect(() => {
+    if (unaffiliatedOrg?.id) {
+      setUserForm((current) => (current.organization_id === "unaffiliated" ? { ...current, organization_id: unaffiliatedOrg.id } : current));
+      setUserEditForm((current) => (current.organization_id === "unaffiliated" ? { ...current, organization_id: unaffiliatedOrg.id } : current));
+    }
+  }, [unaffiliatedOrg?.id]);
 
   useEffect(() => {
     writeSessionCache(ADMIN_UI_STATE_KEY, {
@@ -139,6 +160,7 @@ const Admin = ({ session }) => {
       users,
       editingUser,
       userEditForm,
+      userEditFieldErrors,
       userEditError,
       manageEventsPopupOpen,
       manageEvents,
@@ -234,7 +256,7 @@ const Admin = ({ session }) => {
       setOrgs(cachedOrgs);
     }
 
-    if (!forceRefresh && Array.isArray(cachedOrgs) && isSessionCacheFresh(cachedOrgsEntry, ADMIN_CACHE_TTL_MS)) {
+    if (!forceRefresh && Array.isArray(cachedOrgs) && cachedOrgs.some((o) => o.name?.trim()?.toLowerCase() === 'unaffiliated') && isSessionCacheFresh(cachedOrgsEntry, ADMIN_CACHE_TTL_MS)) {
       setOrgsLoading(false);
       return;
     }
@@ -536,9 +558,19 @@ const updateEventStatus = async (eventId, status) => {
     }
   };
 
+  const clearUserEditFieldError = (name) => {
+    setUserEditFieldErrors((current) => {
+      const { [name]: _, ...rest } = current;
+      return rest;
+    });
+  };
+
   const handleUserEditChange = (e) => {
     const { name, value } = e.target;
     setUserEditForm((current) => ({ ...current, [name]: value }));
+    if (userEditFieldErrors[name]) {
+      clearUserEditFieldError(name);
+    }
     if (userEditError) {
       setUserEditError("");
     }
@@ -549,16 +581,25 @@ const updateEventStatus = async (eventId, status) => {
     if (!userEditForm.role || !['member', 'admin'].includes(userEditForm.role)) {
       errors.role = 'Please select a valid role.';
     }
-    setUserEditError(errors.role || "");
+    if (!userEditForm.organization_id) {
+      errors.organization_id = 'Please select an organization.';
+    }
+    setUserEditFieldErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
   const handleEditUserClick = (user) => {
     setEditingUser(user);
+    let initialOrgId = user.organization_id;
+    if (!initialOrgId || initialOrgId === 'unaffiliated' || (unaffiliatedOrg && initialOrgId === unaffiliatedOrg.id)) {
+      initialOrgId = unaffiliatedOrgId;
+    }
+
     setUserEditForm({
       role: user.role || 'member',
-      organization_id: user.organization_id || 'unaffiliated',
+      organization_id: initialOrgId,
     });
+    setUserEditFieldErrors({});
     setUserEditError("");
     setResetPasswordValue("");
     setResetPasswordConfirm("");
@@ -700,7 +741,7 @@ const updateEventStatus = async (eventId, status) => {
       email: "",
       password: "",
       role: "member",
-      organization_id: "unaffiliated",
+      organization_id: unaffiliatedOrgId,
     });
     setUserFieldErrors({});
     setUserError("");
@@ -709,7 +750,8 @@ const updateEventStatus = async (eventId, status) => {
   const closeUserManagePopup = () => {
     setUserManagePopupOpen(false);
     setEditingUser(null);
-    setUserEditForm({ role: "member", organization_id: "unaffiliated" });
+    setUserEditForm({ role: "member", organization_id: unaffiliatedOrgId });
+    setUserEditFieldErrors({});
     setUserEditError("");
     setResetPasswordValue("");
     setResetPasswordConfirm("");
@@ -799,7 +841,7 @@ const updateEventStatus = async (eventId, status) => {
           email: newUserEmail,
           password: userForm.password,
           role: userForm.role.toLowerCase(),
-          organization_id: userForm.organization_id === "unaffiliated" ? null : userForm.organization_id,
+          organization_id: (!userForm.organization_id || userForm.organization_id === "unaffiliated") ? unaffiliatedOrgId : userForm.organization_id,
         }),
       });
       const body = await response.json().catch(() => null);
@@ -840,12 +882,16 @@ const updateEventStatus = async (eventId, status) => {
     setUserEditError("");
 
     try {
+      const targetOrgId = (!userEditForm.organization_id || userEditForm.organization_id === 'unaffiliated')
+        ? unaffiliatedOrgId
+        : userEditForm.organization_id;
+
       const response = await fetchApi(`/api/users/${editingUser.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           role: userEditForm.role,
-          organization_id: userEditForm.organization_id === 'unaffiliated' ? null : userEditForm.organization_id,
+          organization_id: targetOrgId,
         }),
       });
       const body = await response.json().catch(() => null);
@@ -860,11 +906,15 @@ const updateEventStatus = async (eventId, status) => {
         message: `${editingUser.email || 'User'} updated successfully.`,
       });
     } catch (error) {
-      setUserEditError(error.message || "Unable to update user.");
+      const message = error.message || "Unable to update user.";
+      if (message.toLowerCase().includes("organization")) {
+        setUserEditFieldErrors((prev) => ({ ...prev, organization_id: message }));
+      }
+      setUserEditError(message);
       openAdminAlert({
         title: 'User update failed',
         description: 'Unable to save the user changes.',
-        message: error.message || "Unable to update user.",
+        message,
       });
     } finally {
       setUserEditLoading(false);
@@ -1144,10 +1194,10 @@ const updateEventStatus = async (eventId, status) => {
                 <div className="admin-org-empty">Loading organizations...</div>
               ) : orgsError ? (
                 <div className="admin-org-empty admin-org-error">{orgsError}</div>
-              ) : orgs.length === 0 ? (
+              ) : manageableOrgs.length === 0 ? (
                 <div className="admin-org-empty">No organizations available.</div>
               ) : (
-                orgs.map((org) => (
+                manageableOrgs.map((org) => (
                   <div key={org.id} className="admin-org-row">
                     <span className="admin-org-row-name">{org.name}</span>
                     <div className="admin-org-actions">
@@ -1317,11 +1367,11 @@ const updateEventStatus = async (eventId, status) => {
                   id="register_organization_id"
                   name="organization_id"
                   className="form-input"
-                  value={userForm.organization_id}
+                  value={selectedRegisterOrgId}
                   onChange={handleUserChange}
                 >
-                  <option value="unaffiliated">Unaffiliated</option>
-                  {orgs.map((org) => (
+                  <option value={unaffiliatedOrgId}>Unaffiliated</option>
+                  {selectableOrgs.map((org) => (
                     <option key={org.id} value={org.id}>
                       {org.name}
                     </option>
@@ -1365,7 +1415,7 @@ const updateEventStatus = async (eventId, status) => {
                     readOnly
                   />
                 </FormField>
-                <FormField htmlFor="edit_user_role" label="Role" error={userEditError} required>
+                <FormField htmlFor="edit_user_role" label="Role" error={userEditFieldErrors.role} required>
                   <select
                     id="edit_user_role"
                     name="role"
@@ -1379,16 +1429,16 @@ const updateEventStatus = async (eventId, status) => {
                     <option value="admin">Admin</option>
                   </select>
                 </FormField>
-                <FormField htmlFor="edit_user_organization_id" label="Organization">
+                <FormField htmlFor="edit_user_organization_id" label="Organization" error={userEditFieldErrors.organization_id}>
                   <select
                     id="edit_user_organization_id"
                     name="organization_id"
                     className="form-input"
-                    value={userEditForm.organization_id}
+                    value={selectedEditOrgId}
                     onChange={handleUserEditChange}
                   >
-                    <option value="unaffiliated">Unaffiliated</option>
-                    {orgs.map((org) => (
+                    <option value={unaffiliatedOrgId}>Unaffiliated</option>
+                    {selectableOrgs.map((org) => (
                       <option key={org.id} value={org.id}>
                         {org.name}
                       </option>
@@ -1450,7 +1500,8 @@ const updateEventStatus = async (eventId, status) => {
                 <div className="admin-org-empty">No users available.</div>
               ) : (
                 users.map((user) => {
-                  const organizationName = orgs.find((org) => org.id === user.organization_id)?.name || "No organization";
+                  const userOrg = orgs.find((org) => org.id === user.organization_id);
+                  const organizationName = userOrg?.name || (user.organization_id && user.organization_id !== unaffiliatedOrgId ? "Unknown Organization" : "Unaffiliated");
                   return (
                     <div key={user.id} className="admin-org-row">
                       <div>
