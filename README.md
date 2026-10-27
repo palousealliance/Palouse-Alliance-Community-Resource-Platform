@@ -227,4 +227,4 @@ We welcome contributions to the Palouse Alliance Community Resource Platform! To
 
 ## License
 
-This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for the full text of the license and terms of use.
+This project is licensed according to the terms in the license, see [LICENSE](LICENSE) file for the full text of the license and terms of use.
