@@ -201,7 +201,6 @@ const PostEventForm = ({ onClose, onSuccess }) => {
 
       return (
         hasValidDates &&
-        trimmedLocation !== "" &&
         !isVolunteerUrlInvalid &&
         !isVolunteerUrlTooLong
       );
@@ -569,7 +568,6 @@ const PostEventForm = ({ onClose, onSuccess }) => {
                 <FormField
                   htmlFor="location"
                   label="Physical Location"
-                  required
                 >
                   <input
                     id="location"
@@ -578,7 +576,6 @@ const PostEventForm = ({ onClose, onSuccess }) => {
                     placeholder="E.g., Example Community Center, 206 E 3rd St"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
-                    required
                   />
                 </FormField>
 
