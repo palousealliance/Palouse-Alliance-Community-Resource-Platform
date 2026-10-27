@@ -78,6 +78,7 @@
   flex-direction: column;
   gap: 14px;
   min-width: 0;
+  transform: translateY(0);
   transition:
     transform var(--default-transition-duration) var(--default-transition-timing-function),
     box-shadow var(--default-transition-duration) var(--default-transition-timing-function);

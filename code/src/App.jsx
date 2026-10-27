@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import './App.css'
 import {BrowserRouter as Router, Routes, Route, Navigate, useLocation} from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -10,11 +10,30 @@ import Events from "./pages/Events";
 import Organizations from "./pages/Organizations";
 import Admin from "./pages/Admin";
 import History from "./pages/History";
-import { ADMIN_UI_STATE_KEY, removeSessionCache } from "./lib/sessionCache";
+import {
+  ADMIN_UI_STATE_KEY,
+  ADMIN_ROLE_CACHE_KEY,
+  readSessionCache,
+  writeSessionCache,
+  getSessionCacheValue,
+  removeSessionCache,
+} from "./lib/sessionCache";
 
-function ProtectedRoute({ children, session, loading }) {
-  if (loading) {
-    return <div style={{ padding: "2rem" }}>Loading...</div>;
+function ProtectedRoute({ children, session, loading, sessionResolved }) {
+  if (!sessionResolved || loading) {
+    return (
+      <div
+        className="page-root"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "calc(100vh - 70px)",
+        }}
+      >
+        <p style={{ color: "var(--color-text-muted)", fontWeight: 500 }}>Loading...</p>
+      </div>
+    );
   }
 
   if (!session) {
@@ -24,16 +43,41 @@ function ProtectedRoute({ children, session, loading }) {
   return children;
 }
 
-function AdminRoute({ children, session, loading, isAdmin }) {
-  if (loading) {
-    return <div style={{ padding: "2rem" }}>Loading...</div>;
+function AdminRoute({ children, session, loading, sessionResolved, isAdmin, onVerifyAdmin }) {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Whenever navigating to the admin route, verify the user is still actively an admin in the background
+    if (onVerifyAdmin) {
+      onVerifyAdmin();
+    }
+  }, [location.pathname, onVerifyAdmin]);
+
+  // Only show loading if role is not cached/verified as admin
+  if ((!sessionResolved && !isAdmin) || (loading && !isAdmin)) {
+    return (
+      <div
+        className="admin-page page-root"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "calc(100vh - 70px)",
+        }}
+      >
+        <div style={{ textAlign: "center", color: "var(--color-text-muted)" }}>
+          <p style={{ fontSize: "1.05rem", fontWeight: 600 }}>Loading Admin Dashboard...</p>
+        </div>
+      </div>
+    );
   }
 
-  if (!session) {
+  // Only redirect once the session state has actually resolved
+  if (sessionResolved && !session) {
     return <Navigate to="/login" replace />;
   }
 
-  if (!isAdmin) {
+  if (sessionResolved && !isAdmin) {
     return <Navigate to="/" replace />;
   }
 
@@ -44,27 +88,76 @@ function ScrollToTop() {
   const location = useLocation();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    if (typeof window !== "undefined" && typeof window.scrollTo === "function") {
+      try {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      } catch {
+        // Safe fallback in test environments like jsdom
+      }
+    }
   }, [location.pathname]);
 
   return null;
 }
 
 function App() {
+  const cachedAdminEntry = readSessionCache(ADMIN_ROLE_CACHE_KEY);
+  const cachedAdmin = getSessionCacheValue(cachedAdminEntry);
+  const initialIsAdmin = Boolean(cachedAdmin?.isAdmin);
+
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sessionResolved, setSessionResolved] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isAdminLoading, setIsAdminLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(initialIsAdmin);
+  const [isAdminLoading, setIsAdminLoading] = useState(!initialIsAdmin);
+
+  const checkAdminRole = useCallback(async (currentSession, showLoading = false) => {
+    const userId = currentSession?.user?.id;
+    if (!userId) {
+      setIsAdmin(false);
+      setIsAdminLoading(false);
+      removeSessionCache(ADMIN_ROLE_CACHE_KEY);
+      return false;
+    }
+
+    if (showLoading) {
+      setIsAdminLoading(true);
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from("users")
+        .select("role")
+        .eq("id", userId)
+        .maybeSingle();
+
+      const verifiedAdmin = !error && data?.role === "admin";
+      setIsAdmin(verifiedAdmin);
+
+      if (verifiedAdmin) {
+        writeSessionCache(ADMIN_ROLE_CACHE_KEY, {
+          userId,
+          isAdmin: true,
+        });
+      } else {
+        removeSessionCache(ADMIN_ROLE_CACHE_KEY);
+      }
+
+      return verifiedAdmin;
+    } catch {
+      return false;
+    } finally {
+      setIsAdminLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
 
     const loadSession = async () => {
       try {
-        const {
-          data: { session: currentSession },
-        } = await supabase.auth.getSession();
+        const response = await supabase.auth.getSession();
+        const currentSession = response?.data?.session || null;
 
         if (isMounted) {
           setSession(currentSession);
@@ -73,6 +166,12 @@ function App() {
 
           if (!currentSession) {
             removeSessionCache(ADMIN_UI_STATE_KEY);
+            removeSessionCache(ADMIN_ROLE_CACHE_KEY);
+            setIsAdmin(false);
+            setIsAdminLoading(false);
+          } else {
+            // Verify admin status in background without flashing if already cached
+            checkAdminRole(currentSession, !initialIsAdmin);
           }
         }
       } catch (error) {
@@ -82,6 +181,9 @@ function App() {
           setLoading(false);
           setSessionResolved(true);
           removeSessionCache(ADMIN_UI_STATE_KEY);
+          removeSessionCache(ADMIN_ROLE_CACHE_KEY);
+          setIsAdmin(false);
+          setIsAdminLoading(false);
         }
       }
     };
@@ -95,6 +197,11 @@ function App() {
 
       if (!nextSession) {
         removeSessionCache(ADMIN_UI_STATE_KEY);
+        removeSessionCache(ADMIN_ROLE_CACHE_KEY);
+        setIsAdmin(false);
+        setIsAdminLoading(false);
+      } else {
+        checkAdminRole(nextSession, false);
       }
     });
 
@@ -102,53 +209,16 @@ function App() {
       isMounted = false;
       data.subscription.unsubscribe();
     };
-  }, []);
+  }, [checkAdminRole, initialIsAdmin]);
 
-  useEffect(() => {
-    let isMounted = true;
+  const handleVerifyAdminOnRoute = useCallback(() => {
+    // Non-blocking background verification when navigating back to /admin
+    if (session?.user?.id) {
+      checkAdminRole(session, false);
+    }
+  }, [checkAdminRole, session]);
 
-    const loadAdminRole = async () => {
-      if (!sessionResolved) {
-        if (isMounted) {
-          setIsAdminLoading(true);
-        }
-        return;
-      }
-
-      if (!session?.user?.id) {
-        if (isMounted) {
-          setIsAdmin(false);
-          setIsAdminLoading(false);
-        }
-        return;
-      }
-
-      if (isMounted) {
-        setIsAdminLoading(true);
-      }
-
-      const { data, error } = await supabase
-        .from("users")
-        .select("role")
-        .eq("id", session.user.id)
-        .maybeSingle();
-
-      if (!isMounted) {
-        return;
-      }
-
-      if (!error) {
-        setIsAdmin(data?.role === "admin");
-      }
-      setIsAdminLoading(false);
-    };
-
-    loadAdminRole();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [session, sessionResolved]);
+  const isRolePending = loading || (isAdminLoading && !isAdmin);
 
   return (
     <Router>
@@ -169,9 +239,11 @@ function App() {
               path="/admin"
               element={
                 <AdminRoute
-                  loading={loading || !sessionResolved || isAdminLoading}
+                  loading={isRolePending}
+                  sessionResolved={sessionResolved}
                   session={session}
                   isAdmin={isAdmin}
+                  onVerifyAdmin={handleVerifyAdminOnRoute}
                 >
                   <Admin session={session} />
                 </AdminRoute>

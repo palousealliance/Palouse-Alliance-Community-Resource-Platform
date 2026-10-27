@@ -3,6 +3,11 @@ import '@testing-library/jest-dom';
 import { afterEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
 
+// Stub window.scrollTo for jsdom environments
+if (typeof window !== 'undefined') {
+  window.scrollTo = vi.fn();
+}
+
 // Provide a lightweight global mock for the Supabase client used across components
 vi.mock('../lib/supabase', () => {
   const supabase = {

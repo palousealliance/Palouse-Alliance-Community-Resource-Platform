@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
+import { ADMIN_ROLE_CACHE_KEY, writeSessionCache } from './lib/sessionCache';
 
 const {
   mockGetSession,
@@ -60,6 +61,9 @@ vi.mock('./lib/supabase', () => ({
     },
   },
   getEventFlyerUrl: (flyerPath) => (flyerPath ? `https://example.com/${flyerPath}` : null),
+  getHistoryPdfUrl: () => '/palouse-alliance-history.pdf',
+  fetchCurrentHistoryPdf: vi.fn().mockResolvedValue({ url: '/palouse-alliance-history.pdf', fileName: null }),
+  replaceHistoryPdf: vi.fn(),
 }));
 
 import App from './App';
@@ -115,4 +119,38 @@ describe('App routing and auth', () => {
     });
   });
 
+  it('renders admin dashboard immediately without loading flash when admin role is cached', async () => {
+    window.history.pushState({}, '', '/admin');
+    window.__mockUserRole = 'admin';
+    writeSessionCache(ADMIN_ROLE_CACHE_KEY, { userId: '123', isAdmin: true });
+
+    mockGetSession.mockResolvedValueOnce({
+      data: { session: { user: { id: '123', email: 'admin@palouse.org' } } },
+    });
+
+    render(<App />);
+
+    // Because admin role is cached, the Admin Dashboard heading is rendered immediately
+    expect(screen.getByRole('heading', { name: 'Admin Dashboard' })).toBeInTheDocument();
+    expect(screen.queryByText(/Loading Admin Dashboard/i)).not.toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(mockGetSession).toHaveBeenCalled();
+    });
+  });
+
+  it('redirects non-admin users away from the admin dashboard', async () => {
+    window.history.pushState({}, '', '/admin');
+    window.__mockUserRole = 'member';
+    mockGetSession.mockResolvedValueOnce({
+      data: { session: { user: { id: '123', email: 'member@palouse.org' } } },
+    });
+
+    render(<App />);
+
+    await waitFor(() => {
+      expect(screen.queryByRole('heading', { name: 'Admin Dashboard' })).not.toBeInTheDocument();
+      expect(screen.getByText(/Building a Healthier/i)).toBeInTheDocument();
+    });
+  });
 });

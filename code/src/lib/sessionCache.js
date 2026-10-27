@@ -1,6 +1,7 @@
 export const EVENTS_PAGE_CACHE_KEY = "palouse:events-page-cache";
 export const ORGANIZATIONS_PAGE_CACHE_KEY = "palouse:organizations-page-cache";
 export const ADMIN_UI_STATE_KEY = "palouse:admin-ui-state";
+export const ADMIN_ROLE_CACHE_KEY = "palouse:admin-role-cache";
 
 function getStorage() {
   if (typeof window === "undefined") {
