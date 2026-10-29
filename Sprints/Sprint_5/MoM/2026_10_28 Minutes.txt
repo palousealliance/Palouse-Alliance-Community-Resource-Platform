@@ -1,0 +1,31 @@
+Palouse Alliance Community Resource Platform
+Minutes of Meeting (MoM) - Sprint 5 Client Review
+
+Meeting Details
+Date: October 28, 2026
+Project: Palouse Alliance Community Resource Platform (PAHIFC-WEBMOB)
+Team Number: Team 5
+Attendees:
+  - Allison Rockwell (Client, Palouse Alliance / WSU)
+  - Christine Oakley (Client, Palouse Alliance)
+  - Aryan Puthran (Developer, Database Manager)
+  - Kaeden Peterson (Developer, Testing & CI Lead)
+  - Omar Adil (Developer, Backend/Frontend Integration)
+  - Vijay Deva (Developer, Full Stack & Deployment)
+
+Agenda
+1. Sprint 5 Updates & Feature Walkthrough
+2. Cover New Features and Bug Fixes
+3. Open Discussion and Client Questions
+
+Meeting Notes & Feature Review
+1. History page completed.
+2. Get initial beta testing testing feedback.
+
+Housekeeping & Next Sprint Alignment
+- Sprint 6 Deliverables Alignment:
+  * Migrating from Vercel staging URL to the client's official custom domain.
+
+Action Items
+1. Client: Provide listed users with their credentials for beta testing.
+2. Team: Listen for beta tester feedback and make improvements as needed.
