@@ -64,8 +64,15 @@ const SubscribePopup = ({ onClose }) => {
       {step === "email" && (
         <form onSubmit={sendCode}>
           <FormField htmlFor="sub_email" label="Email Address" required>
-            <input id="sub_email" type="email" className="form-input" value={email}
-              onChange={(e) => setEmail(e.target.value)} required />
+            <input
+              id="sub_email"
+              type="email"
+              className="form-input"
+              placeholder="name@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </FormField>
           {error && <p className="form-error-message">{error}</p>}
           <div className="popup-actions">

@@ -114,6 +114,19 @@ function isDateWithinEvent(date, startDate, endDate) {
   return currentDay >= eventStartDay && currentDay <= eventEndDay;
 }
 
+function isEventInMonth(event, monthDate) {
+  if (!isValidDate(event?.startDate) || !isValidDate(event?.endDate) || !isValidDate(monthDate)) {
+    return false;
+  }
+
+  const startOfMonth = getStartOfDay(new Date(monthDate.getFullYear(), monthDate.getMonth(), 1));
+  const endOfMonth = getStartOfDay(new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 0));
+  const eventStartDay = getStartOfDay(event.startDate);
+  const eventEndDay = getStartOfDay(event.endDate);
+
+  return eventStartDay <= endOfMonth && eventEndDay >= startOfMonth;
+}
+
 function getEventDateKeys(startDate, endDate) {
   if (!isValidDate(startDate) || !isValidDate(endDate)) {
     return [];
@@ -605,9 +618,10 @@ const Events = ({ session }) => {
       selectedTags.length > 0 && !selectedTags.includes(ALL_EVENTS_TAG);
 
     return events.filter((event) => {
-      const matchesSelectedDate = selectedDates.length > 0
-        ? selectedDates.some((date) => isDateWithinEvent(date, event.startDate, event.endDate))
-        : true;
+      const matchesDateFilter =
+        selectedDates.length > 0
+          ? selectedDates.some((date) => isDateWithinEvent(date, event.startDate, event.endDate))
+          : isEventInMonth(event, visibleMonth);
       const matchesCategory =
         !categoryFilterActive ||
         selectedCategories.includes(event.categoryName);
@@ -622,13 +636,13 @@ const Events = ({ session }) => {
         event.location.toLowerCase().includes(query);
 
       return (
-        matchesSelectedDate &&
+        matchesDateFilter &&
         matchesCategory &&
         matchesTags &&
         matchesSearch
       );
     });
-  }, [events, searchQuery, selectedCategories, selectedTags, selectedDates]);
+  }, [events, searchQuery, selectedCategories, selectedTags, selectedDates, visibleMonth]);
 
   const monthLabel = visibleMonth.toLocaleDateString("en-US", {
     month: "long",

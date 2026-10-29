@@ -71,6 +71,8 @@ describe('Events', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     sessionStorage.clear();
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2026-04-15T12:00:00.000Z'));
   });
 
   afterEach(() => {
@@ -533,5 +535,160 @@ describe('Events', () => {
     await waitFor(() => {
       expect(mockEventsOrder).toHaveBeenCalledTimes(2);
     });
+  });
+
+  it('filters events by the currently selected month and updates when navigating months', async () => {
+    mockEventsOrder.mockResolvedValueOnce({
+      data: [
+        {
+          id: 1,
+          title: 'April Community Event',
+          description: 'April event description',
+          start_datetime: '2026-04-10T10:00:00',
+          end_datetime: '2026-04-10T12:00:00',
+          location: 'Downtown',
+          status: 'approved',
+          organizations: { name: 'Org A' },
+          categories: { name: 'Food' },
+          event_tags: [],
+        },
+        {
+          id: 2,
+          title: 'May Spring Festival',
+          description: 'May event description',
+          start_datetime: '2026-05-15T10:00:00',
+          end_datetime: '2026-05-15T12:00:00',
+          location: 'City Park',
+          status: 'approved',
+          organizations: { name: 'Org B' },
+          categories: { name: 'Community Events' },
+          event_tags: [],
+        },
+      ],
+      error: null,
+    });
+
+    mockCategoriesOrder.mockResolvedValueOnce({
+      data: [{ name: 'Food' }],
+      error: null,
+    });
+
+    mockTagsOrder.mockResolvedValueOnce({
+      data: [],
+      error: null,
+    });
+
+    const user = userEvent.setup();
+    renderEvents();
+
+    await waitFor(() => {
+      expect(screen.getByText('April Community Event')).toBeInTheDocument();
+    });
+    expect(screen.queryByText('May Spring Festival')).not.toBeInTheDocument();
+
+    // Navigate to next month (May 2026)
+    await user.click(screen.getByLabelText('Next month'));
+
+    await waitFor(() => {
+      expect(screen.getByText('May Spring Festival')).toBeInTheDocument();
+    });
+    expect(screen.queryByText('April Community Event')).not.toBeInTheDocument();
+  });
+
+  it('filters to selected specific days across multiple months and resets to the visible month', async () => {
+    mockEventsOrder.mockResolvedValueOnce({
+      data: [
+        {
+          id: 1,
+          title: 'April 10 Event',
+          description: 'April 10 event',
+          start_datetime: '2026-04-10T10:00:00',
+          end_datetime: '2026-04-10T12:00:00',
+          location: 'Downtown',
+          status: 'approved',
+          organizations: { name: 'Org A' },
+          categories: { name: 'Food' },
+          event_tags: [],
+        },
+        {
+          id: 2,
+          title: 'April 20 Event',
+          description: 'April 20 event',
+          start_datetime: '2026-04-20T10:00:00',
+          end_datetime: '2026-04-20T12:00:00',
+          location: 'Downtown',
+          status: 'approved',
+          organizations: { name: 'Org A' },
+          categories: { name: 'Food' },
+          event_tags: [],
+        },
+        {
+          id: 3,
+          title: 'May 5 Event',
+          description: 'May 5 event',
+          start_datetime: '2026-05-05T10:00:00',
+          end_datetime: '2026-05-05T12:00:00',
+          location: 'City Park',
+          status: 'approved',
+          organizations: { name: 'Org B' },
+          categories: { name: 'Food' },
+          event_tags: [],
+        },
+      ],
+      error: null,
+    });
+
+    mockCategoriesOrder.mockResolvedValueOnce({
+      data: [{ name: 'Food' }],
+      error: null,
+    });
+
+    mockTagsOrder.mockResolvedValueOnce({
+      data: [],
+      error: null,
+    });
+
+    const user = userEvent.setup();
+    renderEvents();
+
+    await waitFor(() => {
+      expect(screen.getByText('April 10 Event')).toBeInTheDocument();
+      expect(screen.getByText('April 20 Event')).toBeInTheDocument();
+    });
+    expect(screen.queryByText('May 5 Event')).not.toBeInTheDocument();
+
+    // Select April 10
+    const dayTenButton = screen.getByRole('button', { name: '10' });
+    await user.click(dayTenButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('April 10 Event')).toBeInTheDocument();
+    });
+    expect(screen.queryByText('April 20 Event')).not.toBeInTheDocument();
+
+    // Navigate to next month (May 2026) and select May 5
+    await user.click(screen.getByLabelText('Next month'));
+    const dayFiveButtons = screen.getAllByRole('button', { name: '5' });
+    const currentMonthFiveButton = dayFiveButtons.find(
+      (button) => !button.className.includes('outside-month')
+    );
+    await user.click(currentMonthFiveButton);
+
+    // Both specifically selected dates from April and May should be shown
+    await waitFor(() => {
+      expect(screen.getByText('April 10 Event')).toBeInTheDocument();
+      expect(screen.getByText('May 5 Event')).toBeInTheDocument();
+    });
+    expect(screen.queryByText('April 20 Event')).not.toBeInTheDocument();
+
+    // Reset date filter (View All Dates) while currently showing May
+    await user.click(screen.getByRole('button', { name: 'View All Dates' }));
+
+    // Now it should show events for the currently showing month (May) only
+    await waitFor(() => {
+      expect(screen.getByText('May 5 Event')).toBeInTheDocument();
+    });
+    expect(screen.queryByText('April 10 Event')).not.toBeInTheDocument();
+    expect(screen.queryByText('April 20 Event')).not.toBeInTheDocument();
   });
 });

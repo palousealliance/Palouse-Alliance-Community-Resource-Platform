@@ -83,7 +83,7 @@ function EventCalendar({
       </div>
 
       <div className="selected-date-box">
-        <p>{selectedDates.length > 0 ? "Showing events for" : "Showing all upcoming events"}</p>
+        <p>Showing events for</p>
         <strong>
           {selectedDates.length === 0
             ? monthLabel
