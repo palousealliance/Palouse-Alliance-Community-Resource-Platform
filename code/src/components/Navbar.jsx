@@ -40,13 +40,23 @@ const Navbar = ({ session, isAdmin }) => {
     };
 
     useEffect(() => {
+        const scrollContainer = document.querySelector(".app-scroll-container") || document.querySelector(".app-layout");
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 12);
+            const scrollY = scrollContainer ? scrollContainer.scrollTop : (window.scrollY || 0);
+            setIsScrolled(scrollY > 12);
         };
 
         handleScroll();
         window.addEventListener("scroll", handleScroll, { passive: true });
-        return () => window.removeEventListener("scroll", handleScroll);
+        if (scrollContainer) {
+            scrollContainer.addEventListener("scroll", handleScroll, { passive: true });
+        }
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            if (scrollContainer) {
+                scrollContainer.removeEventListener("scroll", handleScroll);
+            }
+        };
     }, []);
 
     return (

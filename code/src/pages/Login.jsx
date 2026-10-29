@@ -213,12 +213,7 @@ const Login = () => {
 
           {isForgotPasswordOpen ? (
             <Popup
-              title="Password reset help"
-              description={
-                <>
-                  Contact <a className="email-link" href={`mailto:${SUPPORT_EMAIL}`}>Palouse Alliance</a> to reset your password and regain access to your account.
-                </>
-              }
+              title="Forgot Password?"
               onClose={() => setIsForgotPasswordOpen(false)}
               className="dialog-popup"
               actions={
@@ -230,7 +225,7 @@ const Login = () => {
                   Close
                 </button>
               }
-              ariaLabel="Forgot password help"
+              ariaLabel="Forgot Password?"
             >
               <p className="login-forgot-body">
                 Please reach out to <a className="email-link" href={`mailto:${SUPPORT_EMAIL}`}>Palouse Alliance</a> to reset your password. They will be able to verify

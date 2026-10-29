@@ -367,7 +367,25 @@ const Events = ({ session }) => {
       return;
     }
 
-    window.scrollTo(0, 0);
+    if (typeof window !== "undefined" && typeof window.scrollTo === "function") {
+      try {
+        window.scrollTo(0, 0);
+      } catch {
+        // Safe fallback in test environments
+      }
+    }
+    const scrollContainer = document.querySelector(".app-scroll-container") || document.querySelector(".app-layout");
+    if (scrollContainer) {
+      if (typeof scrollContainer.scrollTo === "function") {
+        try {
+          scrollContainer.scrollTo({ top: 0, left: 0, behavior: "instant" });
+        } catch {
+          scrollContainer.scrollTop = 0;
+        }
+      } else {
+        scrollContainer.scrollTop = 0;
+      }
+    }
   }, [location.pathname, location.search]);
 
   useEffect(() => {

@@ -9,6 +9,29 @@
   z-index: 1200;
   overflow-y: auto;
   overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+}
+
+.popup-overlay::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.popup-overlay::-webkit-scrollbar-track {
+  background: transparent;
+  border-left: none;
+}
+
+.popup-overlay::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.popup-overlay::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.55);
 }
 
 .popup-content {

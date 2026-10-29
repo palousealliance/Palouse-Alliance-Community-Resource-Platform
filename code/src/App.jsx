@@ -88,11 +88,25 @@ function ScrollToTop() {
   const location = useLocation();
 
   useEffect(() => {
-    if (typeof window !== "undefined" && typeof window.scrollTo === "function") {
-      try {
-        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-      } catch {
-        // Safe fallback in test environments like jsdom
+    if (typeof window !== "undefined") {
+      if (typeof window.scrollTo === "function") {
+        try {
+          window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+        } catch {
+          // Safe fallback in test environments like jsdom
+        }
+      }
+      const scrollContainer = document.querySelector(".app-scroll-container") || document.querySelector(".app-layout");
+      if (scrollContainer) {
+        if (typeof scrollContainer.scrollTo === "function") {
+          try {
+            scrollContainer.scrollTo({ top: 0, left: 0, behavior: "instant" });
+          } catch {
+            scrollContainer.scrollTop = 0;
+          }
+        } else {
+          scrollContainer.scrollTop = 0;
+        }
       }
     }
   }, [location.pathname]);
@@ -225,34 +239,36 @@ function App() {
       <div className="app-layout">
         <Navbar session={session} isAdmin={isAdmin} />
         <ScrollToTop />
-        <main className="app-main">
-          <Routes>
-            <Route path="/" element={<Landing session={session} />} />
-            <Route path="/login" element={<Login />} />
-            <Route
-              path="/events"
-              element={<Events key={session?.user?.id || "public"} session={session} />}
-            />
-            <Route path="/organizations" element={<Organizations session={session} />} />
-            <Route path="/history" element={<History session={session} isAdmin={isAdmin} />} />
-            <Route
-              path="/admin"
-              element={
-                <AdminRoute
-                  loading={isRolePending}
-                  sessionResolved={sessionResolved}
-                  session={session}
-                  isAdmin={isAdmin}
-                  onVerifyAdmin={handleVerifyAdminOnRoute}
-                >
-                  <Admin session={session} />
-                </AdminRoute>
-              }
-            />
-            <Route path="*" element={<Landing session={session} />} />
-          </Routes>
-        </main>
-        <Footer />
+        <div className="app-scroll-container">
+          <main className="app-main">
+            <Routes>
+              <Route path="/" element={<Landing session={session} />} />
+              <Route path="/login" element={<Login />} />
+              <Route
+                path="/events"
+                element={<Events key={session?.user?.id || "public"} session={session} />}
+              />
+              <Route path="/organizations" element={<Organizations session={session} />} />
+              <Route path="/history" element={<History session={session} isAdmin={isAdmin} />} />
+              <Route
+                path="/admin"
+                element={
+                  <AdminRoute
+                    loading={isRolePending}
+                    sessionResolved={sessionResolved}
+                    session={session}
+                    isAdmin={isAdmin}
+                    onVerifyAdmin={handleVerifyAdminOnRoute}
+                  >
+                    <Admin session={session} />
+                  </AdminRoute>
+                }
+              />
+              <Route path="*" element={<Landing session={session} />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
       </div>
     </Router>
   );

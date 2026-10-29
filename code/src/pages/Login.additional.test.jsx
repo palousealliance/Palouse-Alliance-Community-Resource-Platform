@@ -65,10 +65,10 @@ describe('Login extra behavior', () => {
 
     await user.click(screen.getByRole('button', { name: /forgot password/i }));
     await waitFor(() => {
-      expect(screen.getByText(/Password reset help/i)).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: /Forgot Password\?/i })).toBeInTheDocument();
     });
 
     await user.click(screen.getByRole('button', { name: /^Close$/i }));
-    expect(screen.queryByText(/Password reset help/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: /Forgot Password\?/i })).not.toBeInTheDocument();
   });
 });

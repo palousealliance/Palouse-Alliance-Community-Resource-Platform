@@ -1,18 +1,32 @@
 #root {
-  min-height: 100vh;
+  height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 
 .app-layout {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+.app-scroll-container {
+  flex: 1;
+  height: calc(100vh - 70px);
+  height: calc(100dvh - 70px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
   background: var(--color-bg);
 }
 
 .app-main {
   flex: 1;
-  margin-top: 70px;
   background: var(--color-bg);
 }
 

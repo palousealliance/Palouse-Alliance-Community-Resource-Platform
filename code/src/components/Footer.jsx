@@ -31,29 +31,9 @@ const Footer = () => {
                     <h4>Quick Links</h4>
                     <ul className="footer-links">
                         <li><Link to="/">Home</Link></li>
-                        <li><Link to="/history">Our History</Link></li>
-                        <li>
-                            <a
-                                href="https://palouseresources.org/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Palouse Resource Guide
-                                <span className="material-symbols-outlined footer-external-icon" aria-hidden="true">open_in_new</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="https://wsu.givepulse.com/group/244255-palouse-alliance-for-healthy-individuals-families-communities"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                GivePulse
-                                <span className="material-symbols-outlined footer-external-icon" aria-hidden="true">open_in_new</span>
-                            </a>
-                        </li>
                         <li><Link to="/events">Member Events</Link></li>
                         <li><Link to="/organizations">Organizations</Link></li>
+                        <li><Link to="/history">Our History</Link></li>
                     </ul>
                 </div>
 
