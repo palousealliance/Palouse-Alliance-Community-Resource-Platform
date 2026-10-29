@@ -68,3 +68,28 @@ export function formatEventTimeRange(startDate, endDate) {
 
   return `${startDate.toLocaleTimeString("en-US", timeFormat)} - ${endDate.toLocaleTimeString("en-US", timeFormat)}`;
 }
+
+export function isEventActive(event, referenceDate = new Date()) {
+  if (!event || typeof event !== "object") {
+    return false;
+  }
+
+  if (typeof event.status === "string" && event.status.trim()) {
+    if (event.status.trim().toLowerCase() !== "approved") {
+      return false;
+    }
+  }
+
+  const endTimestamp = event.end_datetime || event.endDate || event.start_datetime || event.startDate;
+  if (endTimestamp) {
+    const endDate = parseSupabaseDateTime(endTimestamp);
+    if (endDate && !Number.isNaN(endDate.getTime())) {
+      if (typeof endTimestamp === "string" && !endTimestamp.includes("T") && !endTimestamp.includes(" ")) {
+        endDate.setHours(23, 59, 59, 999);
+      }
+      return endDate >= referenceDate;
+    }
+  }
+
+  return true;
+}

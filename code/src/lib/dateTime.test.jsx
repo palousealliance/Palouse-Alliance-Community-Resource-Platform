@@ -5,6 +5,7 @@ import {
   formatFullDate,
   formatEventDateLabel,
   formatEventTimeRange,
+  isEventActive,
 } from './dateTime';
 
 describe('dateTime utilities', () => {
@@ -51,5 +52,32 @@ describe('dateTime utilities', () => {
     const multiDayTime = formatEventTimeRange(startDate, multiDayEnd);
     expect(multiDayTime).toContain('2026');
     expect(multiDayTime).toContain(' - ');
+  });
+
+  it('correctly determines whether an event is active', () => {
+    const reference = new Date('2026-10-28T12:00:00');
+
+    // Invalid input
+    expect(isEventActive(null, reference)).toBe(false);
+    expect(isEventActive(undefined, reference)).toBe(false);
+
+    // Legacy mock with only id
+    expect(isEventActive({ id: 11 }, reference)).toBe(true);
+
+    // Pending or rejected events are not active
+    expect(isEventActive({ status: 'pending', end_datetime: '2026-11-01T10:00:00' }, reference)).toBe(false);
+    expect(isEventActive({ status: 'rejected', end_datetime: '2026-11-01T10:00:00' }, reference)).toBe(false);
+
+    // Approved upcoming event is active
+    expect(isEventActive({ status: 'approved', end_datetime: '2026-11-01T10:00:00' }, reference)).toBe(true);
+
+    // Approved past event is not active
+    expect(isEventActive({ status: 'approved', end_datetime: '2026-10-20T10:00:00' }, reference)).toBe(false);
+
+    // Approved event ending in the future on the same day is active
+    expect(isEventActive({ status: 'approved', end_datetime: '2026-10-28T14:00:00' }, reference)).toBe(true);
+
+    // Approved event ended earlier on the same day is not active
+    expect(isEventActive({ status: 'approved', end_datetime: '2026-10-28T10:00:00' }, reference)).toBe(false);
   });
 });

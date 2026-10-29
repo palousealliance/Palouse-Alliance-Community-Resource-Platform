@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { isEventActive } from "../lib/dateTime";
 import { supabase } from "../lib/supabase";
 import {
   getSessionCacheValue,
@@ -71,7 +72,7 @@ const Organizations = ({ session }) => {
           phone_number,
           email,
           location,
-          events (id)
+          events (id, status, start_datetime, end_datetime)
         `)
         .order("name", { ascending: true });
 
@@ -79,10 +80,16 @@ const Organizations = ({ session }) => {
         console.error(error.message);
       } else {
         const visibleOrgs = data.filter(isVisibleOrg);
-        const formattedData = visibleOrgs.map((org) => ({
-          ...org,
-          eventCount: org.events ? org.events.length : 0,
-        }));
+        const formattedData = visibleOrgs.map((org) => {
+          const activeEvents = Array.isArray(org.events)
+            ? org.events.filter((event) => isEventActive(event))
+            : [];
+
+          return {
+            ...org,
+            eventCount: activeEvents.length,
+          };
+        });
         setOrgs(formattedData);
         setFilteredOrgs(formattedData);
         writeSessionCache(ORGANIZATIONS_PAGE_CACHE_KEY, formattedData);
