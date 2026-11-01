@@ -190,11 +190,7 @@ The Palouse Alliance Community Resource Platform provides the following core fun
 
 ## Known Problems
 
-There are currently no known critical issues in this repository. However, the following features are noted as placeholders for future enhancement:
-
-- `/register` - User registration flow is not yet fully implemented
-- `/dashboard` - Protected dashboard route exists but lacks specific user-facing features
-- `/admin` - Admin interface is a placeholder and requires full development
+There are currently no known critical issues in this repository.
 
 If you encounter any bugs or issues, please document them with:
 - Steps to reproduce
