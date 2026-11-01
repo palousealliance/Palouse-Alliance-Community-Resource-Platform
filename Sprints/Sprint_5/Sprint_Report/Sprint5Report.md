@@ -1,6 +1,6 @@
 # Sprint 5 Report (10/01/2026 to 10/31/2026)
 ## YouTube link of Sprint Video
-[Sprint 5 Video](INSERT)
+[Sprint 5 Video](https://youtu.be/e2lxfySBd6A)
 
 ## What's New (User Facing)
 * **Event Card Thumbnails**: Events with flyers now display miniature flyer preview thumbnails directly on their event cards, improving readability and visual discovery when browsing events.
