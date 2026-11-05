@@ -42,18 +42,18 @@ const Footer = () => {
                     <h4>Contact Us</h4>
                     <div className="footer-contact-list">
                         <div className="footer-contact-item">
-                            <AtSign className="footer-icon" aria-hidden="true" size={18} />
+                            <AtSign className="footer-icon" aria-hidden="true" size={16} />
                             <a className="footer-email-link" href="mailto:palousealliance@gmail.com">palousealliance@gmail.com</a>
                         </div>
                         <div className="footer-contact-item">
-                            <MapPin className="footer-icon" aria-hidden="true" size={18} />
+                            <MapPin className="footer-icon" aria-hidden="true" size={16} />
                             <div className="footer-address-stack">
                                 <span>PO Box 874</span>
                                 <span>Pullman, WA 99163</span>
                             </div>
                         </div>
                         <div className="footer-contact-item">
-                            <Globe className="footer-icon" aria-hidden="true" size={18} />
+                            <Globe className="footer-icon" aria-hidden="true" size={16} />
                             <span>Palouse Region, ID & WA</span>
                         </div>
                     </div>

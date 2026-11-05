@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, lazy, Suspense } from "react";
 import './App.css'
 import {BrowserRouter as Router, Routes, Route, Navigate, useLocation} from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -8,8 +8,9 @@ import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Events from "./pages/Events";
 import Organizations from "./pages/Organizations";
-import Admin from "./pages/Admin";
-import History from "./pages/History";
+
+const Admin = lazy(() => import("./pages/Admin"));
+const History = lazy(() => import("./pages/History"));
 import {
   ADMIN_UI_STATE_KEY,
   ADMIN_ROLE_CACHE_KEY,
@@ -84,7 +85,7 @@ function AdminRoute({ children, session, loading, sessionResolved, isAdmin, onVe
   return children;
 }
 
-function ScrollToTop() {
+function RouteHandler() {
   const location = useLocation();
 
   useEffect(() => {
@@ -93,7 +94,7 @@ function ScrollToTop() {
         try {
           window.scrollTo({ top: 0, left: 0, behavior: "instant" });
         } catch {
-          // Safe fallback in test environments like jsdom
+          window.scrollTo(0, 0);
         }
       }
       const scrollContainer = document.querySelector(".app-scroll-container") || document.querySelector(".app-layout");
@@ -109,6 +110,16 @@ function ScrollToTop() {
         }
       }
     }
+
+    const titles = {
+      "/": "Palouse Alliance",
+      "/events": "Community Events | Palouse Alliance",
+      "/organizations": "Organizations | Palouse Alliance",
+      "/history": "Our History | Palouse Alliance",
+      "/login": "Member Login | Palouse Alliance",
+      "/admin": "Admin Dashboard | Palouse Alliance",
+    };
+    document.title = titles[location.pathname] || "Palouse Alliance";
   }, [location.pathname]);
 
   return null;
@@ -237,35 +248,54 @@ function App() {
   return (
     <Router>
       <div className="app-layout">
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <Navbar session={session} isAdmin={isAdmin} />
-        <ScrollToTop />
+        <RouteHandler />
         <div className="app-scroll-container">
-          <main className="app-main">
-            <Routes>
-              <Route path="/" element={<Landing session={session} />} />
-              <Route path="/login" element={<Login />} />
-              <Route
-                path="/events"
-                element={<Events key={session?.user?.id || "public"} session={session} />}
-              />
-              <Route path="/organizations" element={<Organizations session={session} />} />
-              <Route path="/history" element={<History session={session} isAdmin={isAdmin} />} />
-              <Route
-                path="/admin"
-                element={
-                  <AdminRoute
-                    loading={isRolePending}
-                    sessionResolved={sessionResolved}
-                    session={session}
-                    isAdmin={isAdmin}
-                    onVerifyAdmin={handleVerifyAdminOnRoute}
-                  >
-                    <Admin session={session} />
-                  </AdminRoute>
-                }
-              />
-              <Route path="*" element={<Landing session={session} />} />
-            </Routes>
+          <main id="main-content" className="app-main" tabIndex="-1">
+            <Suspense
+              fallback={
+                <div
+                  className="page-root"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    minHeight: "calc(100vh - 70px)",
+                  }}
+                >
+                  <p style={{ color: "var(--color-text-muted)", fontWeight: 500 }}>Loading...</p>
+                </div>
+              }
+            >
+              <Routes>
+                <Route path="/" element={<Landing session={session} />} />
+                <Route path="/login" element={<Login />} />
+                <Route
+                  path="/events"
+                  element={<Events key={session?.user?.id || "public"} session={session} />}
+                />
+                <Route path="/organizations" element={<Organizations session={session} />} />
+                <Route path="/history" element={<History session={session} isAdmin={isAdmin} />} />
+                <Route
+                  path="/admin"
+                  element={
+                    <AdminRoute
+                      loading={isRolePending}
+                      sessionResolved={sessionResolved}
+                      session={session}
+                      isAdmin={isAdmin}
+                      onVerifyAdmin={handleVerifyAdminOnRoute}
+                    >
+                      <Admin session={session} />
+                    </AdminRoute>
+                  }
+                />
+                <Route path="*" element={<Landing session={session} />} />
+              </Routes>
+            </Suspense>
           </main>
           <Footer />
         </div>

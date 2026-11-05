@@ -1,7 +1,7 @@
 .site-footer {
-  background: linear-gradient(0deg, rgba(47, 56, 43, 0.96), var(--color-primary-900));
+  background: var(--color-primary-900);
   color: var(--color-text-inverse);
-  padding: 4rem 0 2.5rem;
+  padding: 2.75rem 0 1.75rem;
   width: 100%;
 }
 
@@ -11,7 +11,7 @@
   padding: 0 1.5rem;
   display: grid;
   grid-template-columns: minmax(280px, 1.35fr) repeat(2, minmax(180px, 1fr));
-  gap: 2.5rem 3rem;
+  gap: 2rem 2.5rem;
   align-items: start;
   box-sizing: border-box;
 }
@@ -19,39 +19,40 @@
 .footer-brand {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 0.85rem;
 }
 
 .footer-logo-row {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
+  gap: 0.75rem;
 }
 
 .footer-logo {
-  height: 48px;
+  height: 42px;
   width: auto;
 }
 
 .footer-brand-name {
   font-weight: 700;
-  font-size: 1.55rem;
+  font-size: 1.35rem;
   letter-spacing: -0.02em;
 }
 
 .footer-copy {
-  font-size: 0.95rem;
-  line-height: 1.4;
-  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
   margin: 0;
-  max-width: 430px;
+  max-width: 420px;
 }
 
 .footer-col h4 {
-  margin: 0 0 1rem 0;
-  font-size: 1.05rem;
-  color: rgba(255, 255, 255, 0.96);
-  letter-spacing: 0.03em;
+  margin: 0 0 0.85rem 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
@@ -60,22 +61,22 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.85rem;
-  font-size: 0.95rem;
-  line-height: 1.9;
+  gap: 0.55rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
 }
 
 .footer-links li a {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(255, 255, 255, 0.82);
   text-decoration: none;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition: color 0.15s ease, transform 0.15s ease;
 }
 
 .footer-external-icon {
-  font-size: 1rem;
+  font-size: 0.9rem;
   line-height: 1;
 }
 
@@ -87,21 +88,22 @@
 .footer-contact-list {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  font-size: 0.95rem;
-  line-height: 1.4;
+  gap: 0.65rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
 }
 
 .footer-contact-item {
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.82);
 }
 
 .footer-email-link {
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(255, 255, 255, 0.82);
   text-decoration: none;
+  transition: color 0.15s ease;
 }
 
 .footer-email-link:hover {
@@ -113,21 +115,22 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
-  min-width: 18px;
-  height: 18px;
+  width: 16px;
+  min-width: 16px;
+  height: 16px;
   flex-shrink: 0;
-  margin-top: 2px;
-  color: var(--color-primary-100);
+  margin-top: 3px;
+  color: var(--color-primary-400);
 }
 
 .footer-bottom {
   max-width: 1200px;
-  margin: 2.5rem auto 0;
-  padding: 0 1.5rem;
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 0.95rem;
-  line-height: 1.9;
+  margin: 2rem auto 0;
+  padding: 1.25rem 1.5rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.82rem;
+  line-height: 1.4;
   box-sizing: border-box;
   text-align: center;
   display: flex;
@@ -138,18 +141,28 @@
 
 .footer-bottom svg,
 .footer-bottom .material-symbols-outlined {
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 1;
-}
-
-@media (max-width: 860px) {
-  .footer-inner {
-    grid-template-columns: 1fr;
-  }
 }
 
 .footer-address-stack {
   display: flex;
   flex-direction: column;
   line-height: 1.4;
+}
+
+@media (max-width: 860px) {
+  .site-footer {
+    padding: 2.25rem 0 1.25rem;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .footer-bottom {
+    margin: 1.75rem auto 0;
+    padding-top: 1rem;
+  }
 }

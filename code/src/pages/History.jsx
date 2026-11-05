@@ -179,7 +179,7 @@ export default function History({ session: sessionProp, isAdmin: isAdminProp }) 
     <div className="history-page page-root">
       <div className="page-shell history-shell">
         <section className="page-hero history-hero">
-          <h1 className="page-title">The story of the Palouse Alliance</h1>
+          <h1 className="page-title">The Story of the Palouse Alliance</h1>
           <p className="page-description">
             Discover the people, partnerships, and milestones behind a regional network built to
             strengthen health and human services across the Palouse.

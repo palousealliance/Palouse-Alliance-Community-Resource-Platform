@@ -156,8 +156,7 @@ const Organizations = ({ session }) => {
         <section className="page-hero organizations-header">
           <h1 className="page-title">Community Organizations</h1>
           <p className="page-description">
-            Discover local organizations making a difference in the Palouse.
-            region
+            Discover local organizations making a difference across the Palouse region.
           </p>
         </section>
 
