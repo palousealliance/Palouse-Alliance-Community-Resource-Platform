@@ -61,16 +61,6 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  transition:
-    background-color var(--default-transition-duration) var(--default-transition-timing-function),
-    border-color var(--default-transition-duration) var(--default-transition-timing-function),
-    box-shadow var(--default-transition-duration) var(--default-transition-timing-function);
-}
-
-.history-feature:hover {
-  background-color: var(--color-surface-2);
-  border-color: var(--color-border-2);
-  box-shadow: var(--shadow-md);
 }
 
 .history-feature-icon {
@@ -117,6 +107,14 @@
   align-items: center;
   text-align: center;
   min-height: 240px;
+  cursor: default;
+}
+
+.static-pillar-card:hover {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+  transform: none;
 }
 
 .pillar-icon {

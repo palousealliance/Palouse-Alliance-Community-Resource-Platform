@@ -92,15 +92,6 @@
   flex-direction: column;
   gap: 14px;
   min-width: 0;
-  transform: translateY(0);
-  transition:
-    transform var(--default-transition-duration) var(--default-transition-timing-function),
-    box-shadow var(--default-transition-duration) var(--default-transition-timing-function);
-}
-
-.page-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 18px -4px rgba(0, 0, 0, 0.15);
 }
 
 .admin-page,

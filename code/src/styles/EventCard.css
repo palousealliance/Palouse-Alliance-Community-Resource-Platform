@@ -12,9 +12,6 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-  transition: background-color var(--default-transition-duration) var(--default-transition-timing-function),
-    border-color var(--default-transition-duration) var(--default-transition-timing-function),
-    box-shadow var(--default-transition-duration) var(--default-transition-timing-function);
 }
 
 .event-card-copy {
@@ -86,13 +83,6 @@
     color-mix(in srgb, var(--event-card-surface) 92%, transparent) 230px,
     var(--event-card-surface) 270px
   );
-}
-
-.event-card:hover {
-  --event-card-surface: var(--color-surface-2);
-  background-color: var(--color-surface-2) !important;
-  border-color: var(--color-border-2) !important;
-  box-shadow: var(--shadow-md);
 }
 
 .event-card-top {
