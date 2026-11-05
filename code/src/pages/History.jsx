@@ -178,16 +178,13 @@ export default function History({ session: sessionProp, isAdmin: isAdminProp }) 
   return (
     <div className="history-page page-root">
       <div className="page-shell history-shell">
-        <header className="page-hero history-hero">
-          <div className="org-location-chip legacy-chip">Since 1984</div>
-          <h1 className="page-title">
-            The story of the <span>Palouse Alliance</span>
-          </h1>
+        <section className="page-hero history-hero">
+          <h1 className="page-title">The story of the Palouse Alliance</h1>
           <p className="page-description">
             Discover the people, partnerships, and milestones behind a regional network built to
             strengthen health and human services across the Palouse.
           </p>
-        </header>
+        </section>
 
         {successMessage ? (
           <div className="history-alert history-alert-success" role="status">

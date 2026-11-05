@@ -4,15 +4,10 @@
 }
 
 .history-hero {
-  padding: 1rem 1rem 0.5rem;
-}
-
-.history-hero .legacy-chip {
-  margin-bottom: 0.85rem;
-}
-
-.history-hero .page-title span {
-  color: var(--color-primary-700);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 24px;
 }
 
 .history-alert {
@@ -233,9 +228,6 @@
 @media (max-width: 700px) {
   .history-shell {
     padding: 28px 16px 44px;
-  }
-  .history-hero {
-    padding: 1.5rem 0.25rem 1rem;
   }
   .history-document-header {
     align-items: flex-start;
