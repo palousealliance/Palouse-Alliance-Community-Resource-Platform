@@ -226,7 +226,7 @@ export default function History({ session: sessionProp, isAdmin: isAdminProp }) 
                 rel="noopener noreferrer"
               >
                 <ExternalLink size={16} aria-hidden="true" />
-                Open in new tab
+                Open in New Tab
               </a>
               <a
                 className="btn-primary history-download-link"
@@ -245,13 +245,6 @@ export default function History({ session: sessionProp, isAdmin: isAdminProp }) 
             src={`${pdfUrl}#view=FitH`}
             title="Palouse Alliance history PDF"
           />
-          <p className="history-pdf-fallback">
-            If the document does not display in your browser,{" "}
-            <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
-              open the history PDF directly
-            </a>
-            .
-          </p>
         </section>
 
         {isEditDialogOpen && (
@@ -341,7 +334,7 @@ export default function History({ session: sessionProp, isAdmin: isAdminProp }) 
                         if (fileInputRef.current) fileInputRef.current.value = "";
                       }}
                     >
-                      Choose a different file
+                      Choose Different File
                     </button>
                   </div>
                 ) : (

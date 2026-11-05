@@ -118,17 +118,6 @@
   background: #eef0ec;
 }
 
-.history-pdf-fallback {
-  margin: 0;
-  padding: 0.9rem 1.5rem;
-  color: var(--color-text-muted);
-  font-size: 0.9rem;
-  text-align: center;
-}
-
-.history-pdf-fallback a {
-  color: var(--color-primary-700);
-}
 
 /* History Replace Dialog Styles */
 .popup-content.history-popup {
