@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { Search } from "lucide-react";
 import EventCalendar from "../components/EventCalendar";
 import EventCard from "../components/EventCard";
 import MyEvents from "../components/MyEvents";
@@ -774,9 +775,7 @@ const Events = ({ session }) => {
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
               />
-              <span className="material-symbols-outlined home-search-input-icon">
-                search
-              </span>
+              <Search className="home-search-input-icon" size={20} aria-hidden="true" />
             </div>
 
             <div className="home-filter-controls">

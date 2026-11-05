@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { Upload } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import FormField from "./FormField";
 import "../styles/PostEvent.css";
@@ -700,9 +701,7 @@ const PostEventForm = ({ onClose, onSuccess }) => {
                     className="file-upload"
                     onClick={() => document.getElementById("flyer").click()}
                   >
-                    <span className="material-symbols-outlined upload-icon" aria-hidden="true">
-                      cloud_upload
-                    </span>
+                    <Upload className="upload-icon" aria-hidden="true" size={32} />
                     <input
                       id="flyer"
                       type="file"

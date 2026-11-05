@@ -88,7 +88,7 @@
   padding: var(--space-3) var(--space-4);
 }
 
-.email-link.org-meta-row {
+.email-link {
   color: var(--color-primary-700);
   text-decoration: none;
   font-weight: 600;
@@ -114,7 +114,6 @@
   margin: 0 auto;
 }
 
-.email-link.org-meta-row:hover,
 .email-link:hover {
   text-decoration: underline;
 }

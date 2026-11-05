@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { ExternalLink, Menu, X } from "lucide-react";
 import logo from "../assets/PalouseTextLogo.png";
 import { supabase } from "../lib/supabase";
 import "../styles/Navbar.css";
@@ -83,7 +84,7 @@ const Navbar = ({ session, isAdmin }) => {
                             title="Opens in a new tab"
                         >
                             Palouse Resource Guide
-                            <span className="navbar-external-icon material-symbols-outlined" aria-hidden="true">open_in_new</span>
+                            <ExternalLink className="navbar-external-icon" aria-hidden="true" size={14} />
                         </a>
                         <a
                             href="https://wsu.givepulse.com/group/244255-palouse-alliance-for-healthy-individuals-families-communities"
@@ -94,10 +95,10 @@ const Navbar = ({ session, isAdmin }) => {
                             title="Opens in a new tab"
                         >
                             GivePulse
-                            <span className="navbar-external-icon material-symbols-outlined" aria-hidden="true">open_in_new</span>
+                            <ExternalLink className="navbar-external-icon" aria-hidden="true" size={14} />
                         </a>
 
-                        <Link to="/events" className="navbar-link navbar-link-text">Member Events</Link>
+                        <Link to="/events" className="navbar-link navbar-link-text">Community Events</Link>
                         <Link to="/organizations" className="navbar-link navbar-link-text">Organizations</Link>
                         <Link to="/history" className="navbar-link navbar-link-text">Our History</Link>
                     </div>
@@ -128,9 +129,7 @@ const Navbar = ({ session, isAdmin }) => {
                     aria-controls="mobile-navigation"
                     aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
                 >
-                    <span className="material-symbols-outlined navbar-menu-icon" aria-hidden="true">
-                        menu
-                    </span>
+                    <Menu className="navbar-menu-icon" aria-hidden="true" size={24} />
                 </button>
             </nav>
 
@@ -158,9 +157,7 @@ const Navbar = ({ session, isAdmin }) => {
                         onClick={closeMobileMenu}
                         aria-label="Close navigation menu"
                     >
-                        <span className="material-symbols-outlined navbar-close-icon" aria-hidden="true">
-                            close
-                        </span>
+                        <X className="navbar-close-icon" aria-hidden="true" size={24} />
                     </button>
                 </div>
 
@@ -175,7 +172,7 @@ const Navbar = ({ session, isAdmin }) => {
                         title="Opens in a new tab"
                     >
                         Palouse Resource Guide
-                        <span className="navbar-external-icon material-symbols-outlined" aria-hidden="true">open_in_new</span>
+                        <ExternalLink className="navbar-external-icon" aria-hidden="true" size={14} />
                     </a>
                     <a
                         href="https://wsu.givepulse.com/group/244255-palouse-alliance-for-healthy-individuals-families-communities"
@@ -186,9 +183,9 @@ const Navbar = ({ session, isAdmin }) => {
                         title="Opens in a new tab"
                     >
                         GivePulse
-                        <span className="navbar-external-icon material-symbols-outlined" aria-hidden="true">open_in_new</span>
+                        <ExternalLink className="navbar-external-icon" aria-hidden="true" size={14} />
                     </a>
-                    <Link to="/events" className="navbar-mobile-link">Member Events</Link>
+                    <Link to="/events" className="navbar-mobile-link">Community Events</Link>
                     <Link to="/organizations" className="navbar-mobile-link">Organizations</Link>
                     <Link to="/history" className="navbar-mobile-link">Our History</Link>
                     {isAdmin ? (

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { Pencil, Trash2, ChevronUp, ChevronDown, Check, X } from "lucide-react";
 import EventCard from "../components/EventCard";
 import Popup from "../components/Popup";
 import FormField from "../components/FormField";
@@ -1060,14 +1061,14 @@ const updateEventStatus = async (eventId, status) => {
             <div className="admin-card-actions-row">
               <button
                 type="button"
-                className="navbar-link navbar-link-primary btn-primary admin-action-button"
+                className="btn-primary admin-action-button"
                 onClick={openUserPopup}
               >
                 Register User
               </button>
               <button
                 type="button"
-                className="navbar-link navbar-link-secondary admin-action-button"
+                className="btn-secondary admin-action-button"
                 onClick={openUserManagePopup}
               >
                 Manage Users
@@ -1082,14 +1083,14 @@ const updateEventStatus = async (eventId, status) => {
             <div className="admin-card-actions-row">
               <button
                 type="button"
-                className="navbar-link navbar-link-primary btn-primary admin-action-button"
+                className="btn-primary admin-action-button"
                 onClick={openRegisterOrgPopup}
               >
                 Register Organization
               </button>
               <button
                 type="button"
-                className="navbar-link navbar-link-secondary admin-action-button"
+                className="btn-secondary admin-action-button"
                 onClick={openOrgPopup}
               >
                 Manage Organizations
@@ -1103,7 +1104,7 @@ const updateEventStatus = async (eventId, status) => {
             </p>
             <button
               type="button"
-              className="navbar-link navbar-link-primary btn-primary admin-action-button"
+              className="btn-primary admin-action-button"
               onClick={openManageEventsPopup}
             >
               Manage Events
@@ -1208,7 +1209,7 @@ const updateEventStatus = async (eventId, status) => {
                         aria-label={`Edit ${org.name}`}
                         title={`Edit ${org.name}`}
                       >
-                        <span className="material-symbols-outlined" aria-hidden="true">edit</span>
+                        <Pencil size={16} aria-hidden="true" />
                       </button>
                       <button
                         type="button"
@@ -1217,7 +1218,7 @@ const updateEventStatus = async (eventId, status) => {
                         aria-label={`Delete ${org.name}`}
                         title={`Delete ${org.name}`}
                       >
-                        <span className="material-symbols-outlined" aria-hidden="true">delete</span>
+                        <Trash2 size={16} aria-hidden="true" />
                       </button>
                     </div>
                   </div>
@@ -1516,7 +1517,7 @@ const updateEventStatus = async (eventId, status) => {
                           aria-label={`Edit ${user.email}`}
                           title={`Edit ${user.email}`}
                         >
-                          <span className="material-symbols-outlined" aria-hidden="true">edit</span>
+                          <Pencil size={16} aria-hidden="true" />
                         </button>
                         <button
                           type="button"
@@ -1526,7 +1527,7 @@ const updateEventStatus = async (eventId, status) => {
                           aria-label={user.id === currentUserId ? "You cannot delete your own account." : `Delete ${user.email}`}
                           title={user.id === currentUserId ? "You cannot delete your own account." : `Delete ${user.email}`}
                         >
-                          <span className="material-symbols-outlined" aria-hidden="true">delete</span>
+                          <Trash2 size={16} aria-hidden="true" />
                         </button>
                       </div>
                     </div>
@@ -1570,9 +1571,11 @@ const updateEventStatus = async (eventId, status) => {
                   >
                     <span>{title} ({items.length})</span>
                     <span className="admin-events-group-chevron">
-                      <span className="material-symbols-outlined" aria-hidden="true">
-                        {manageEventsSections[key] ? "expand_less" : "expand_more"}
-                      </span>
+                      {manageEventsSections[key] ? (
+                        <ChevronUp size={20} aria-hidden="true" />
+                      ) : (
+                        <ChevronDown size={20} aria-hidden="true" />
+                      )}
                     </span>
                   </button>
                   {manageEventsSections[key] && (
@@ -1602,9 +1605,7 @@ const updateEventStatus = async (eventId, status) => {
                                       disabled={manageEventActionLoading === event.id}
                                       onClick={() => updateEventStatus(event.id, "approved")}
                                     >
-                                      <span className="material-symbols-outlined" aria-hidden="true">
-                                        check
-                                      </span>
+                                      <Check size={16} aria-hidden="true" />
                                     </button>
                                   )}
                                   {event.status?.toLowerCase() !== "rejected" && (
@@ -1616,9 +1617,7 @@ const updateEventStatus = async (eventId, status) => {
                                       disabled={manageEventActionLoading === event.id}
                                       onClick={() => updateEventStatus(event.id, "rejected")}
                                     >
-                                      <span className="material-symbols-outlined" aria-hidden="true">
-                                        close
-                                      </span>
+                                      <X size={16} aria-hidden="true" />
                                     </button>
                                   )}
                                 </div>
@@ -1643,10 +1642,10 @@ const updateEventStatus = async (eventId, status) => {
           className="dialog-popup"
           actions={
             <>
-              <button type="button" className="secondary-btn" onClick={closeVolunteerConfirm}>
+              <button type="button" className="btn-secondary" onClick={closeVolunteerConfirm}>
                 Cancel
               </button>
-              <button type="button" className="primary-btn" onClick={confirmVolunteerLink}>
+              <button type="button" className="btn-primary" onClick={confirmVolunteerLink}>
                 Continue
               </button>
             </>

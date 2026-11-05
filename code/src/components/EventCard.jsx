@@ -156,7 +156,7 @@ function EventCard({ event, footerActions = null, formatFullDate, formatTimeRang
           <div className="event-actions">
             {flyerUrl ? (
               <button
-                className="secondary-btn"
+                className="btn-secondary"
                 type="button"
                 onClick={() => setFlyerModalOpen(true)}
               >
@@ -165,7 +165,7 @@ function EventCard({ event, footerActions = null, formatFullDate, formatTimeRang
             ) : null}
 
             {volunteerUrl ? (
-              <button className="primary-btn" type="button" onClick={handleViewDetails}>
+              <button className="btn-primary" type="button" onClick={handleViewDetails}>
                 {volunteerActionLabel}
               </button>
             ) : null}
@@ -186,12 +186,12 @@ function EventCard({ event, footerActions = null, formatFullDate, formatTimeRang
             <>
               <button
                 type="button"
-                className="secondary-btn"
+                className="btn-secondary"
                 onClick={() => setConfirmOpen(false)}
               >
                 Cancel
               </button>
-              <button type="button" className="primary-btn" onClick={handleLeaveSite}>
+              <button type="button" className="btn-primary" onClick={handleLeaveSite}>
                 {volunteerContinueLabel}
               </button>
             </>
@@ -212,7 +212,7 @@ function EventCard({ event, footerActions = null, formatFullDate, formatTimeRang
           actions={
             <button
               type="button"
-              className="primary-btn"
+              className="btn-primary"
               onClick={() => setFlyerModalOpen(false)}
             >
               Close

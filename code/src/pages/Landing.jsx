@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
+import { Scroll, ArrowRight, Handshake, BookOpen, Users } from "lucide-react";
 import logo from "../assets/PalouseTextLogo.png";
 import "../styles/Landing.css";
 
@@ -26,10 +27,10 @@ const Landing = () => {
               className="btn-primary landing-btn" 
               onClick={() => navigate('/events')}
             >
-              Member Events
+              Community Events
             </button>
             <button 
-              className="btn-outline landing-btn" 
+              className="btn-secondary landing-btn" 
               onClick={() => navigate('/organizations')}
             >
               Organizations
@@ -39,7 +40,7 @@ const Landing = () => {
 
         <section className="history-feature" aria-labelledby="history-title">
           <div className="history-feature-icon" aria-hidden="true">
-            <span className="material-symbols-outlined">history_edu</span>
+            <Scroll size={40} className="history-feature-icon-svg" aria-hidden="true" />
           </div>
           <div className="history-feature-copy">
             <p className="history-eyebrow">A legacy of collaboration</p>
@@ -48,14 +49,14 @@ const Landing = () => {
           </div>
           <button className="btn-primary history-feature-button" onClick={() => navigate('/history')}>
             Explore our history
-            <span className="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+            <ArrowRight size={18} aria-hidden="true" />
           </button>
         </section>
 
         <div className="masonry-container landing-pillars">
           <div className="masonry-item">
             <div className="org-card static-pillar-card">
-              <span className="material-symbols-outlined pillar-icon" aria-hidden="true">handshake</span>
+              <Handshake className="pillar-icon" size={40} aria-hidden="true" />
               <h3 className="org-title">Coordinate</h3>
               <p className="org-description">
                 We bridge the gaps between regional providers to ensure seamless community support systems.
@@ -65,7 +66,7 @@ const Landing = () => {
 
           <div className="masonry-item">
             <div className="org-card static-pillar-card">
-              <span className="material-symbols-outlined pillar-icon" aria-hidden="true">menu_book</span>
+              <BookOpen className="pillar-icon" size={40} aria-hidden="true" />
               <h3 className="org-title">Network</h3>
               <p className="org-description">
                 We serve as a trusted resource to facilitate networking and collaboration
@@ -75,7 +76,7 @@ const Landing = () => {
 
           <div className="masonry-item">
             <div className="org-card static-pillar-card">
-              <span className="material-symbols-outlined pillar-icon" aria-hidden="true">groups</span>
+              <Users className="pillar-icon" size={40} aria-hidden="true" />
               <h3 className="org-title">Advocate</h3>
               <p className="org-description">
                 We are a collective voice for health and human services in our region.

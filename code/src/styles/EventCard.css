@@ -70,6 +70,7 @@
   color: var(--color-primary-700);
 }
 
+.event-pdf-background-fallback svg,
 .event-pdf-background-fallback .material-symbols-outlined { font-size: 36px; }
 
 .event-flyer-backdrop::after {

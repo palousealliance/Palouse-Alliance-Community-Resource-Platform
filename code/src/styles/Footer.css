@@ -133,6 +133,7 @@
   gap: 0.4rem;
 }
 
+.footer-bottom svg,
 .footer-bottom .material-symbols-outlined {
   font-size: 1.1rem;
   line-height: 1;

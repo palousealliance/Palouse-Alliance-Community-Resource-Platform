@@ -602,6 +602,7 @@
   line-height: 1;
 }
 
+.my-events-group-chevron svg,
 .my-events-group-chevron .material-symbols-outlined {
   font-size: 18px;
 }

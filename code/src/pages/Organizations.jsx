@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Search, Calendar, Phone, Mail } from "lucide-react";
 import { isEventActive } from "../lib/dateTime";
 import { supabase } from "../lib/supabase";
 import {
@@ -168,9 +169,7 @@ const Organizations = ({ session }) => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
           />
-          <span className="material-symbols-outlined search-input-icon">
-            search
-          </span>
+          <Search className="search-input-icon" size={20} aria-hidden="true" />
         </div>
 
         <div className="events-header">
@@ -213,9 +212,7 @@ const Organizations = ({ session }) => {
                       <div className="org-meta">
                         {org.eventCount > 0 && (
                           <span className="org-meta-row">
-                            <span className="material-symbols-outlined org-meta-icon">
-                              calendar_today
-                            </span>
+                            <Calendar className="org-meta-icon" size={16} aria-hidden="true" />
                             {org.eventCount} active{' '}
                             {org.eventCount === 1 ? 'event' : 'events'}
                           </span>
@@ -223,23 +220,21 @@ const Organizations = ({ session }) => {
 
                         {isValid(org.phone_number) && (
                           <span className="org-meta-row">
-                            <span className="material-symbols-outlined org-meta-icon">
-                              call
-                            </span>
+                            <Phone className="org-meta-icon" size={16} aria-hidden="true" />
                             {org.phone_number}
                           </span>
                         )}
 
                         {isValid(org.email) && (
-                          <a
-                            href={`mailto:${org.email}`}
-                            className="email-link org-meta-row"
-                          >
-                            <span className="material-symbols-outlined org-meta-icon">
-                              mail
-                            </span>
-                            {org.email}
-                          </a>
+                          <span className="org-meta-row">
+                            <Mail className="org-meta-icon" size={16} aria-hidden="true" />
+                            <a
+                              href={`mailto:${org.email}`}
+                              className="email-link"
+                            >
+                              {org.email}
+                            </a>
+                          </span>
                         )}
                       </div>
                     )}

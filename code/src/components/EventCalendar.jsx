@@ -1,4 +1,5 @@
 import React from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import "../styles/EventCalendar.css";
 
 const DAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
@@ -30,7 +31,7 @@ function EventCalendar({
           aria-label="Previous month"
           disabled={!canNavigatePrevious}
         >
-          <span className="material-symbols-outlined">chevron_left</span>
+          <ChevronLeft size={20} aria-hidden="true" />
         </button>
         <span>{monthLabel}</span>
         <button
@@ -40,7 +41,7 @@ function EventCalendar({
           aria-label="Next month"
           disabled={!canNavigateNext}
         >
-          <span className="material-symbols-outlined">chevron_right</span>
+          <ChevronRight size={20} aria-hidden="true" />
         </button>
       </div>
 

@@ -219,7 +219,7 @@ const Login = () => {
               actions={
                 <button
                   type="button"
-                  className="primary-btn"
+                  className="btn-primary"
                   onClick={() => setIsForgotPasswordOpen(false)}
                 >
                   Close

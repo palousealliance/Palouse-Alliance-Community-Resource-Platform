@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { X, ChevronUp, ChevronDown } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import { parseSupabaseDateTime } from "../lib/dateTime";
 
@@ -242,7 +243,7 @@ const MyEvents = ({ session, formatTimeRange, onClose, onPostEvent, canPostEvent
             onClick={onClose}
             aria-label="Close My Events"
           >
-            <span className="material-symbols-outlined" aria-hidden="true">close</span>
+            <X size={20} aria-hidden="true" />
           </button>
         </div>
 
@@ -298,9 +299,11 @@ const MyEvents = ({ session, formatTimeRange, onClose, onPostEvent, canPostEvent
                 <span className="my-events-group-title">Pending Events</span>
                 <span className="my-events-group-meta">
                   <span className="my-events-group-chevron" aria-hidden="true">
-                    <span className="material-symbols-outlined">
-                      {myEventsSections.pending ? "expand_less" : "expand_more"}
-                    </span>
+                    {myEventsSections.pending ? (
+                      <ChevronUp size={20} aria-hidden="true" />
+                    ) : (
+                      <ChevronDown size={20} aria-hidden="true" />
+                    )}
                   </span>
                 </span>
               </button>
@@ -337,9 +340,11 @@ const MyEvents = ({ session, formatTimeRange, onClose, onPostEvent, canPostEvent
                 <span className="my-events-group-title">Approved Events</span>
                 <span className="my-events-group-meta">
                   <span className="my-events-group-chevron" aria-hidden="true">
-                    <span className="material-symbols-outlined">
-                      {myEventsSections.approved ? "expand_less" : "expand_more"}
-                    </span>
+                    {myEventsSections.approved ? (
+                      <ChevronUp size={20} aria-hidden="true" />
+                    ) : (
+                      <ChevronDown size={20} aria-hidden="true" />
+                    )}
                   </span>
                 </span>
               </button>
@@ -376,9 +381,11 @@ const MyEvents = ({ session, formatTimeRange, onClose, onPostEvent, canPostEvent
                 <span className="my-events-group-title">Rejected Events</span>
                 <span className="my-events-group-meta">
                   <span className="my-events-group-chevron" aria-hidden="true">
-                    <span className="material-symbols-outlined">
-                      {myEventsSections.rejected ? "expand_less" : "expand_more"}
-                    </span>
+                    {myEventsSections.rejected ? (
+                      <ChevronUp size={20} aria-hidden="true" />
+                    ) : (
+                      <ChevronDown size={20} aria-hidden="true" />
+                    )}
                   </span>
                 </span>
               </button>

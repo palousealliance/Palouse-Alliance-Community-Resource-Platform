@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { CheckCircle, X, FileEdit, ExternalLink, Download, AlertCircle, FileText, Upload } from "lucide-react";
 import Popup from "../components/Popup";
 import {
   fetchCurrentHistoryPdf,
@@ -190,9 +191,7 @@ export default function History({ session: sessionProp, isAdmin: isAdminProp }) 
 
         {successMessage ? (
           <div className="history-alert history-alert-success" role="status">
-            <span className="material-symbols-outlined" aria-hidden="true">
-              check_circle
-            </span>
+            <CheckCircle size={18} aria-hidden="true" />
             <span>{successMessage}</span>
             <button
               type="button"
@@ -200,9 +199,7 @@ export default function History({ session: sessionProp, isAdmin: isAdminProp }) 
               onClick={() => setSuccessMessage("")}
               aria-label="Dismiss message"
             >
-              <span className="material-symbols-outlined" aria-hidden="true">
-                close
-              </span>
+              <X size={16} aria-hidden="true" />
             </button>
           </div>
         ) : null}
@@ -217,25 +214,21 @@ export default function History({ session: sessionProp, isAdmin: isAdminProp }) 
               {isAdmin && (
                 <button
                   type="button"
-                  className="btn-outline history-replace-btn"
+                  className="btn-secondary history-replace-btn"
                   onClick={handleOpenDialog}
                   aria-label="Replace PDF"
                 >
-                  <span className="material-symbols-outlined" aria-hidden="true">
-                    edit_document
-                  </span>
+                  <FileEdit size={16} aria-hidden="true" />
                   Replace PDF
                 </button>
               )}
               <a
-                className="btn-outline history-open-link"
+                className="btn-secondary history-open-link"
                 href={pdfUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <span className="material-symbols-outlined" aria-hidden="true">
-                  open_in_new
-                </span>
+                <ExternalLink size={16} aria-hidden="true" />
                 Open in new tab
               </a>
               <a
@@ -243,9 +236,7 @@ export default function History({ session: sessionProp, isAdmin: isAdminProp }) 
                 href={pdfUrl}
                 download={activeFileName || "Palouse-Alliance-History.pdf"}
               >
-                <span className="material-symbols-outlined" aria-hidden="true">
-                  download
-                </span>
+                <Download size={16} aria-hidden="true" />
                 Download PDF
               </a>
             </div>
@@ -297,9 +288,7 @@ export default function History({ session: sessionProp, isAdmin: isAdminProp }) 
             <div className="history-dialog-body">
               {dialogError ? (
                 <div className="history-alert history-alert-error" role="alert">
-                  <span className="material-symbols-outlined" aria-hidden="true">
-                    error
-                  </span>
+                  <AlertCircle size={18} aria-hidden="true" />
                   <span>{dialogError}</span>
                 </div>
               ) : null}
@@ -335,12 +324,11 @@ export default function History({ session: sessionProp, isAdmin: isAdminProp }) 
                   }}
                 />
 
-                <span
-                  className="material-symbols-outlined upload-icon"
-                  aria-hidden="true"
-                >
-                  {selectedFile ? "picture_as_pdf" : "cloud_upload"}
-                </span>
+                {selectedFile ? (
+                  <FileText className="upload-icon" size={32} aria-hidden="true" />
+                ) : (
+                  <Upload className="upload-icon" size={32} aria-hidden="true" />
+                )}
 
                 {selectedFile ? (
                   <div className="history-selected-preview">
@@ -348,7 +336,7 @@ export default function History({ session: sessionProp, isAdmin: isAdminProp }) 
                     <p className="upload-subtext">{formatFileSize(selectedFile.size)}</p>
                     <button
                       type="button"
-                      className="btn-outline history-change-btn"
+                      className="btn-secondary history-change-btn"
                       onClick={(e) => {
                         e.stopPropagation();
                         setSelectedFile(null);

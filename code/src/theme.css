@@ -46,7 +46,7 @@ textarea {
   color: inherit;
 }
 
-:where(button, .btn-primary, .btn-secondary, .primary-btn, .secondary-btn, .my-events-cta, .filter-trigger) {
+:where(button, .btn-primary, .btn-secondary, .primary-btn, .secondary-btn, .btn-outline, .my-events-cta, .filter-trigger) {
   min-height: 42px;
   border-radius: var(--radius-md);
   padding: 0 16px;
@@ -141,7 +141,8 @@ button[type="submit"]:hover,
 }
 
 .btn-secondary,
-.secondary-btn {
+.secondary-btn,
+.btn-outline {
   border: 1px solid var(--btn-secondary-border);
   background: var(--btn-secondary-bg);
   color: var(--btn-secondary-text);
@@ -187,7 +188,8 @@ textarea[disabled] {
 }
 
 .btn-secondary:hover,
-.secondary-btn:hover {
+.secondary-btn:hover,
+.btn-outline:hover {
   background: var(--btn-secondary-bg-hover);
   color: var(--btn-secondary-text-hover);
   border-color: var(--btn-secondary-border-hover);

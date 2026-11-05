@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { FileText } from "lucide-react";
 
 // Render just the first page. A canvas has no native PDF viewer controls.
 export default function PdfFlyerBackground({ src }) {
@@ -85,7 +86,7 @@ export default function PdfFlyerBackground({ src }) {
       <canvas ref={canvasRef} />
       {status === "error" ? (
         <div className="event-pdf-background-fallback">
-          <span className="material-symbols-outlined">description</span>
+          <FileText size={36} aria-hidden="true" />
           <span>Flyer available</span>
         </div>
       ) : null}

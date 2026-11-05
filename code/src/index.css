@@ -156,6 +156,18 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
+/* Icons behave as graphics/images and cannot be highlighted or selected as text */
+svg.lucide,
+.lucide,
+[data-icon] {
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 /* Custom scrollbar styling - Palouse Alliance site theme */
 html,
 body,

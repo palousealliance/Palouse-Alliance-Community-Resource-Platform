@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { X } from "lucide-react";
 import "../styles/Popup.css";
 
 const Popup = ({
@@ -41,7 +42,7 @@ const Popup = ({
             onClick={onClose}
             aria-label="Close popup"
           >
-            <span className="material-symbols-outlined" aria-hidden="true">close</span>
+            <X size={20} aria-hidden="true" />
           </button>
         </div>
         <div className="popup-body">{children}</div>

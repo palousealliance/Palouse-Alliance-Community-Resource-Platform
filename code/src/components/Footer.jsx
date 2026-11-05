@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import { AtSign, MapPin, Globe } from "lucide-react";
 import logo from "../assets/PalouseSquareLogo.png";
 import "../styles/Footer.css";
 
@@ -31,7 +32,7 @@ const Footer = () => {
                     <h4>Quick Links</h4>
                     <ul className="footer-links">
                         <li><Link to="/">Home</Link></li>
-                        <li><Link to="/events">Member Events</Link></li>
+                        <li><Link to="/events">Community Events</Link></li>
                         <li><Link to="/organizations">Organizations</Link></li>
                         <li><Link to="/history">Our History</Link></li>
                     </ul>
@@ -41,18 +42,18 @@ const Footer = () => {
                     <h4>Contact Us</h4>
                     <div className="footer-contact-list">
                         <div className="footer-contact-item">
-                            <span className="material-symbols-outlined footer-icon" aria-hidden="true">alternate_email</span>
+                            <AtSign className="footer-icon" aria-hidden="true" size={18} />
                             <a className="footer-email-link" href="mailto:palousealliance@gmail.com">palousealliance@gmail.com</a>
                         </div>
                         <div className="footer-contact-item">
-                            <span className="material-symbols-outlined footer-icon" aria-hidden="true">place</span>
+                            <MapPin className="footer-icon" aria-hidden="true" size={18} />
                             <div className="footer-address-stack">
                                 <span>PO Box 874</span>
                                 <span>Pullman, WA 99163</span>
                             </div>
                         </div>
                         <div className="footer-contact-item">
-                            <span className="material-symbols-outlined footer-icon" aria-hidden="true">public</span>
+                            <Globe className="footer-icon" aria-hidden="true" size={18} />
                             <span>Palouse Region, ID & WA</span>
                         </div>
                     </div>
