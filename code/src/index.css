@@ -130,8 +130,23 @@ a {
   color: var(--color-link);
 }
 
-a:hover {
+a:not(:where(button, .btn-primary, .btn-secondary, .primary-btn, .secondary-btn, .btn-outline, .btn-danger, [role="button"], [class*="btn"], button *)):hover {
   color: var(--color-link-hover);
+}
+
+/* Ensure buttons and button contents don't inherit link hover colors or darken */
+:where(button, .btn-primary, .btn-secondary, .primary-btn, .secondary-btn, .btn-outline, .btn-danger, [role="button"]):hover,
+:where(button, .btn-primary, .btn-secondary, .primary-btn, .secondary-btn, .btn-outline, .btn-danger, [role="button"]):hover * {
+  text-decoration: none;
+}
+
+button a,
+button a:hover,
+button:hover a,
+button:hover,
+button:hover a *,
+button:hover span {
+  color: inherit;
 }
 
 button {

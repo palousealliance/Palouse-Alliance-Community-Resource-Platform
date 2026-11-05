@@ -52,6 +52,12 @@ textarea {
   padding: 0 14px;
   font-size: 13.5px;
   font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--default-transition-duration) var(--default-transition-timing-function);
 }
 
 input,
@@ -131,13 +137,17 @@ button[type="submit"],
   background: var(--btn-primary-bg);
   color: var(--btn-primary-text);
   box-shadow: var(--shadow-sm);
+  text-decoration: none;
 }
 
 .btn-primary:hover,
 .primary-btn:hover,
 button[type="submit"]:hover,
-.my-events-cta:hover {
+.my-events-cta:hover,
+a.btn-primary:hover,
+a.primary-btn:hover {
   background: var(--btn-primary-bg-hover);
+  color: var(--btn-primary-text);
 }
 
 .btn-secondary,
@@ -147,6 +157,7 @@ button[type="submit"]:hover,
   background: var(--btn-secondary-bg);
   color: var(--btn-secondary-text);
   box-shadow: var(--shadow-sm);
+  text-decoration: none;
 }
 
 .btn-danger {
@@ -189,10 +200,21 @@ textarea[disabled] {
 
 .btn-secondary:hover,
 .secondary-btn:hover,
-.btn-outline:hover {
+.btn-outline:hover,
+a.btn-secondary:hover,
+a.secondary-btn:hover,
+a.btn-outline:hover {
   background: var(--btn-secondary-bg-hover);
   color: var(--btn-secondary-text-hover);
   border-color: var(--btn-secondary-border-hover);
+}
+
+/* Ensure links or text inside buttons never darken on hover */
+:where(button, .btn-primary, .btn-secondary, .primary-btn, .secondary-btn, .btn-outline, .btn-danger, [role="button"]) a,
+:where(button, .btn-primary, .btn-secondary, .primary-btn, .secondary-btn, .btn-outline, .btn-danger, [role="button"]):hover a,
+:where(button, .btn-primary, .btn-secondary, .primary-btn, .secondary-btn, .btn-outline, .btn-danger, [role="button"]) a:hover {
+  color: inherit;
+  text-decoration: none;
 }
 
 .filter-trigger:hover {
