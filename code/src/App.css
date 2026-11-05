@@ -51,23 +51,24 @@
 
 .page-hero {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .page-title {
-  margin: 0 0 12px 0;
-  font-size: 42px;
-  line-height: normal;
-  letter-spacing: -0.01em;
+  margin: 0 0 10px 0;
+  font-size: 2rem;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  font-weight: 700;
   color: var(--color-text);
 }
 
 .page-description {
-  max-width: 760px;
+  max-width: 680px;
   margin: 0 auto;
   color: var(--color-text-muted);
-  font-size: 18px;
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.55;
 }
 
 .page-panel {
@@ -105,13 +106,13 @@
   .home-hero h1,
   .login-title,
   .postevent-title {
-    font-size: 32px;
+    font-size: 1.5rem;
   }
 
   .page-description,
   .home-hero p,
   .login-subtitle,
   .postevent-subtitle {
-    font-size: 16px;
+    font-size: 0.9rem;
   }
 }

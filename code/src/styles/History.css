@@ -4,7 +4,11 @@
 }
 
 .history-hero {
-  padding: 2.5rem 1rem 1rem;
+  padding: 1rem 1rem 0.5rem;
+}
+
+.history-hero .legacy-chip {
+  margin-bottom: 0.85rem;
 }
 
 .history-hero .page-title span {

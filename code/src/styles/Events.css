@@ -16,21 +16,23 @@
 
 .home-hero {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .home-hero h1 {
-  font-size: 42px;
-  line-height: normal;
-  margin: 0 0 12px 0;
+  font-size: 2rem;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  font-weight: 700;
+  margin: 0 0 10px 0;
   color: var(--color-text);
 }
 
 .home-hero p {
-  max-width: 760px;
+  max-width: 680px;
   margin: 0 auto;
-  font-size: 18px;
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.55;
   color: var(--color-text-muted);
 }
 
@@ -820,11 +822,11 @@
   }
 
   .home-hero h1 {
-    font-size: 32px;
+    font-size: 1.5rem;
   }
 
   .home-hero p {
-    font-size: 16px;
+    font-size: 0.9rem;
   }
 
   .home-panel {
