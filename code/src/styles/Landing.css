@@ -89,7 +89,7 @@
 }
 .history-feature-copy h2 { margin: 0 0 .45rem; font-size: 1.55rem; color: var(--color-text); }
 .history-feature-copy p:last-child { margin: 0; color: var(--color-text-muted); line-height: 1.55; }
-.history-feature-button { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; padding: .85rem 1.2rem; white-space: nowrap; cursor: pointer; }
+.history-feature-button { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: .85rem 1.2rem; white-space: nowrap; cursor: pointer; }
 .history-feature-button svg,
 .history-feature-button .material-symbols-outlined { font-size: 1.15rem; }
 
