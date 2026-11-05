@@ -113,7 +113,9 @@
 
 .org-cta-btn {
   width: 100%;
-  padding: var(--space-3) var(--space-4);
+  min-height: 36px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.88rem;
 }
 
 .email-link {

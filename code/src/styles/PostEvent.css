@@ -245,14 +245,14 @@ textarea.form-input::placeholder {
 
 .postevent-button {
   width: 100%;
-  min-height: 42px;
+  min-height: 38px;
   border-radius: var(--radius-md);
-  padding: 0 16px;
+  padding: 0 14px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 13.5px;
   cursor: pointer;
   margin-top: 8px;
 }

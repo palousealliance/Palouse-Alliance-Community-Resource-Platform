@@ -98,9 +98,10 @@
 .navbar-link-primary,
 .navbar-link-secondary,
 .navbar-link-accent {
-  min-height: 42px;
+  min-height: 36px;
   border-radius: var(--radius-md);
-  padding: 0 16px;
+  padding: 0 14px;
+  font-size: 0.88rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -169,15 +170,15 @@
 
 .navbar-menu-toggle {
   display: none;
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
   border: none;
   border-radius: var(--radius-md);
   background: transparent;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
   padding: 0;
 }
 
@@ -187,12 +188,12 @@
 
 .navbar-menu-icon,
 .navbar-close-icon {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 1;
 }
 
@@ -248,13 +249,13 @@
 }
 
 .navbar-mobile-close {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border: none;
   border-radius: 50%;
   background: transparent;
   color: var(--color-text);
-  font-size: 1.7rem;
+  font-size: 1.4rem;
   line-height: 1;
   display: inline-flex;
   align-items: center;
@@ -268,8 +269,8 @@
 }
 
 .navbar-close-icon {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   display: block;
 }
 
@@ -277,20 +278,20 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 0.5rem;
-  padding-top: 1rem;
+  gap: 0.35rem;
+  padding-top: 0.75rem;
 }
 
 .navbar-mobile-section {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.2rem;
 }
 
 .navbar-mobile-divider {
   height: 1px;
   background: var(--color-border);
-  margin: 0.4rem 0;
+  margin: 0.35rem 0;
   border: none;
   flex-shrink: 0;
 }
@@ -301,14 +302,14 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  min-height: 44px;
+  min-height: 38px;
   text-decoration: none;
   color: var(--color-text);
   border: none;
   border-radius: var(--radius-md);
-  padding: 0.65rem 0.85rem;
+  padding: 0.45rem 0.75rem;
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   background: transparent;
   text-align: left;
   box-sizing: border-box;
@@ -328,25 +329,26 @@
 
 .navbar-mobile-actions {
   margin-top: auto;
-  padding-top: 1rem;
+  padding-top: 0.75rem;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.5rem;
   flex-shrink: 0;
 }
 
 .navbar-mobile-link.navbar-link-primary,
 .navbar-mobile-link.navbar-link-accent,
 .navbar-mobile-link.navbar-link-secondary {
-  min-height: 44px;
+  min-height: 38px;
   width: 100%;
   border-radius: var(--radius-md);
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 0.95rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--color-text-inverse);
   font-weight: 600;
+  font-size: 0.88rem;
 }
 
 .navbar-mobile-link.navbar-link-primary {
@@ -381,9 +383,12 @@
   width: 100%;
 }
 
-.navbar-logo,
-.navbar-mobile-logo {
+.navbar-logo {
   height: 44px;
+}
+
+.navbar-mobile-logo {
+  height: 36px;
 }
 
 /* Laptop layout optimizations (1025px - 1240px) */
@@ -412,9 +417,9 @@
 
   .navbar-link-primary,
   .navbar-link-secondary {
-    min-height: 38px;
+    min-height: 36px;
     padding: 0 12px;
-    font-size: 0.88rem;
+    font-size: 0.86rem;
   }
 
   .navbar-external-icon {
@@ -437,14 +442,15 @@
 @media (max-width: 480px) {
   .site-navbar {
     padding: 0 1rem;
+    height: 60px;
   }
 
   .navbar-logo {
-    height: 36px;
+    height: 34px;
   }
 
   .navbar-menu-toggle {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
   }
 }

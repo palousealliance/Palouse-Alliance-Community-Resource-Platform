@@ -136,7 +136,7 @@ const Navbar = ({ session, isAdmin }) => {
                     aria-controls="mobile-navigation"
                     aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
                 >
-                    <Menu className="navbar-menu-icon" aria-hidden="true" size={24} />
+                    <Menu className="navbar-menu-icon" aria-hidden="true" size={22} />
                 </button>
             </nav>
 
@@ -164,7 +164,7 @@ const Navbar = ({ session, isAdmin }) => {
                         onClick={closeMobileMenu}
                         aria-label="Close navigation menu"
                     >
-                        <X className="navbar-close-icon" aria-hidden="true" size={24} />
+                        <X className="navbar-close-icon" aria-hidden="true" size={20} />
                     </button>
                 </div>
 

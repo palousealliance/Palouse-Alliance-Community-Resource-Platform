@@ -40,8 +40,10 @@
 }
 
 .landing-btn {
-  min-width: 180px;
-  padding: var(--space-3) var(--space-5);
+  min-width: 140px;
+  min-height: 38px;
+  padding: 0.55rem 1.15rem;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
 }
@@ -113,15 +115,18 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.85rem 1.25rem;
+  gap: 0.45rem;
+  min-height: 36px;
+  padding: 0.5rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
 }
 
 .history-feature-button svg,
 .history-feature-button .material-symbols-outlined {
-  font-size: 1.15rem;
+  font-size: 1rem;
 }
 
 .landing-pillars.masonry-container {
