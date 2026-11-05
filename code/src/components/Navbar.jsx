@@ -40,6 +40,13 @@ const Navbar = ({ session, isAdmin }) => {
         setMobileMenuOpen(false);
     };
 
+    const isActive = (path) => {
+        if (path === "/") {
+            return location.pathname === "/";
+        }
+        return location.pathname.startsWith(path);
+    };
+
     useEffect(() => {
         const scrollContainer = document.querySelector(".app-scroll-container") || document.querySelector(".app-layout");
         const handleScroll = () => {
@@ -74,7 +81,7 @@ const Navbar = ({ session, isAdmin }) => {
 
                 <div className="navbar-desktop-links">
                     <div className="navbar-link-group">
-                        <Link to="/" className="navbar-link navbar-link-text">Home</Link>
+                        <Link to="/" className={`navbar-link navbar-link-text ${isActive("/") ? "is-active" : ""}`}>Home</Link>
                         <a
                             href="https://palouseresources.org/"
                             target="_blank"
@@ -98,9 +105,9 @@ const Navbar = ({ session, isAdmin }) => {
                             <ExternalLink className="navbar-external-icon" aria-hidden="true" size={14} />
                         </a>
 
-                        <Link to="/events" className="navbar-link navbar-link-text">Community Events</Link>
-                        <Link to="/organizations" className="navbar-link navbar-link-text">Organizations</Link>
-                        <Link to="/history" className="navbar-link navbar-link-text">Our History</Link>
+                        <Link to="/events" className={`navbar-link navbar-link-text ${isActive("/events") ? "is-active" : ""}`}>Community Events</Link>
+                        <Link to="/organizations" className={`navbar-link navbar-link-text ${isActive("/organizations") ? "is-active" : ""}`}>Organizations</Link>
+                        <Link to="/history" className={`navbar-link navbar-link-text ${isActive("/history") ? "is-active" : ""}`}>Our History</Link>
                     </div>
 
                     <div className="navbar-action-group">
@@ -162,46 +169,58 @@ const Navbar = ({ session, isAdmin }) => {
                 </div>
 
                 <div className="navbar-mobile-links">
-                    <Link to="/" className="navbar-mobile-link">Home</Link>
-                    <a
-                        href="https://palouseresources.org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="navbar-mobile-link"
-                        aria-label="Palouse Resource Guide — opens in a new tab"
-                        title="Opens in a new tab"
-                    >
-                        Palouse Resource Guide
-                        <ExternalLink className="navbar-external-icon" aria-hidden="true" size={14} />
-                    </a>
-                    <a
-                        href="https://wsu.givepulse.com/group/244255-palouse-alliance-for-healthy-individuals-families-communities"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="navbar-mobile-link"
-                        aria-label="GivePulse — opens in a new tab"
-                        title="Opens in a new tab"
-                    >
-                        GivePulse
-                        <ExternalLink className="navbar-external-icon" aria-hidden="true" size={14} />
-                    </a>
-                    <Link to="/events" className="navbar-mobile-link">Community Events</Link>
-                    <Link to="/organizations" className="navbar-mobile-link">Organizations</Link>
-                    <Link to="/history" className="navbar-mobile-link">Our History</Link>
-                    {isAdmin ? (
-                        <Link to="/admin" className="navbar-mobile-link navbar-link-primary btn-primary">Admin Dashboard</Link>
-                    ) : null}
-                    {session ? (
-                        <button
-                            onClick={handleLogout}
-                            className="navbar-mobile-link navbar-link-secondary navbar-mobile-button btn-secondary"
-                            type="button"
+                    <div className="navbar-mobile-section">
+                        <Link to="/" className={`navbar-mobile-link ${isActive("/") ? "is-active" : ""}`} onClick={closeMobileMenu}>Home</Link>
+                        <Link to="/events" className={`navbar-mobile-link ${isActive("/events") ? "is-active" : ""}`} onClick={closeMobileMenu}>Community Events</Link>
+                        <Link to="/organizations" className={`navbar-mobile-link ${isActive("/organizations") ? "is-active" : ""}`} onClick={closeMobileMenu}>Organizations</Link>
+                        <Link to="/history" className={`navbar-mobile-link ${isActive("/history") ? "is-active" : ""}`} onClick={closeMobileMenu}>Our History</Link>
+                    </div>
+
+                    <div className="navbar-mobile-divider" role="separator" />
+
+                    <div className="navbar-mobile-section">
+                        <a
+                            href="https://palouseresources.org/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="navbar-mobile-link"
+                            aria-label="Palouse Resource Guide — opens in a new tab"
+                            title="Opens in a new tab"
+                            onClick={closeMobileMenu}
                         >
-                            Logout
-                        </button>
-                    ) : (
-                        <Link to="/login" className="navbar-mobile-link navbar-link-primary btn-primary">Login</Link>
-                    )}
+                            <span>Palouse Resource Guide</span>
+                            <ExternalLink className="navbar-external-icon" aria-hidden="true" size={14} />
+                        </a>
+                        <a
+                            href="https://wsu.givepulse.com/group/244255-palouse-alliance-for-healthy-individuals-families-communities"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="navbar-mobile-link"
+                            aria-label="GivePulse — opens in a new tab"
+                            title="Opens in a new tab"
+                            onClick={closeMobileMenu}
+                        >
+                            <span>GivePulse</span>
+                            <ExternalLink className="navbar-external-icon" aria-hidden="true" size={14} />
+                        </a>
+                    </div>
+
+                    <div className="navbar-mobile-actions">
+                        {isAdmin ? (
+                            <Link to="/admin" className="navbar-mobile-link navbar-link-primary btn-primary" onClick={closeMobileMenu}>Admin Dashboard</Link>
+                        ) : null}
+                        {session ? (
+                            <button
+                                onClick={handleLogout}
+                                className="navbar-mobile-link navbar-link-secondary navbar-mobile-button btn-secondary"
+                                type="button"
+                            >
+                                Logout
+                            </button>
+                        ) : (
+                            <Link to="/login" className="navbar-mobile-link navbar-link-primary btn-primary" onClick={closeMobileMenu}>Login</Link>
+                        )}
+                    </div>
                 </div>
             </aside>
         </>

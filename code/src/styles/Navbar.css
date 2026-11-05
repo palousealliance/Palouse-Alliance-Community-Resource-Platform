@@ -61,11 +61,29 @@
 
 .navbar-link-text {
   color: var(--color-text);
-  padding: 0.5rem 0.25rem;
+  padding: 0.5rem 0.35rem;
+  position: relative;
+  font-size: 0.95rem;
 }
 
 .navbar-link-text:hover {
   color: var(--color-primary-800);
+}
+
+.navbar-link-text.is-active {
+  color: var(--color-primary-800);
+  font-weight: 600;
+}
+
+.navbar-link-text.is-active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0.35rem;
+  right: 0.35rem;
+  height: 2px;
+  background: var(--color-primary-700);
+  border-radius: 2px;
 }
 
 .navbar-external-icon {
@@ -181,7 +199,9 @@
 .navbar-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(17, 24, 39, 0.42);
+  background: rgba(17, 24, 39, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.24s ease;
@@ -197,17 +217,20 @@
   position: fixed;
   top: 0;
   right: 0;
-  width: min(84vw, 340px);
+  width: min(86vw, 360px);
   height: 100vh;
+  height: 100dvh;
   background: var(--color-surface);
   box-shadow: var(--shadow-md);
   transform: translateX(100%);
-  transition: transform 0.24s ease;
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 1100;
   display: flex;
   flex-direction: column;
-  padding: 1.25rem 1.1rem 1.5rem;
+  padding: 1.25rem 1.15rem 1.5rem;
   box-sizing: border-box;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .navbar-mobile-drawer.is-open {
@@ -219,8 +242,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding-bottom: 1rem;
+  padding-bottom: 0.9rem;
   border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
 }
 
 .navbar-mobile-close {
@@ -252,40 +276,77 @@
 .navbar-mobile-links {
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
-  padding-top: 1.25rem;
+  flex: 1;
+  gap: 0.5rem;
+  padding-top: 1rem;
 }
+
+.navbar-mobile-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.navbar-mobile-divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: 0.4rem 0;
+  border: none;
+  flex-shrink: 0;
+}
+
 
 .navbar-mobile-link {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   width: 100%;
+  min-height: 44px;
   text-decoration: none;
   color: var(--color-text);
   border: none;
-  border-radius: var(--radius-lg);
-  padding: 0.95rem 1rem;
+  border-radius: var(--radius-md);
+  padding: 0.65rem 0.85rem;
   font-weight: 500;
+  font-size: 0.95rem;
   background: transparent;
   text-align: left;
+  box-sizing: border-box;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .navbar-mobile-link:hover {
   background: var(--color-primary-100);
+  color: var(--color-primary-800);
+}
+
+.navbar-mobile-link.is-active {
+  background: var(--color-primary-100);
+  color: var(--color-primary-900);
+  font-weight: 600;
+}
+
+.navbar-mobile-actions {
+  margin-top: auto;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex-shrink: 0;
 }
 
 .navbar-mobile-link.navbar-link-primary,
 .navbar-mobile-link.navbar-link-accent,
 .navbar-mobile-link.navbar-link-secondary {
-  min-height: 42px;
+  min-height: 44px;
   width: 100%;
   border-radius: var(--radius-md);
-  padding: 0.95rem 1rem;
+  padding: 0.75rem 1rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--color-text-inverse);
+  font-weight: 600;
 }
 
 .navbar-mobile-link.navbar-link-primary {
@@ -325,12 +386,65 @@
   height: 44px;
 }
 
-@media (max-width: 1210px) {
+/* Laptop layout optimizations (1025px - 1240px) */
+@media (max-width: 1240px) and (min-width: 1025px) {
+  .site-navbar {
+    padding: 0 1.25rem;
+  }
+
+  .navbar-logo {
+    height: 38px;
+  }
+
+  .navbar-desktop-links {
+    gap: 0.6rem;
+  }
+
+  .navbar-link-group,
+  .navbar-action-group {
+    gap: 0.45rem;
+  }
+
+  .navbar-link-text {
+    font-size: 0.88rem;
+    padding: 0.4rem 0.25rem;
+  }
+
+  .navbar-link-primary,
+  .navbar-link-secondary {
+    min-height: 38px;
+    padding: 0 12px;
+    font-size: 0.88rem;
+  }
+
+  .navbar-external-icon {
+    margin-left: 0.2rem;
+  }
+}
+
+/* Tablets and Mobile breakpoint: Collapse to drawer */
+@media (max-width: 1024px) {
   .navbar-desktop-links {
     display: none;
   }
 
   .navbar-menu-toggle {
     display: inline-flex;
+  }
+}
+
+/* Compact mobile header adjustments */
+@media (max-width: 480px) {
+  .site-navbar {
+    padding: 0 1rem;
+  }
+
+  .navbar-logo {
+    height: 36px;
+  }
+
+  .navbar-menu-toggle {
+    width: 40px;
+    height: 40px;
   }
 }
