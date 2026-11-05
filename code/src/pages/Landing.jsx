@@ -40,15 +40,15 @@ const Landing = () => {
 
         <section className="history-feature" aria-labelledby="history-title">
           <div className="history-feature-icon" aria-hidden="true">
-            <Scroll size={40} className="history-feature-icon-svg" aria-hidden="true" />
+            <Scroll size={28} className="history-feature-icon-svg" aria-hidden="true" />
           </div>
           <div className="history-feature-copy">
             <p className="history-eyebrow">A legacy of collaboration</p>
-            <h2 id="history-title">Our story on the Palouse</h2>
+            <h2 id="history-title">Our Story on the Palouse</h2>
             <p>Learn how the Palouse Alliance began and how decades of partnership have shaped our work today.</p>
           </div>
           <button className="btn-primary history-feature-button" onClick={() => navigate('/history')}>
-            Explore our history
+            Explore Our History
             <ArrowRight size={18} aria-hidden="true" />
           </button>
         </section>
@@ -56,7 +56,9 @@ const Landing = () => {
         <div className="masonry-container landing-pillars">
           <div className="masonry-item">
             <div className="org-card static-pillar-card">
-              <Handshake className="pillar-icon" size={40} aria-hidden="true" />
+              <div className="pillar-icon-badge" aria-hidden="true">
+                <Handshake size={28} />
+              </div>
               <h3 className="org-title">Coordinate</h3>
               <p className="org-description">
                 We bridge the gaps between regional providers to ensure seamless community support systems.
@@ -66,17 +68,21 @@ const Landing = () => {
 
           <div className="masonry-item">
             <div className="org-card static-pillar-card">
-              <BookOpen className="pillar-icon" size={40} aria-hidden="true" />
+              <div className="pillar-icon-badge" aria-hidden="true">
+                <BookOpen size={28} />
+              </div>
               <h3 className="org-title">Network</h3>
               <p className="org-description">
-                We serve as a trusted resource to facilitate networking and collaboration
+                We serve as a trusted resource to facilitate networking and collaboration.
               </p>
             </div>
           </div>
 
           <div className="masonry-item">
             <div className="org-card static-pillar-card">
-              <Users className="pillar-icon" size={40} aria-hidden="true" />
+              <div className="pillar-icon-badge" aria-hidden="true">
+                <Users size={28} />
+              </div>
               <h3 className="org-title">Advocate</h3>
               <p className="org-description">
                 We are a collective voice for health and human services in our region.
