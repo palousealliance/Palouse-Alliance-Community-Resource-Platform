@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { X, ChevronUp, ChevronDown } from "lucide-react";
+import { X, ChevronUp, ChevronDown, Calendar } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import { parseSupabaseDateTime } from "../lib/dateTime";
 
@@ -254,6 +254,9 @@ const MyEvents = ({ session, formatTimeRange, onClose, onPostEvent, canPostEvent
           </div>
         ) : myEvents.length === 0 && !myEventsLoading ? (
           <div className="my-events-empty-state">
+            <div className="empty-state-icon" aria-hidden="true">
+              <Calendar size={22} />
+            </div>
             <h3>No Submitted Events Yet</h3>
             <p>
               When you submit an event for review, it will appear here with its
