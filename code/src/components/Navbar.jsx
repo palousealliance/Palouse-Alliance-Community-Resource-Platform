@@ -120,10 +120,10 @@ const Navbar = ({ session, isAdmin }) => {
                                 className="navbar-link navbar-link-secondary navbar-button btn-secondary"
                                 type="button"
                             >
-                                Logout
+                                Log Out
                             </button>
                         ) : (
-                            <Link to="/login" className="navbar-link navbar-link-primary btn-primary">Login</Link>
+                            <Link to="/login" className="navbar-link navbar-link-primary btn-primary">Log In</Link>
                         )}
                     </div>
                 </div>
@@ -215,10 +215,10 @@ const Navbar = ({ session, isAdmin }) => {
                                 className="navbar-mobile-link navbar-link-secondary navbar-mobile-button btn-secondary"
                                 type="button"
                             >
-                                Logout
+                                Log Out
                             </button>
                         ) : (
-                            <Link to="/login" className="navbar-mobile-link navbar-link-primary btn-primary" onClick={closeMobileMenu}>Login</Link>
+                            <Link to="/login" className="navbar-mobile-link navbar-link-primary btn-primary" onClick={closeMobileMenu}>Log In</Link>
                         )}
                     </div>
                 </div>

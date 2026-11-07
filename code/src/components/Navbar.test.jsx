@@ -50,7 +50,7 @@ describe('Navbar', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByRole('link', { name: 'Login' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Log In' })).toBeInTheDocument();
     expect(screen.queryByRole('link', { name: 'Register' })).not.toBeInTheDocument();
   });
 
@@ -64,7 +64,7 @@ describe('Navbar', () => {
     );
 
     expect(screen.queryByRole('link', { name: 'Admin' })).not.toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: 'Logout' }));
+    await user.click(screen.getByRole('button', { name: 'Log Out' }));
 
     await waitFor(() => {
       expect(mockSignOut).toHaveBeenCalledTimes(1);

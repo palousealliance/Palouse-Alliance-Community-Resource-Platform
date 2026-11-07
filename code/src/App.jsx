@@ -116,7 +116,7 @@ function RouteHandler() {
       "/events": "Community Events | Palouse Alliance",
       "/organizations": "Organizations | Palouse Alliance",
       "/history": "Our History | Palouse Alliance",
-      "/login": "Member Login | Palouse Alliance",
+      "/login": "Member Log In | Palouse Alliance",
       "/admin": "Admin Dashboard | Palouse Alliance",
     };
     document.title = titles[location.pathname] || "Palouse Alliance";

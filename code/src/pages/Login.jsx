@@ -119,7 +119,7 @@ const Login = () => {
           </div>
           <h1 className="login-title">Welcome Back</h1>
           <p className="login-subtitle">
-            Sign in to your account to manage events <br />
+            Log in to your account to manage events <br />
             and connect with the community.
           </p>
 
@@ -201,7 +201,7 @@ const Login = () => {
                 cooldownSeconds > 0
               }
             >
-              {cooldownSeconds > 0 ? `Try again in ${cooldownSeconds}s` : 'Sign In'}
+              {cooldownSeconds > 0 ? `Try again in ${cooldownSeconds}s` : 'Log In'}
             </button>
 
             {errorMessage && (

@@ -267,7 +267,7 @@ const MyEvents = ({ session, formatTimeRange, onClose, onPostEvent, canPostEvent
                 className="my-events-cta"
                 onClick={onPostEvent || (() => {})}
               >
-                Post an Event
+                Post Event
               </button>
             ) : (
               <p className="my-events-group-empty">

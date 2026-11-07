@@ -52,7 +52,7 @@ describe('Login', () => {
 
     await user.type(screen.getByLabelText(/email address/i), 'a@example.com');
     await user.type(screen.getByLabelText(/password/i, { selector: 'input' }), 'bad-password');
-    await user.click(screen.getByRole('button', { name: 'Sign In' }));
+    await user.click(screen.getByRole('button', { name: 'Log In' }));
 
     await waitFor(() => {
       expect(screen.getByRole('alert')).toHaveTextContent('Invalid credentials');
@@ -79,7 +79,7 @@ describe('Login', () => {
 
     await user.type(screen.getByLabelText(/email address/i), 'a@example.com');
     await user.type(screen.getByLabelText(/password/i, { selector: 'input' }), 'good-password');
-    await user.click(screen.getByRole('button', { name: 'Sign In' }));
+    await user.click(screen.getByRole('button', { name: 'Log In' }));
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith('/');

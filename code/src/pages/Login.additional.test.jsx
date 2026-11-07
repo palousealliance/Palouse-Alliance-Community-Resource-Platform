@@ -32,7 +32,7 @@ describe('Login extra behavior', () => {
     vi.clearAllMocks();
   });
 
-  it('keeps the sign in button disabled for invalid credentials', async () => {
+  it('keeps the log in button disabled for invalid credentials', async () => {
     const user = userEvent.setup();
 
     render(
@@ -44,7 +44,7 @@ describe('Login extra behavior', () => {
     await user.type(screen.getByLabelText(/email address/i), 'invalid-email');
     await user.type(screen.getByLabelText(/password/i, { selector: 'input' }), 'bad-pass');
 
-    expect(screen.getByRole('button', { name: 'Sign In' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Log In' })).toBeDisabled();
     expect(mockNavigate).not.toHaveBeenCalled();
   });
 
