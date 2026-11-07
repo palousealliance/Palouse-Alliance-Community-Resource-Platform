@@ -396,6 +396,17 @@
   font-size: 28px;
   line-height: 1;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close svg {
+  pointer-events: none;
+}
+
+.modal-close:hover {
+  color: var(--color-text);
 }
 
 .my-events-popup-header {
@@ -641,6 +652,16 @@
   gap: 16px;
   cursor: pointer;
   text-align: left;
+}
+
+.my-events-group-toggle:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.my-events-group-toggle:disabled .my-events-group-chevron {
+  opacity: 0.45;
+  cursor: default;
 }
 
 .my-events-group-title {

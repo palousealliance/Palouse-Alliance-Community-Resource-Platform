@@ -149,6 +149,17 @@
   line-height: 1;
   cursor: pointer;
   padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-close svg {
+  pointer-events: none;
+}
+
+.popup-close:hover {
+  color: var(--color-text);
 }
 
 @media (max-width: 520px) {

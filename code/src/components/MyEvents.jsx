@@ -216,15 +216,12 @@ const MyEvents = ({ session, formatTimeRange, onClose, onPostEvent, canPostEvent
   );
 
   function toggleMyEventsSection(sectionName) {
-    setMyEventsSections((currentSections) => {
-      const isOpen = currentSections[sectionName];
-      return {
-        pending: false,
-        approved: false,
-        rejected: false,
-        [sectionName]: !isOpen,
-      };
-    });
+    setMyEventsSections(() => ({
+      pending: false,
+      approved: false,
+      rejected: false,
+      [sectionName]: true,
+    }));
   }
 
   return (
@@ -297,6 +294,8 @@ const MyEvents = ({ session, formatTimeRange, onClose, onPostEvent, canPostEvent
                 className="my-events-group-toggle"
                 onClick={() => toggleMyEventsSection("pending")}
                 type="button"
+                disabled={myEventsSections.pending}
+                aria-expanded={myEventsSections.pending}
               >
                 <span className="my-events-group-title">Pending Events</span>
                 <span className="my-events-group-meta">
@@ -338,6 +337,8 @@ const MyEvents = ({ session, formatTimeRange, onClose, onPostEvent, canPostEvent
                 className="my-events-group-toggle"
                 onClick={() => toggleMyEventsSection("approved")}
                 type="button"
+                disabled={myEventsSections.approved}
+                aria-expanded={myEventsSections.approved}
               >
                 <span className="my-events-group-title">Approved Events</span>
                 <span className="my-events-group-meta">
@@ -379,6 +380,8 @@ const MyEvents = ({ session, formatTimeRange, onClose, onPostEvent, canPostEvent
                 className="my-events-group-toggle"
                 onClick={() => toggleMyEventsSection("rejected")}
                 type="button"
+                disabled={myEventsSections.rejected}
+                aria-expanded={myEventsSections.rejected}
               >
                 <span className="my-events-group-title">Rejected Events</span>
                 <span className="my-events-group-meta">

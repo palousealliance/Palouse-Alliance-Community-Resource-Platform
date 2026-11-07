@@ -46,7 +46,7 @@ textarea {
   color: inherit;
 }
 
-:where(button, .btn-primary, .btn-secondary, .primary-btn, .secondary-btn, .btn-outline, .my-events-cta, .filter-trigger) {
+:where(button, .btn-primary, .btn-secondary, .btn-danger, .primary-btn, .secondary-btn, .btn-outline, .danger-btn, .btn-danger-primary, .btn-danger-secondary, .btn-danger-outline, .my-events-cta, .filter-trigger) {
   min-height: 36px;
   border-radius: var(--radius-md);
   padding: 0 14px;
@@ -160,15 +160,80 @@ a.primary-btn:hover {
   text-decoration: none;
 }
 
-.btn-danger {
-  border: 1px solid var(--color-danger-border);
-  background: var(--color-danger-bg);
-  color: var(--color-danger);
+/* Danger button - Primary variant (consistent bright red, matching primary button formatting) */
+.btn-danger,
+.danger-btn,
+.btn-danger-primary {
+  border: 1px solid var(--btn-danger-border);
+  background: var(--btn-danger-bg);
+  color: var(--btn-danger-text);
   box-shadow: var(--shadow-sm);
+  text-decoration: none;
 }
 
-.btn-danger:hover:not(:disabled) {
-  background: rgba(185, 74, 72, 0.2);
+.btn-danger:hover:not(:disabled),
+.danger-btn:hover:not(:disabled),
+.btn-danger-primary:hover:not(:disabled),
+a.btn-danger:hover,
+a.danger-btn:hover,
+a.btn-danger-primary:hover {
+  background: var(--btn-danger-bg-hover);
+  color: var(--btn-danger-text);
+  border-color: var(--btn-danger-bg-hover);
+}
+
+.btn-danger:focus-visible,
+.danger-btn:focus-visible,
+.btn-danger-primary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(184, 68, 68, 0.35);
+}
+
+/* Danger button - Secondary variant (matching regular secondary button outline formatting but danger colored) */
+.btn-danger-secondary,
+.btn-secondary-danger,
+.btn-danger-outline,
+.btn-outline-danger,
+.btn-danger.btn-secondary,
+.btn-secondary.btn-danger,
+.btn-danger.btn-outline,
+.btn-outline.btn-danger,
+.btn-danger.secondary-btn,
+.secondary-btn.btn-danger {
+  border: 1px solid var(--btn-danger-secondary-border);
+  background: var(--btn-danger-secondary-bg);
+  color: var(--btn-danger-secondary-text);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+}
+
+.btn-danger-secondary:hover:not(:disabled),
+.btn-secondary-danger:hover:not(:disabled),
+.btn-danger-outline:hover:not(:disabled),
+.btn-outline-danger:hover:not(:disabled),
+.btn-danger.btn-secondary:hover:not(:disabled),
+.btn-secondary.btn-danger:hover:not(:disabled),
+.btn-danger.btn-outline:hover:not(:disabled),
+.btn-outline.btn-danger:hover:not(:disabled),
+.btn-danger.secondary-btn:hover:not(:disabled),
+.secondary-btn.btn-danger:hover:not(:disabled),
+a.btn-danger-secondary:hover,
+a.btn-secondary-danger:hover,
+a.btn-danger-outline:hover,
+a.btn-outline-danger:hover {
+  background: var(--btn-danger-secondary-bg-hover);
+  color: var(--btn-danger-secondary-text-hover);
+  border-color: var(--btn-danger-secondary-border-hover);
+}
+
+.btn-danger-secondary:focus-visible,
+.btn-secondary-danger:focus-visible,
+.btn-danger-outline:focus-visible,
+.btn-outline-danger:focus-visible,
+.btn-danger.btn-secondary:focus-visible,
+.btn-secondary.btn-danger:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(184, 68, 68, 0.25);
 }
 
 button:disabled,
@@ -179,6 +244,10 @@ button[disabled],
 .primary-btn:disabled,
 .secondary-btn:disabled,
 .btn-outline:disabled,
+.danger-btn:disabled,
+.btn-danger-primary:disabled,
+.btn-danger-secondary:disabled,
+.btn-danger-outline:disabled,
 input:disabled,
 input[disabled],
 select:disabled,
@@ -203,7 +272,11 @@ button[disabled]:active,
 .btn-danger:disabled:hover,
 .primary-btn:disabled:hover,
 .secondary-btn:disabled:hover,
-.btn-outline:disabled:hover {
+.btn-outline:disabled:hover,
+.danger-btn:disabled:hover,
+.btn-danger-primary:disabled:hover,
+.btn-danger-secondary:disabled:hover,
+.btn-danger-outline:disabled:hover {
   cursor: not-allowed;
   box-shadow: none !important;
   transform: none !important;
@@ -236,11 +309,42 @@ button[type="submit"]:disabled:hover,
   border-color: var(--btn-secondary-border) !important;
 }
 
+/* Primary danger disabled lock */
 .btn-danger:disabled,
-.btn-danger:disabled:hover {
-  background: var(--color-danger-bg) !important;
-  color: var(--color-danger) !important;
-  border-color: var(--color-danger-border) !important;
+.btn-danger:disabled:hover,
+.danger-btn:disabled,
+.danger-btn:disabled:hover,
+.btn-danger-primary:disabled,
+.btn-danger-primary:disabled:hover {
+  background: var(--btn-danger-bg) !important;
+  color: var(--btn-danger-text) !important;
+  border-color: var(--btn-danger-border) !important;
+}
+
+/* Secondary danger disabled lock */
+.btn-danger-secondary:disabled,
+.btn-danger-secondary:disabled:hover,
+.btn-secondary-danger:disabled,
+.btn-secondary-danger:disabled:hover,
+.btn-danger-outline:disabled,
+.btn-danger-outline:disabled:hover,
+.btn-outline-danger:disabled,
+.btn-outline-danger:disabled:hover,
+.btn-danger.btn-secondary:disabled,
+.btn-danger.btn-secondary:disabled:hover,
+.btn-secondary.btn-danger:disabled,
+.btn-secondary.btn-danger:disabled:hover,
+.btn-danger.btn-outline:disabled,
+.btn-danger.btn-outline:disabled:hover,
+.btn-outline.btn-danger:disabled,
+.btn-outline.btn-danger:disabled:hover,
+.btn-danger.secondary-btn:disabled,
+.btn-danger.secondary-btn:disabled:hover,
+.secondary-btn.btn-danger:disabled,
+.secondary-btn.btn-danger:disabled:hover {
+  background: var(--btn-danger-secondary-bg) !important;
+  color: var(--btn-danger-secondary-text) !important;
+  border-color: var(--btn-danger-secondary-border) !important;
 }
 
 .filter-trigger {
@@ -360,3 +464,100 @@ a.btn-outline:hover {
 .home-hero h1 {
   letter-spacing: -0.01em;
 }
+
+/* Icon buttons - cursor consistency and hover icon invariant */
+.icon-button,
+button.icon-button,
+.modal-close,
+.popup-close {
+  cursor: pointer;
+}
+
+.icon-button,
+button.icon-button {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  border-radius: var(--radius-md);
+}
+
+.icon-button:disabled,
+button.icon-button:disabled,
+.modal-close:disabled,
+.popup-close:disabled {
+  cursor: not-allowed;
+}
+
+.icon-button svg,
+.icon-button svg *,
+button.icon-button svg,
+button.icon-button svg *,
+.modal-close svg,
+.modal-close svg *,
+.popup-close svg,
+.popup-close svg *,
+.icon-button .material-symbols-outlined,
+button.icon-button .material-symbols-outlined {
+  pointer-events: none;
+  cursor: inherit;
+  filter: none;
+  opacity: 1;
+}
+
+.icon-button:hover svg,
+.icon-button:hover svg *,
+button.icon-button:hover svg,
+button.icon-button:hover svg *,
+.modal-close:hover svg,
+.modal-close:hover svg *,
+.popup-close:hover svg,
+.popup-close:hover svg * {
+  filter: none;
+  opacity: 1;
+}
+
+/* Ensure icon colors stay invariant and do not darken on hover */
+.btn-primary.icon-button svg,
+.btn-primary.icon-button:hover svg,
+.primary-btn.icon-button svg,
+.primary-btn.icon-button:hover svg {
+  color: var(--btn-primary-text) !important;
+  stroke: var(--btn-primary-text) !important;
+}
+
+.btn-danger.icon-button svg,
+.btn-danger.icon-button:hover svg,
+.danger-btn.icon-button svg,
+.danger-btn.icon-button:hover svg,
+.btn-danger-primary.icon-button svg,
+.btn-danger-primary.icon-button:hover svg {
+  color: var(--btn-danger-text) !important;
+  stroke: var(--btn-danger-text) !important;
+}
+
+.btn-secondary.icon-button svg,
+.btn-secondary.icon-button:hover svg,
+.secondary-btn.icon-button svg,
+.secondary-btn.icon-button:hover svg,
+.btn-outline.icon-button svg,
+.btn-outline.icon-button:hover svg {
+  color: var(--btn-secondary-text) !important;
+  stroke: var(--btn-secondary-text) !important;
+}
+
+.btn-danger-secondary.icon-button svg,
+.btn-danger-secondary.icon-button:hover svg,
+.btn-secondary-danger.icon-button svg,
+.btn-secondary-danger.icon-button:hover svg,
+.btn-danger-outline.icon-button svg,
+.btn-danger-outline.icon-button:hover svg {
+  color: var(--btn-danger-secondary-text) !important;
+  stroke: var(--btn-danger-secondary-text) !important;
+}
+

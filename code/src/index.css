@@ -39,14 +39,15 @@
   /* Semantic */
   --color-success: #56684F; /* aligned to primary */
   --color-warning: #E0B12D; /* aligned to accent */
-  --color-danger: #B94A48;
+  --color-danger: #B84444; /* muted earthy crimson matching website palette */
+  --color-danger-hover: #9B3333;
   --color-info: #3B6E8C;
   --color-success-bg: rgba(86, 104, 79, 0.15);
   --color-success-border: #b7dbb0;
   --color-warning-bg: rgba(224, 177, 45, 0.18);
   --color-warning-border: #edd38b;
-  --color-danger-bg: rgba(185, 74, 72, 0.15);
-  --color-danger-border: #efb1b1;
+  --color-danger-bg: rgba(184, 68, 68, 0.12);
+  --color-danger-border: #ECA8A8;
 
   /* Links */
   --color-link: #3F4C3A;
@@ -84,6 +85,21 @@
   --btn-secondary-bg-hover: var(--color-primary-100);
   --btn-secondary-text-hover: var(--color-primary-800);
   --btn-secondary-border-hover: var(--color-primary-700);
+
+  /* Danger Button tokens */
+  /* Primary variant (solid muted red, matching primary button formatting) */
+  --btn-danger-bg: #B84444;
+  --btn-danger-bg-hover: #9B3333;
+  --btn-danger-text: var(--color-text-inverse);
+  --btn-danger-border: #B84444;
+
+  /* Secondary variant (matching regular secondary formatting but danger colored) */
+  --btn-danger-secondary-bg: transparent;
+  --btn-danger-secondary-text: #B84444;
+  --btn-danger-secondary-border: #B84444;
+  --btn-danger-secondary-bg-hover: rgba(184, 68, 68, 0.08);
+  --btn-danger-secondary-text-hover: #9B3333;
+  --btn-danger-secondary-border-hover: #9B3333;
 
   /* Disabled */
   --btn-disabled-bg: #E9EEE7;

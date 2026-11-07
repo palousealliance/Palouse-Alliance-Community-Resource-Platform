@@ -1568,6 +1568,8 @@ const updateEventStatus = async (eventId, status) => {
                     type="button"
                     className="admin-events-group-toggle"
                     onClick={() => toggleManageEventsSection(key)}
+                    disabled={manageEventsSections[key]}
+                    aria-expanded={manageEventsSections[key]}
                   >
                     <span>{title} ({items.length})</span>
                     <span className="admin-events-group-chevron">
