@@ -782,14 +782,14 @@ const Events = ({ session }) => {
               <div className="filter-button-group">
                 <button
                   type="button"
-                  className={`filter-trigger ${filterMenuOpen === "categories" ? "active" : ""}`}
+                  className={`btn-secondary filter-trigger ${filterMenuOpen === "categories" ? "active" : ""}`}
                   onClick={() => toggleFilterMenu("categories")}
                 >
                   Categories
                 </button>
                 <button
                   type="button"
-                  className={`filter-trigger ${filterMenuOpen === "tags" ? "active" : ""}`}
+                  className={`btn-secondary filter-trigger ${filterMenuOpen === "tags" ? "active" : ""}`}
                   onClick={() => toggleFilterMenu("tags")}
                 >
                   Tags
