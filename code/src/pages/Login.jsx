@@ -119,7 +119,7 @@ const Login = () => {
           </div>
           <h1 className="login-title">Welcome Back</h1>
           <p className="login-subtitle">
-            Sign in to your organization account to manage events <br />
+            Sign in to your account to manage events <br />
             and connect with the community.
           </p>
 
