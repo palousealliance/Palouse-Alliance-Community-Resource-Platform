@@ -908,9 +908,12 @@ const Events = ({ session }) => {
 
             {!eventsLoading && filteredEvents.length === 0 ? (
               <div className="empty-state">
+                <div className="empty-state-icon" aria-hidden="true">
+                  <Search size={22} />
+                </div>
                 <h3>No Events Found</h3>
                 <p>
-                  Try adjusting your search.
+                  Try adjusting your search or filters to find what you're looking for.
                 </p>
               </div>
             ) : eventsLoading ? (

@@ -261,16 +261,19 @@ const Organizations = ({ session }) => {
             })}
         </div>
 
-        {filteredOrgs.length === 0 && (
+        {loading ? (
           <div className="empty-state">
-            <h3>No Organizations Found</h3>
-            {loading ? (
-              <p>Loading organizations...</p>
-            ) : (
-              <p>Try adjusting your search.</p>
-            )}
+            <p>Loading organizations...</p>
           </div>
-        )}
+        ) : filteredOrgs.length === 0 ? (
+          <div className="empty-state">
+            <div className="empty-state-icon" aria-hidden="true">
+              <Search size={22} />
+            </div>
+            <h3>No Organizations Found</h3>
+            <p>Try adjusting your search to find what you're looking for.</p>
+          </div>
+        ) : null}
       </main>
     </div>
   );
