@@ -156,12 +156,22 @@
 .home-filter-controls .btn-secondary,
 .home-actions .btn-primary,
 .home-actions .btn-secondary {
+  min-width: 140px;
   min-height: 38px;
   padding: 0.55rem 1.15rem;
   font-size: 0.9rem;
   font-weight: 600;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   white-space: nowrap;
+}
+
+@media (max-width: 360px) {
+  .home-filter-controls .filter-trigger,
+  .home-filter-controls .btn-secondary,
+  .home-actions .btn-primary,
+  .home-actions .btn-secondary {
+    min-width: 0;
+  }
 }
 
 .filter-trigger {
@@ -170,18 +180,6 @@
   justify-content: center;
   gap: 8px;
   cursor: pointer;
-}
-
-.home-filter-controls .filter-trigger.active {
-  border-color: var(--btn-primary-border);
-  background: var(--btn-primary-bg);
-  color: var(--btn-primary-text);
-}
-
-.home-filter-controls .filter-trigger.active:hover {
-  border-color: var(--btn-primary-bg-hover);
-  background: var(--btn-primary-bg-hover);
-  color: var(--btn-primary-text);
 }
 
 .filter-menu {
