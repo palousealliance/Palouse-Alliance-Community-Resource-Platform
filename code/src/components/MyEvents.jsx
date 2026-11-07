@@ -234,7 +234,7 @@ const MyEvents = ({ session, formatTimeRange, onClose, onPostEvent, canPostEvent
           <div>
             <h2>My Events</h2>
             <p className="panel-description">
-              Track where your community submissions stand.
+              Track the review and approval status of community events you've created. This dashboard only displays events submitted by your account.
             </p>
           </div>
           <button
@@ -259,8 +259,7 @@ const MyEvents = ({ session, formatTimeRange, onClose, onPostEvent, canPostEvent
             </div>
             <h3>No Submitted Events Yet</h3>
             <p>
-              When you submit an event for review, it will appear here with its
-              approval status.
+              You haven't created or submitted any events yet. When you submit a community event for review, it will appear here so you can track its approval status.
             </p>
             {canPostEvent ? (
               <button

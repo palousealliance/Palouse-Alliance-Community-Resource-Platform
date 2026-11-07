@@ -844,6 +844,7 @@ const Events = ({ session }) => {
                   type="button"
                   className="btn-secondary"
                   onClick={() => setIsMyEventsOpen(true)}
+                  title="Track events you've created and submitted for review"
                 >
                   My Events
                 </button>
