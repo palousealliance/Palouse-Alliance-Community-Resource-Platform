@@ -1,5 +1,4 @@
 .login-page {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   background: var(--color-bg);
@@ -7,11 +6,13 @@
 }
 
 .login-main {
-  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--page-content-padding);
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 48px 16px;
+  box-sizing: border-box;
 }
 
 .login-card {
@@ -199,6 +200,14 @@ select.form-input option[value=""] {
 }
 
 @media (max-width: 600px) {
+  .login-main {
+    padding: 24px 16px 40px;
+  }
+
+  .login-card {
+    padding: 32px 20px 28px;
+  }
+
   .form-grid {
     grid-template-columns: 1fr;
   }
