@@ -78,13 +78,13 @@
   --btn-primary-text: var(--color-text-inverse);
   --btn-primary-border: var(--color-primary-700);
 
-  /* Option A: Secondary (outline/ghost) for Login */
-  --btn-secondary-bg: transparent;
-  --btn-secondary-text: var(--color-primary-800);
-  --btn-secondary-border: var(--color-primary-700);
-  --btn-secondary-bg-hover: var(--color-primary-100);
-  --btn-secondary-text-hover: var(--color-primary-800);
-  --btn-secondary-border-hover: var(--color-primary-700);
+  /* Secondary button tokens (filled tonal / soft surface) */
+  --btn-secondary-bg: #E2EAE0;
+  --btn-secondary-text: #2D3E2F;
+  --btn-secondary-border: #C2D5BD;
+  --btn-secondary-bg-hover: #D4E2D0;
+  --btn-secondary-text-hover: #1E2B20;
+  --btn-secondary-border-hover: #AFC6A8;
 
   /* Danger Button tokens */
   /* Primary variant (solid muted red, matching primary button formatting) */
@@ -94,12 +94,12 @@
   --btn-danger-border: #B84444;
 
   /* Secondary variant (matching regular secondary formatting but danger colored) */
-  --btn-danger-secondary-bg: transparent;
-  --btn-danger-secondary-text: #B84444;
-  --btn-danger-secondary-border: #B84444;
-  --btn-danger-secondary-bg-hover: rgba(184, 68, 68, 0.08);
-  --btn-danger-secondary-text-hover: #9B3333;
-  --btn-danger-secondary-border-hover: #9B3333;
+  --btn-danger-secondary-bg: #FBEAEA;
+  --btn-danger-secondary-text: #962E2E;
+  --btn-danger-secondary-border: #ECA8A8;
+  --btn-danger-secondary-bg-hover: #F3D3D3;
+  --btn-danger-secondary-text-hover: #7A1F1F;
+  --btn-danger-secondary-border-hover: #DF8C8C;
 
   /* Disabled */
   --btn-disabled-bg: #E9EEE7;

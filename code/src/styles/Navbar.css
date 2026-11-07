@@ -143,7 +143,7 @@
   color: var(--color-text);
 }
 
-/* Secondary / less prominent button (outline with primary text) */
+/* Secondary button (filled tonal with subtle border) */
 .navbar-link-secondary {
   color: var(--btn-secondary-text);
   background: var(--btn-secondary-bg);
@@ -152,8 +152,9 @@
 }
 
 .navbar-link-secondary:hover {
-  background: var(--btn-secondary-bg-hover); /* subtle primary tint */
-  color: var(--btn-secondary-text);
+  background: var(--btn-secondary-bg-hover);
+  color: var(--btn-secondary-text-hover);
+  border-color: var(--btn-secondary-border-hover);
 }
 
 .navbar-button,
@@ -372,10 +373,13 @@
   background: var(--btn-secondary-bg);
   color: var(--btn-secondary-text);
   border: 1px solid var(--btn-secondary-border);
+  box-shadow: var(--shadow-sm);
 }
 
 .navbar-mobile-link.navbar-link-secondary:hover {
   background: var(--btn-secondary-bg-hover);
+  color: var(--btn-secondary-text-hover);
+  border-color: var(--btn-secondary-border-hover);
 }
 
 .navbar-mobile-button {

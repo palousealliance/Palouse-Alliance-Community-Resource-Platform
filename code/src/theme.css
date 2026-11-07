@@ -160,6 +160,33 @@ a.primary-btn:hover {
   text-decoration: none;
 }
 
+.btn-secondary:hover:not(:disabled),
+.secondary-btn:hover:not(:disabled),
+.btn-outline:hover:not(:disabled),
+a.btn-secondary:hover,
+a.secondary-btn:hover,
+a.btn-outline:hover {
+  background: var(--btn-secondary-bg-hover);
+  color: var(--btn-secondary-text-hover);
+  border-color: var(--btn-secondary-border-hover);
+}
+
+.btn-secondary:active:not(:disabled),
+.secondary-btn:active:not(:disabled),
+.btn-outline:active:not(:disabled) {
+  background: #C7D9C2;
+  border-color: #A0B799;
+  color: #182319;
+  transform: translateY(1px);
+}
+
+.btn-secondary:focus-visible,
+.secondary-btn:focus-visible,
+.btn-outline:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(86, 104, 79, 0.25);
+}
+
 /* Danger button - Primary variant (consistent bright red, matching primary button formatting) */
 .btn-danger,
 .danger-btn,
@@ -189,7 +216,7 @@ a.btn-danger-primary:hover {
   box-shadow: 0 0 0 3px rgba(184, 68, 68, 0.35);
 }
 
-/* Danger button - Secondary variant (matching regular secondary button outline formatting but danger colored) */
+/* Danger button - Secondary variant (matching regular secondary button formatting but danger colored) */
 .btn-danger-secondary,
 .btn-secondary-danger,
 .btn-danger-outline,
@@ -224,6 +251,18 @@ a.btn-outline-danger:hover {
   background: var(--btn-danger-secondary-bg-hover);
   color: var(--btn-danger-secondary-text-hover);
   border-color: var(--btn-danger-secondary-border-hover);
+}
+
+.btn-danger-secondary:active:not(:disabled),
+.btn-secondary-danger:active:not(:disabled),
+.btn-danger-outline:active:not(:disabled),
+.btn-outline-danger:active:not(:disabled),
+.btn-danger.btn-secondary:active:not(:disabled),
+.btn-secondary.btn-danger:active:not(:disabled) {
+  background: #EABDBD;
+  border-color: #D37A7A;
+  color: #681616;
+  transform: translateY(1px);
 }
 
 .btn-danger-secondary:focus-visible,
@@ -354,12 +393,7 @@ button[type="submit"]:disabled:hover,
   box-shadow: var(--shadow-sm);
 }
 
-.btn-secondary:hover:not(:disabled),
-.secondary-btn:hover:not(:disabled),
-.btn-outline:hover:not(:disabled),
-a.btn-secondary:hover,
-a.secondary-btn:hover,
-a.btn-outline:hover {
+.filter-trigger:hover:not(:disabled) {
   background: var(--btn-secondary-bg-hover);
   color: var(--btn-secondary-text-hover);
   border-color: var(--btn-secondary-border-hover);
