@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, Calendar, Phone, Mail } from "lucide-react";
+import Popup from "../components/Popup";
 import { isEventActive } from "../lib/dateTime";
 import { supabase } from "../lib/supabase";
 import {
@@ -12,6 +13,28 @@ import {
 import "../styles/Organizations.css";
 
 const SUPPORT_EMAIL = "palousealliance@gmail.com";
+
+function getEditOrgMailtoLink(org) {
+  const subject = `Edit Organization Details: ${org?.name || "Organization"}`;
+  const lines = [
+    "Hello Palouse Alliance Team,",
+    "",
+    `I would like to request updates to the organization profile for ${org?.name || "our organization"}.`,
+    "",
+    "Updated Details (please fill in any changed fields):",
+    `- Organization Name: ${org?.name || ""}`,
+    `- Description: ${org?.description || ""}`,
+    `- Location: ${org?.location || ""}`,
+    `- Contact Email: ${org?.email || ""}`,
+    `- Phone Number: ${org?.phone_number || ""}`,
+    "",
+    "Additional Notes / Changes:",
+    "",
+    "",
+    "Thank you!",
+  ];
+  return `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+}
 
 const Organizations = ({ session }) => {
   const navigate = useNavigate();
@@ -25,6 +48,7 @@ const Organizations = ({ session }) => {
   const [loading, setLoading] = useState(!Array.isArray(cachedOrganizations));
   const [revalidationKey, setRevalidationKey] = useState(0);
   const [currentUserOrgId, setCurrentUserOrgId] = useState(null);
+  const [editingOrg, setEditingOrg] = useState(null);
 
   const isVisibleOrg = (org) => {
     const name = org.name?.trim()?.toLowerCase();
@@ -195,7 +219,12 @@ const Organizations = ({ session }) => {
                 org.eventCount > 0 ||
                 isValid(org.phone_number) ||
                 isValid(org.email);
-              const showSupportLink = Boolean(session?.user?.id && currentUserOrgId && currentUserOrgId !== "unaffiliated" && org.id === currentUserOrgId);
+              const canEditOrg = Boolean(
+                session?.user?.id &&
+                currentUserOrgId &&
+                currentUserOrgId !== "unaffiliated" &&
+                String(org.id) === String(currentUserOrgId)
+              );
 
               return (
                 <div key={org.id} className="masonry-item">
@@ -238,23 +267,28 @@ const Organizations = ({ session }) => {
                       </div>
                     )}
 
-                    {org.eventCount > 0 && (
+                    {(org.eventCount > 0 || canEditOrg) && (
                       <div className="org-card-footer">
-                        <button
-                          className="btn-primary org-cta-btn"
-                          type="button"
-                          onClick={() => navigate(`/events?q=${encodeURIComponent(org.name)}`)}
-                        >
-                          View Events
-                        </button>
+                        {org.eventCount > 0 && (
+                          <button
+                            className="btn-primary org-cta-btn"
+                            type="button"
+                            onClick={() => navigate(`/events?q=${encodeURIComponent(org.name)}`)}
+                          >
+                            View Events
+                          </button>
+                        )}
+                        {canEditOrg && (
+                          <button
+                            type="button"
+                            className="btn-secondary org-cta-btn"
+                            onClick={() => setEditingOrg(org)}
+                          >
+                            Edit Details
+                          </button>
+                        )}
                       </div>
                     )}
-
-                    {showSupportLink ? (
-                      <p className="org-support-link">
-                        Contact the <a className="email-link" href={`mailto:${SUPPORT_EMAIL}`}>Palouse Alliance</a> to edit your organization's details.
-                      </p>
-                    ) : null}
                   </div>
                 </div>
               );
@@ -273,6 +307,70 @@ const Organizations = ({ session }) => {
             <h3>No Organizations Found</h3>
             <p>Try adjusting your search to find what you're looking for.</p>
           </div>
+        ) : null}
+
+        {editingOrg ? (
+          <Popup
+            title="Edit Organization Details"
+            description={`Contact Palouse Alliance to request updates for ${editingOrg.name}.`}
+            onClose={() => setEditingOrg(null)}
+            className="dialog-popup"
+            ariaLabel="Edit Organization Details"
+            actions={
+              <>
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={() => setEditingOrg(null)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn-primary"
+                  onClick={() => {
+                    const mailto = getEditOrgMailtoLink(editingOrg);
+                    window.location.href = mailto;
+                  }}
+                >
+                  Send Email
+                </button>
+              </>
+            }
+          >
+            <div className="org-edit-popup-body">
+              <p className="org-edit-popup-intro">
+                To request edits for your organization, please contact Palouse Alliance administrators at{" "}
+                <a className="email-link" href={`mailto:${SUPPORT_EMAIL}`}>
+                  {SUPPORT_EMAIL}
+                </a>
+                .
+              </p>
+              <p className="org-edit-popup-instructions">
+                Include any updated values for the following fields in your email so an admin can update your listing:
+              </p>
+              <ul className="org-edit-fields-list">
+                <li>
+                  <strong>Organization Name</strong>
+                </li>
+                <li>
+                  <strong>Description</strong>
+                </li>
+                <li>
+                  <strong>Location</strong>
+                </li>
+                <li>
+                  <strong>Contact Email</strong>
+                </li>
+                <li>
+                  <strong>Phone Number</strong>
+                </li>
+              </ul>
+              <p className="org-edit-popup-note">
+                You can also click <strong>Send Email</strong> below to open a pre-filled draft in your default email client.
+              </p>
+            </div>
+          </Popup>
         ) : null}
       </main>
     </div>

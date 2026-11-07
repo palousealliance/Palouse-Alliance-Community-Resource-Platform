@@ -102,6 +102,37 @@
 .org-card-footer {
   margin-top: auto;
   padding-top: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.org-edit-popup-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--color-text-subtle);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.org-edit-popup-intro,
+.org-edit-popup-instructions,
+.org-edit-popup-note {
+  margin: 0;
+}
+
+.org-edit-fields-list {
+  margin: 4px 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--color-text);
+}
+
+.org-edit-fields-list strong {
+  color: var(--color-text);
 }
 
 .org-support-link {
