@@ -351,23 +351,20 @@ const Organizations = ({ session }) => {
               </p>
               <ul className="org-edit-fields-list">
                 <li>
-                  <strong>Organization Name</strong>
+                  Description
                 </li>
                 <li>
-                  <strong>Description</strong>
+                  Location
                 </li>
                 <li>
-                  <strong>Location</strong>
+                  Contact Email
                 </li>
                 <li>
-                  <strong>Contact Email</strong>
-                </li>
-                <li>
-                  <strong>Phone Number</strong>
+                  Phone Number
                 </li>
               </ul>
               <p className="org-edit-popup-note">
-                You can also click <strong>Send Email</strong> below to open a pre-filled draft in your default email client.
+                You can also click Send Email below to open a pre-filled draft in your default email client.
               </p>
             </div>
           </Popup>
