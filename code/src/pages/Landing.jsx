@@ -43,14 +43,13 @@ const Landing = () => {
             <Scroll size={28} className="history-feature-icon-svg" aria-hidden="true" />
           </div>
           <div className="history-feature-copy">
-            <p className="history-eyebrow">A legacy of collaboration</p>
             <h2 id="history-title">Our Story on the Palouse</h2>
             <p>Learn how the Palouse Alliance began and how decades of partnership have shaped our work today.</p>
+            <button className="btn-primary history-feature-button" onClick={() => navigate('/history')}>
+              Explore Our History
+              <ArrowRight size={18} aria-hidden="true" />
+            </button>
           </div>
-          <button className="btn-primary history-feature-button" onClick={() => navigate('/history')}>
-            Explore Our History
-            <ArrowRight size={18} aria-hidden="true" />
-          </button>
         </section>
 
         <div className="masonry-container landing-pillars">
