@@ -161,15 +161,18 @@ select.form-input option[value=""] {
   transition: background 0.2s ease;
 }
 
-.login-button:hover {
+.login-button:hover:not(:disabled) {
   background: var(--color-accent-600);
 }
 
-.login-button:disabled {
-  background-color: var(--btn-disabled-bg);
-  color: var(--btn-disabled-text);
-  border-color: var(--btn-disabled-border);
+.login-button:disabled,
+.login-button:disabled:hover {
+  background-color: var(--btn-disabled-bg) !important;
+  color: var(--btn-disabled-text) !important;
+  border-color: var(--btn-disabled-border) !important;
   cursor: not-allowed;
+  box-shadow: none !important;
+  transform: none !important;
 }
 
 .login-error-message {

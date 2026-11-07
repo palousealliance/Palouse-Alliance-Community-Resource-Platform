@@ -107,13 +107,13 @@
 }
 
 .history-document-actions a.btn-primary:hover,
-.history-document-actions button.btn-primary:hover {
+.history-document-actions button.btn-primary:hover:not(:disabled) {
   background: var(--btn-primary-bg-hover);
   color: var(--btn-primary-text);
 }
 
 .history-document-actions a.btn-secondary:hover,
-.history-document-actions button.btn-secondary:hover {
+.history-document-actions button.btn-secondary:hover:not(:disabled) {
   background: var(--btn-secondary-bg-hover);
   color: var(--btn-secondary-text-hover);
   border-color: var(--btn-secondary-border-hover);
@@ -203,7 +203,7 @@
   transition: all var(--default-transition-duration) var(--default-transition-timing-function);
 }
 
-.history-change-btn:hover {
+.history-change-btn:hover:not(:disabled) {
   background: var(--btn-secondary-bg-hover);
   color: var(--btn-secondary-text-hover);
   border-color: var(--btn-secondary-border-hover);

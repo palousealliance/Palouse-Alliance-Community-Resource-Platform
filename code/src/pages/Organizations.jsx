@@ -22,7 +22,6 @@ function getEditOrgMailtoLink(org) {
     `I would like to request updates to the organization profile for ${org?.name || "our organization"}.`,
     "",
     "Updated Details (please fill in any changed fields):",
-    `- Organization Name: ${org?.name || ""}`,
     `- Description: ${org?.description || ""}`,
     `- Location: ${org?.location || ""}`,
     `- Contact Email: ${org?.email || ""}`,

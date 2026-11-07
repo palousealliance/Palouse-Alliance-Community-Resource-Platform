@@ -300,7 +300,7 @@ describe('Organizations', () => {
     expect(screen.getByText('palousealliance@gmail.com')).toBeInTheDocument();
 
     // Listed fields
-    expect(screen.getByText('Organization Name')).toBeInTheDocument();
+    expect(screen.queryByText('Organization Name')).not.toBeInTheDocument();
     expect(screen.getByText('Description')).toBeInTheDocument();
     expect(screen.getByText('Location')).toBeInTheDocument();
     expect(screen.getByText('Contact Email')).toBeInTheDocument();

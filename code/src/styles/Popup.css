@@ -124,6 +124,23 @@
   flex-wrap: wrap;
 }
 
+.popup-actions button:not(.icon-button),
+.popup-actions .btn-primary,
+.popup-actions .btn-secondary,
+.popup-actions .btn-danger {
+  min-width: 140px;
+  min-height: 38px;
+  padding: 0.55rem 1.15rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
 .popup-close {
   border: none;
   background: transparent;
@@ -146,5 +163,19 @@
     max-width: 100%;
     padding: 20px;
     margin: 0 10px;
+  }
+
+  .popup-actions {
+    width: 100%;
+    gap: 8px;
+  }
+
+  .popup-actions button:not(.icon-button),
+  .popup-actions .btn-primary,
+  .popup-actions .btn-secondary,
+  .popup-actions .btn-danger {
+    min-width: 0;
+    flex: 1 1 0;
+    text-align: center;
   }
 }
