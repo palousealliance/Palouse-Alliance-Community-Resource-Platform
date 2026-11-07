@@ -17,8 +17,8 @@ import {
 } from "../lib/sessionCache";
 import "../styles/Events.css";
 
-const ALL_EVENTS_CATEGORY = "All Events";
-const ALL_EVENTS_TAG = "All Tags";
+const ALL_EVENTS_CATEGORY = "All";
+const ALL_EVENTS_TAG = "All";
 const TOAST_DURATION_MS = 2600;
 
 function getStartOfDay(date) {

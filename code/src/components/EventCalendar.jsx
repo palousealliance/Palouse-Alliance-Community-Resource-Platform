@@ -21,6 +21,7 @@ function EventCalendar({
   minVisibleMonth,
   maxVisibleMonth,
 }) {
+  const today = React.useMemo(() => new Date(), []);
   return (
     <div className="calendar-card">
       <div className="calendar-month-header">
@@ -62,19 +63,25 @@ function EventCalendar({
               : true;
           const isDisabled = !isAllowedMonth;
           const isSelected = selectedDates.some((selectedDate) => isSameDay(day, selectedDate));
+          const isToday = isSameDay
+            ? isSameDay(day, today)
+            : day.getFullYear() === today.getFullYear() &&
+              day.getMonth() === today.getMonth() &&
+              day.getDate() === today.getDate();
           const eventCount = eventCountByDate[dayKey] || 0;
 
           return (
             <button
               key={dayKey}
               type="button"
-              className={`calendar-day ${isSelected ? "selected" : ""} ${
+              className={`calendar-day ${isToday ? "today" : ""} ${isSelected ? "selected" : ""} ${
                 eventCount > 0 ? "has-event" : ""
               } ${!isCurrentMonth ? "outside-month" : ""} ${
                 isDisabled ? "disabled" : ""
               }`}
               onClick={() => handleSelectDay(day)}
               disabled={isDisabled}
+              aria-current={isToday ? "date" : undefined}
             >
               <span className="calendar-day-number">{day.getDate()}</span>
               {eventCount > 0 && <span className="event-dot"></span>}

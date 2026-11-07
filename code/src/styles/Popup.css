@@ -67,11 +67,12 @@
 .popup-content.filter-popup .category-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 8px;
 }
 
 .popup-content.filter-popup .category-pill {
-  padding: 0.9rem 1rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 12px;
 }
 
 .popup-content.filter-popup .category-pill.active {

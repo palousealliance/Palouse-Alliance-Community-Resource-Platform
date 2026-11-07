@@ -165,12 +165,45 @@
   white-space: nowrap;
 }
 
-@media (max-width: 360px) {
-  .home-filter-controls .filter-trigger,
-  .home-filter-controls .btn-secondary,
+@media (max-width: 700px) {
+  .home-filter-controls {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .filter-button-group {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+
+  .filter-button-group .filter-trigger {
+    flex: 1 1 0;
+    min-width: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .home-filter-controls > .btn-secondary {
+    width: 100%;
+    min-width: 0;
+    text-align: center;
+  }
+
+  .home-actions {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+
   .home-actions .btn-primary,
   .home-actions .btn-secondary {
+    flex: 1 1 0;
     min-width: 0;
+    text-align: center;
   }
 }
 
@@ -334,7 +367,8 @@
 
 .modal-content.filter-popup .category-pill {
   width: fit-content;
-  padding: 0.75rem 1rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 12px;
 }
 
 .modal-content.filter-popup .modal-close {

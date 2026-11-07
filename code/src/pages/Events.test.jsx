@@ -288,9 +288,9 @@ describe('Events', () => {
               tagIds: ['tag-1'],
             },
           ],
-          categories: ['All Events', 'Food'],
+          categories: ['All', 'Food'],
           tags: [
-            { id: 'All Tags', name: 'All Tags' },
+            { id: 'All', name: 'All' },
             { id: 'tag-1', name: 'Community' },
           ],
         },
