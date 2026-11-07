@@ -12,7 +12,7 @@ const Landing = () => {
       <main className="page-shell landing-shell">
         
         <section className="page-hero landing-hero-main">
-          <div className="org-location-chip legacy-chip">Since 1984</div>
+          <div className="legacy-chip">Since 1984</div>
           <img src={logo} alt="Palouse Alliance" className="hero-logo-img" draggable="false" />
           <h1 className="page-title">
             Building a Healthier <br/>
@@ -40,7 +40,7 @@ const Landing = () => {
 
         <section className="history-feature" aria-labelledby="history-title">
           <div className="history-feature-icon" aria-hidden="true">
-            <Scroll size={28} className="history-feature-icon-svg" aria-hidden="true" />
+            <Scroll size={24} className="history-feature-icon-svg" aria-hidden="true" />
           </div>
           <div className="history-feature-copy">
             <h2 id="history-title">Our Story on the Palouse</h2>
@@ -54,36 +54,36 @@ const Landing = () => {
 
         <div className="masonry-container landing-pillars">
           <div className="masonry-item">
-            <div className="org-card static-pillar-card">
+            <div className="static-pillar-card">
               <div className="pillar-icon-badge" aria-hidden="true">
-                <Handshake size={28} />
+                <Handshake size={24} />
               </div>
-              <h3 className="org-title">Coordinate</h3>
-              <p className="org-description">
+              <h3 className="pillar-title org-title">Coordinate</h3>
+              <p className="pillar-description org-description">
                 We bridge the gaps between regional providers to ensure seamless community support systems.
               </p>
             </div>
           </div>
 
           <div className="masonry-item">
-            <div className="org-card static-pillar-card">
+            <div className="static-pillar-card">
               <div className="pillar-icon-badge" aria-hidden="true">
-                <BookOpen size={28} />
+                <BookOpen size={24} />
               </div>
-              <h3 className="org-title">Network</h3>
-              <p className="org-description">
+              <h3 className="pillar-title org-title">Network</h3>
+              <p className="pillar-description org-description">
                 We serve as a trusted resource to facilitate networking and collaboration.
               </p>
             </div>
           </div>
 
           <div className="masonry-item">
-            <div className="org-card static-pillar-card">
+            <div className="static-pillar-card">
               <div className="pillar-icon-badge" aria-hidden="true">
-                <Users size={28} />
+                <Users size={24} />
               </div>
-              <h3 className="org-title">Advocate</h3>
-              <p className="org-description">
+              <h3 className="pillar-title org-title">Advocate</h3>
+              <p className="pillar-description org-description">
                 We are a collective voice for health and human services in our region.
               </p>
             </div>

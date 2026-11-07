@@ -26,7 +26,25 @@
 }
 
 .legacy-chip {
+  width: fit-content;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-primary-300);
+  background: var(--color-primary-100);
+  color: var(--color-primary-700);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.32rem 0.75rem;
+  box-shadow: var(--shadow-sm);
+  line-height: 1.25;
+  box-sizing: border-box;
   margin-bottom: 0.85rem;
+  cursor: default;
 }
 
 .accent-text {
@@ -62,14 +80,19 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 1px 3px rgba(17, 17, 17, 0.04);
   box-sizing: border-box;
 }
 
+.history-feature:hover {
+  box-shadow: 0 1px 3px rgba(17, 17, 17, 0.04);
+  transform: none;
+}
+
 .history-feature-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
   background: var(--color-primary-50);
   border: 1px solid var(--color-primary-200);
   display: inline-flex;
@@ -146,9 +169,13 @@
   height: 100%;
   flex: 1;
   box-sizing: border-box;
-  cursor: default;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 3px rgba(17, 17, 17, 0.04);
 }
 
+.static-pillar-card .pillar-title,
 .static-pillar-card .org-title {
   font-size: 1.25rem;
   font-weight: 700;
@@ -156,6 +183,7 @@
   margin: 0;
 }
 
+.static-pillar-card .pillar-description,
 .static-pillar-card .org-description {
   font-size: 0.95rem;
   line-height: 1.55;
@@ -167,14 +195,14 @@
 .static-pillar-card:hover {
   background-color: var(--color-surface);
   border-color: var(--color-border);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 1px 3px rgba(17, 17, 17, 0.04);
   transform: none;
 }
 
 .pillar-icon-badge {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
   background: var(--color-primary-50);
   border: 1px solid var(--color-primary-200);
   display: inline-flex;
@@ -229,6 +257,6 @@
   }
 
   .landing-pillars .static-pillar-card {
-    padding: 1.75rem 1.5rem;
+    padding: 1.5rem 1.25rem;
   }
 }
