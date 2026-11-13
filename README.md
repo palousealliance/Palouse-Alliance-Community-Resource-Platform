@@ -116,15 +116,13 @@ To connect to your own Supabase instance, update these variables in your `.env` 
 4. Configure build settings:
    - Build command: `npm run build`
    - Output directory: `dist`
-5. Add all environment variables in Vercel Project Settings:
-   - `SITE_URL` (e.g. `https://www.palousealliance.org` - used for event links in outgoing subscriber emails)
-   - `API_URL` (e.g. `https://www.palousealliance.org` - used for unsubscribe links in emails)
-   - `CORS_ORIGIN` (e.g. `https://www.palousealliance.org` - allowed origins for backend API calls)
-   - `VITE_API_BASE` (leave blank for same-origin API calls on Vercel or set to `https://www.palousealliance.org`)
-   - `VITE_SUPABASE_URL` & `VITE_SUPABASE_ANON_KEY`
-   - `SUPABASE_SECRET_KEY` (or `SUPABASE_SERVICE_ROLE_KEY`)
-   - `SUBSCRIBE_SECRET`
-   - `GMAIL_USER` & `GMAIL_APP_PASSWORD` (for event notification and verification emails)
+5. Add environment variables in Vercel Project Settings:
+   - SITE_URL (e.g. https://www.palousealliance.org — consolidated domain variable that automatically configures event links, unsubscribe endpoints, and CORS origins for both www and apex domains)
+   - VITE_SUPABASE_URL & VITE_SUPABASE_ANON_KEY
+   - SUPABASE_SECRET_KEY (or SUPABASE_SERVICE_ROLE_KEY)
+   - SUBSCRIBE_SECRET
+   - GMAIL_USER & GMAIL_APP_PASSWORD
+   - *Optional overrides*: API_URL, CORS_ORIGIN, or VITE_API_BASE (only needed if API is hosted on a separate external server)
 6. In Supabase Dashboard (Auth -> URL Configuration):
    - Update **Site URL** to `https://www.palousealliance.org`
    - Add `https://www.palousealliance.org/**` and `https://palousealliance.org/**` to **Redirect URLs**
