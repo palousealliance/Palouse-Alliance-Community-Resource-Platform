@@ -24,9 +24,27 @@ const supabaseAdmin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
 
 const app = express();
 
+const configuredSiteUrl = process.env.SITE_URL || process.env.APP_URL;
+
+// Derive trusted CORS origins automatically from SITE_URL if CORS_ORIGIN is not explicitly provided
+const defaultOrigins = ['http://localhost:5173', 'http://localhost:3000'];
+if (configuredSiteUrl) {
+  try {
+    const parsed = new URL(configuredSiteUrl);
+    defaultOrigins.push(parsed.origin);
+    if (parsed.hostname.startsWith('www.')) {
+      defaultOrigins.push(`${parsed.protocol}//${parsed.hostname.replace(/^www\./, '')}`);
+    } else {
+      defaultOrigins.push(`${parsed.protocol}//www.${parsed.hostname}`);
+    }
+  } catch {
+    defaultOrigins.push(configuredSiteUrl.replace(/\/$/, ''));
+  }
+}
+
 const TRUSTED_ORIGINS = process.env.CORS_ORIGIN
   ? process.env.CORS_ORIGIN.split(',').map((value) => value.trim()).filter(Boolean)
-  : ['http://localhost:5173'];
+  : defaultOrigins;
 
 app.use(
   cors({
@@ -659,8 +677,8 @@ const transporter = process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD
   : null;
 
 const SUBSCRIBE_SECRET = process.env.SUBSCRIBE_SECRET;
-const SITE_URL = (process.env.SITE_URL || 'http://localhost:5173').replace(/\/$/, '');
-const API_URL = (process.env.API_URL || `http://localhost:${PORT}`).replace(/\/$/, '');
+const SITE_URL = (configuredSiteUrl || 'http://localhost:5173').replace(/\/$/, '');
+const API_URL = (process.env.API_URL || configuredSiteUrl || `http://localhost:${PORT}`).replace(/\/$/, '');
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const CODE_WINDOW_MS = 10 * 60_000;
 

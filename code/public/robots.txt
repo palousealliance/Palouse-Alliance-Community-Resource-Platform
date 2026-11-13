@@ -1,2 +1,14 @@
+# Allow crawling for public resource pages
 User-agent: *
-Disallow: /
+Allow: /
+Allow: /events
+Allow: /organizations
+Allow: /history
+
+# Disallow non-public, member auth, and backend API routes
+Disallow: /admin
+Disallow: /login
+Disallow: /api/
+
+# XML Sitemap
+Sitemap: https://www.palousealliance.org/sitemap.xml

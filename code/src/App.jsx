@@ -120,6 +120,26 @@ function RouteHandler() {
       "/admin": "Admin Dashboard | Palouse Alliance",
     };
     document.title = titles[location.pathname] || "Palouse Alliance";
+
+    // Dynamically adjust robots meta tag so private/member/admin routes are never indexed
+    if (typeof document !== "undefined") {
+      const robotsMeta = document.querySelector('meta[name="robots"]');
+      if (robotsMeta) {
+        const isPrivate = location.pathname.startsWith("/admin") || location.pathname.startsWith("/login");
+        robotsMeta.setAttribute("content", isPrivate ? "noindex, nofollow" : "index, follow");
+      }
+
+      const canonicalLink = document.querySelector('link[rel="canonical"]');
+      if (canonicalLink) {
+        const origin = (typeof window !== "undefined" && window.location?.origin)
+          ? window.location.origin
+          : "https://www.palousealliance.org";
+        canonicalLink.setAttribute(
+          "href",
+          `${origin}${location.pathname === "/" ? "/" : location.pathname}`
+        );
+      }
+    }
   }, [location.pathname]);
 
   return null;
