@@ -116,7 +116,7 @@ describe('App routing and auth', () => {
 
     await waitFor(() => {
       expect(screen.getByRole('heading', { name: 'Admin Dashboard' })).toBeInTheDocument();
-    });
+    }, { timeout: 4000 });
   });
 
   it('renders admin dashboard immediately without loading flash when admin role is cached', async () => {

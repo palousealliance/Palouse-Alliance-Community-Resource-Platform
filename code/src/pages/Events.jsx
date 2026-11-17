@@ -286,6 +286,69 @@ const Events = ({ session }) => {
     setSearchQuery(searchParams.get("q")?.trim() || "");
   }, [searchParams]);
 
+  // Inject Schema.org Event structured data for search engine rich snippets
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return;
+    }
+
+    if (!Array.isArray(events) || events.length === 0) {
+      const existing = document.getElementById("events-schema-jsonld");
+      if (existing) existing.remove();
+      return;
+    }
+
+    const now = new Date();
+    const upcomingEvents = events
+      .filter((ev) => ev.startDate instanceof Date && !isNaN(ev.startDate.getTime()) && ev.startDate >= now)
+      .slice(0, 25);
+
+    if (upcomingEvents.length === 0) {
+      const existing = document.getElementById("events-schema-jsonld");
+      if (existing) existing.remove();
+      return;
+    }
+
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@graph": upcomingEvents.map((ev) => ({
+        "@type": "Event",
+        "name": ev.title || "Community Event",
+        "description": ev.description || "",
+        "startDate": ev.startDate.toISOString(),
+        "endDate": (ev.endDate instanceof Date && !isNaN(ev.endDate.getTime()))
+          ? ev.endDate.toISOString()
+          : ev.startDate.toISOString(),
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "location": {
+          "@type": "Place",
+          "name": ev.location || "Palouse Region",
+          "address": ev.location || "Palouse Region",
+        },
+        "organizer": {
+          "@type": "Organization",
+          "name": ev.organizationName || "Palouse Alliance",
+        },
+        ...(ev.flyer_url ? { image: [ev.flyer_url] } : {}),
+      })),
+    };
+
+    let scriptTag = document.getElementById("events-schema-jsonld");
+    if (!scriptTag) {
+      scriptTag = document.createElement("script");
+      scriptTag.id = "events-schema-jsonld";
+      scriptTag.type = "application/ld+json";
+      document.head.appendChild(scriptTag);
+    }
+    scriptTag.textContent = JSON.stringify(structuredData);
+
+    return () => {
+      const tag = document.getElementById("events-schema-jsonld");
+      if (tag) tag.remove();
+    };
+  }, [events]);
+
   useEffect(() => {
     let isMounted = true;
 

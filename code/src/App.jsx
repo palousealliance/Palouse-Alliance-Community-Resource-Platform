@@ -119,24 +119,54 @@ function RouteHandler() {
       "/login": "Member Log In | Palouse Alliance",
       "/admin": "Admin Dashboard | Palouse Alliance",
     };
-    document.title = titles[location.pathname] || "Palouse Alliance";
+    const currentTitle = titles[location.pathname] || "Palouse Alliance";
+    document.title = currentTitle;
 
-    // Dynamically adjust robots meta tag so private/member/admin routes are never indexed
+    // Descriptions for public crawlable pages only
+    const publicDescriptions = {
+      "/": "A community-focused platform organizing Palouse area events, organizations, and resources into an accessible hub.",
+      "/events": "Explore upcoming community events, workshops, and gatherings across the Palouse region.",
+      "/organizations": "Directory of community health, human service, and non-profit organizations across the Palouse region.",
+      "/history": "Learn about the mission, founding in 1984, and decades of partnership behind the Palouse Alliance.",
+    };
+    const currentDescription = publicDescriptions[location.pathname] || publicDescriptions["/"];
+
+    // Dynamically adjust robots meta tag and page metadata so routes stay accurate
     if (typeof document !== "undefined") {
-      const robotsMeta = document.querySelector('meta[name="robots"]');
-      if (robotsMeta) {
-        const isPrivate = location.pathname.startsWith("/admin") || location.pathname.startsWith("/login");
-        robotsMeta.setAttribute("content", isPrivate ? "noindex, nofollow" : "index, follow");
+      const isPrivate = location.pathname.startsWith("/admin") || location.pathname.startsWith("/login");
+      let robotsMeta = document.querySelector('meta[name="robots"]');
+      if (!robotsMeta) {
+        robotsMeta = document.createElement("meta");
+        robotsMeta.setAttribute("name", "robots");
+        document.head.appendChild(robotsMeta);
       }
+      robotsMeta.setAttribute("content", isPrivate ? "noindex, nofollow" : "index, follow");
+
+      const isLocalhost = typeof window !== "undefined" && window.location?.hostname === "localhost";
+      const origin = isLocalhost ? window.location.origin : "https://www.palousealliance.org";
+      // If someone lands on /admin while unauthenticated, point canonical to /login
+      const canonicalPath = location.pathname.startsWith("/admin") ? "/login" : (location.pathname === "/" ? "/" : location.pathname);
+      const currentUrl = `${origin}${canonicalPath}`;
 
       const canonicalLink = document.querySelector('link[rel="canonical"]');
       if (canonicalLink) {
-        const isLocalhost = typeof window !== "undefined" && window.location?.hostname === "localhost";
-        const origin = isLocalhost ? window.location.origin : "https://www.palousealliance.org";
-        canonicalLink.setAttribute(
-          "href",
-          `${origin}${location.pathname === "/" ? "/" : location.pathname}`
-        );
+        canonicalLink.setAttribute("href", currentUrl);
+      }
+
+      const updateMeta = (selector, content) => {
+        const el = document.querySelector(selector);
+        if (el) {
+          el.setAttribute("content", content);
+        }
+      };
+
+      if (!isPrivate) {
+        updateMeta('meta[name="description"]', currentDescription);
+        updateMeta('meta[property="og:title"]', currentTitle);
+        updateMeta('meta[property="og:description"]', currentDescription);
+        updateMeta('meta[property="og:url"]', currentUrl);
+        updateMeta('meta[name="twitter:title"]', currentTitle);
+        updateMeta('meta[name="twitter:description"]', currentDescription);
       }
     }
   }, [location.pathname]);
