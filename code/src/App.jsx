@@ -131,9 +131,8 @@ function RouteHandler() {
 
       const canonicalLink = document.querySelector('link[rel="canonical"]');
       if (canonicalLink) {
-        const origin = (typeof window !== "undefined" && window.location?.origin)
-          ? window.location.origin
-          : "https://www.palousealliance.org";
+        const isLocalhost = typeof window !== "undefined" && window.location?.hostname === "localhost";
+        const origin = isLocalhost ? window.location.origin : "https://www.palousealliance.org";
         canonicalLink.setAttribute(
           "href",
           `${origin}${location.pathname === "/" ? "/" : location.pathname}`

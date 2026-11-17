@@ -1,3 +1,7 @@
+# Allow Googlebot-Image full access to favicons and images
+User-agent: Googlebot-Image
+Allow: /
+
 # Allow crawling for public resource pages
 User-agent: *
 Allow: /
